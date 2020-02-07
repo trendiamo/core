@@ -83,55 +83,62 @@
 <footer class="site-footer" role="contentinfo">
   <div class="page-width">
     <div class="site-footer__content">
-      {%- for block in section.blocks -%}
 
-        <div class="site-footer__item
-                    {% if section.blocks.size == 1 %} site-footer__item--center{% endif %}
-                    {{ footer_item }}
-                    {% if block.type == 'newsletter' and section.blocks.size == 3 %}site-footer-newsletter__one-half{% endif %}"
-             {{ block.shopify_attributes }}>
-          <div class="site-footer__item-inner site-footer__item-inner--{{ block.type }}">
+    <div class="site-footer__item site-footer__item--one-third">
+      <div class="site-footer__item-inner site-footer__item-inner--link_list">
+        <p class="h4">{{ 'layout.footer.menu.get_involved' | t }}</p>
+        <ul class="site-footer__linklist">
+          <li class="site-footer__linklist-item">
+            <a href="/magazine/newsletter-signup">
+              {{ 'layout.menu_items.join_community' | t }}
+            </a>
+          </li>
+          <li class="site-footer__linklist-item">
+            <a href="/magazine">
+              {{ 'layout.menu_items.magazine' | t }}
+            </a>
+          </li>
+          <li class="site-footer__linklist-item">
+            <a href="/about-us">
+              {{ 'layout.menu_items.about_us' | t }}
+            </a>
+          </li>
+          <li class="site-footer__linklist-item">
+            <a href="/jobs">
+              {{ 'layout.menu_items.jobs' | t }}
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
 
-            {%- if block.settings.title -%}
-              <p class="h4">{{ block.settings.title | escape }}</p>
-            {%- endif -%}
+    <div class="site-footer__item site-footer__item--one-third">
+      <div class="site-footer__item-inner site-footer__item-inner--link_list">
+        <p class="h4">{{ 'layout.footer.menu.information' | t }}</p>
+        <ul class="site-footer__linklist">
+          <li class="site-footer__linklist-item">
+            <a href="/magazine/newsletter-signup">
+              {{ 'layout.menu_items.terms_and_conditions' | t }}
+            </a>
+          </li>
+          <li class="site-footer__linklist-item">
+            <a href="/magazine">
+              {{ 'layout.menu_items.privacy_policy' | t }}
+            </a>
+          </li>
+          <li class="site-footer__linklist-item">
+            <a href="/about-us">
+              {{ 'layout.menu_items.cookie_policy' | t }}
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
 
-            {%- case block.type -%}
-              {%- when 'text' -%}
-                {%- if block.settings.text != blank -%}
-                  <div class="site-footer__rte
-                              {% if section.blocks.size == 1 %} site-footer__single-block--centered{% endif %}">
-                      {{ block.settings.text }}
-                  </div>
-                {%- endif -%}
 
-              {%- when 'link_list' -%}
-                {%- assign footer_linklist = block.settings.menu -%}
-                  <ul class="site-footer__linklist
-                            {% if inline_list %}list--inline{% endif %}">
-                    {%- for link in linklists[footer_linklist].links -%}
-                      <li class="site-footer__linklist-item">
-                        <a href="{{ link.url }}"
-                          {% if link.current %} aria-current="page"{% endif %}
-                        >
-                          {{ link.title | escape }}
-                        </a>
-                      </li>
-                    {%- endfor -%}
-                  </ul>
-
-            {%- endcase -%}
-
-          </div>
-        </div>
-      {%- endfor -%}
-
-      <div class="site-footer__item
-                  {{ footer_item }}"
-          >
+      <div class="site-footer__item {{ footer_item }}">
         <div class="site-footer__item-inner site-footer__item-inner--link_list">
-
-          <p class="h4">Follow us</p>
+          <p class="h4">{{ 'layout.footer.follow_us' | t }}</p>
             <ul class="site-footer__linklist list--inline footer-social ">
               {%- for social in socials -%}
                 {%- assign social_link = social | prepend: 'social_' | append: '_link' | downcase -%}
@@ -148,7 +155,6 @@
             </ul>
         </div>
       </div>
-
     </div>
   </div>
 
@@ -172,7 +178,7 @@
       </div>
       <div class="grid__item{% unless social_icons %} medium-up--hide{% endunless %}">
         <p class="site-footer__copyright-content site-footer__copyright-content--powered-by">
-          &copy; {{ 'now' | date: "%Y" }} uptous.co - All rights reserved.
+          &copy; {{ 'now' | date: "%Y" }} uptous.co - {{ 'layout.footer.copyright_text' | t }}
         </p>
       </div>
     </div>

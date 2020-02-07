@@ -316,20 +316,75 @@
     }
   },
   "homepage": {
-    "general": {
-      "title": "Startseite"
+    "hero": {
+      "heading": "Don’t miss out on a revolution!",
+      "subheading": "Shop sustainable, fair and eco brands for less.",
+      "subheading2_html": "New sales promotions every week. <br /> Time limited availability. <br/> Join our club and save up to <b>30%!</b>"
     },
-    "onboarding": {
-      "product_title": "Der Name Ihres Produkts",
-      "product_description": "Diesen Abschnitt können Sie nutzen, um die Details Ihres Produkts zu beschreiben. Erzählen Sie den Kunden, wie Ihr Produkt aussieht, sich anfühlt und designt ist. Fügen Sie Einzelheiten zu Farbe, verwendeten Materialien, Größe und Produktionsort hinzu.",
-      "collection_title": "Der Name Ihrer Kollektion",
-      "blog_title": "Der Titel Ihres Posts",
-      "blog_excerpt": "Ihr Laden hat noch keine Blogposts veröffentlicht. Ein Blog kann genutzt werden, um über die Einführung neuer Produkte, Tipps oder andere Neuigkeiten, die Sie mit Ihren Kunden teilen möchten, zu berichten. Für Inspiration und Ratschläge für Ihren eigenen Laden und Blog können Sie den E-Commerce-Blog von Shopify besuchen.",
-      "blog_author": "Name des Autors",
-      "no_content": "Dieser Bereich hat zur Zeit keinen Inhalt. Füge diesem Bereich über die Seitenleiste Inhalte hinzu."
-    }
+    "our_values": {
+      "first_column": {
+        "heading": "Become a member",
+        "subheading": "What is our shopping club?",
+        "item1": {
+          "text": "We are a members only shopping club, where you can discover and shop sustainably produced fashion and lifestyle items for better prices.",
+          "index": "01",
+          "title": "Sign up for free and save money"
+        },
+        "item2": {
+          "text": "We frequently launch new discounted collections with a time limited pre-order phase, based on your feedback. Join the pre-order phase to claim your personal items exclusively for the best price.",
+          "index": "02",
+          "title": "New tailored offers every week"
+        },
+        "item3": {
+          "text": "Your needs are our rules. We listen carefully to what you have to say and what you want to do in our club. For instance, you, as part of our community, decide what products and brands you can shop here.",
+          "index": "03",
+          "title": "You are the center of our good business"
+        }
+      },
+      "second_column": {
+        "heading": "Our Pledge",
+        "subheading": "How does it work?",
+        "item1": {
+          "text": "We are the new channel for positive impact brands that removes the margin loss classic retailers provoke. We collect bulk orders after a … days sales period and focus on on-demand quality to unlock better prices and margins for everyone involved.",
+          "index": "01",
+          "title": "Pre-orders and no returns"
+        },
+        "item2": {
+          "text": "We carefully select and curate our offers and brands with the focus on their positive impact values to shape a new form of shopping and consumption. We enable new sustainable production chains that wouldn’t be actionable without our pre-order model.",
+          "index": "02",
+          "title": "We work with brands that are committed to sustainability."
+        },
+        "item3": {
+          "text": "We pledge ourselves to create business that is positive for everyone, including our planet.",
+          "index": "03",
+          "title": "Changing how we consume for the better, forever."
+        }
+      }
+    },
+    "last_part": "Join our community and become part of a revolution"
   },
   "layout": {
+    "buttons": {
+      "sign_up_with_google": "Sign up with Google",
+      "sign_up_with_facebook": "Sign up with Facebook",
+      "sign_up_for_free": "Sign up for Free",
+      "sign_me_up": "Sign me up"
+    },
+    "timer": {
+      "days": "days",
+      "hours": "hours",
+      "minutes": "minutes",
+      "heading": "We open our sustainable lifestyle shopping club doors soon",
+      "subheading_html": "Be the first the discover and shop sustainable fashion brands with up to <b>30% discounts</b>. Join the worlds first impact shopping club and get offers tailored just for you while helping to create a better future together."
+    } ,
+    "footer_subscription": {
+      "heading": "Join our community and become part of a revolution",
+      "subheading": "Stay tuned and be the first to join by signing up to our newsletter!"
+    },
+    "form": {
+      "your_email_address": "Your email address",
+      "clicking_agreement_html": "By clicking this button you subscribe to our newsletter and agree to our <a href=\"{{ link }}\">Terms and Conditions<\/a>"
+    },
     "navigation": {
       "search": "Suchen",
       "expand": "ausklappen",
@@ -350,7 +405,22 @@
       "create_account": "Konto erstellen"
     },
     "footer": {
-      "social_platform": "{{ name }} auf {{ platform }}"
+      "social_platform": "{{ name }} auf {{ platform }}",
+      "follow_us": "Follow us",
+      "copyright_text": "All rights reserved.",
+      "menu": {
+        "information": "Information",
+        "get_involved": "Get Involved"
+      }
+    },
+    "menu_items": {
+      "join_community": "Join Community",
+      "magazine": "Magazine",
+      "about_us": "About us",
+      "jobs": "Jobs",
+      "terms_and_conditions": "Terms and Conditions",
+      "privacy_policy": "Privacy Policy",
+      "cookie_policy": "Cookie Policy"
     }
   },
   "products": {
