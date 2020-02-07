@@ -5105,3 +5105,41 @@ theme.init = function() {
 };
 
 $(theme.init);
+
+// ========================================================================================================
+//  CUSTOM JAVASCRIPT
+// ========================================================================================================
+
+var date = '2020-03-06T18:00';
+
+var addZero = function(digit) {
+  return ('0' + digit).slice(-2);
+}
+
+var updateTimer = function() {
+  const difference = +new Date(date) - +new Date();
+
+  const parts = {
+    days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+    hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+    minutes: Math.floor((difference / 1000 / 60) % 60),
+    seconds: Math.floor((difference / 1000) % 60),
+  }
+
+  parts.days = addZero(parts.days);
+  parts.hours = addZero(parts.hours);
+  parts.minutes = addZero(parts.minutes);
+  parts.seconds = addZero(parts.seconds);
+
+  document.getElementById('counter-days').innerText = parts.days;
+  document.getElementById('counter-hours').innerText = parts.hours;
+  document.getElementById('counter-minutes').innerText = parts.minutes;
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  var openingCounter = document.getElementById('opening-counter');
+  if (openingCounter){
+    updateTimer();
+    window.setInterval(updateTimer, 1000);
+  }
+})

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+    <defs>
+        <style>
+            .cls-1{fill:#fbbb00}.cls-2{fill:#518ef8}.cls-3{fill:#28b446}.cls-4{fill:#f14336}
+        </style>
+    </defs>
+    <g id="Gruppe_17" data-name="Gruppe 17" transform="translate(-829 -509.939)">
+        <g id="search" transform="translate(829 509.939)">
+            <path id="Pfad_6" d="M3.546 9.669l-.557 2.079-2.036.043a8.014 8.014 0 0 1-.059-7.47l1.812.332.794 1.8a4.774 4.774 0 0 0 .045 3.214z" class="cls-1" data-name="Pfad 6"/>
+            <path id="Pfad_7" d="M15.86 6.505a8 8 0 0 1-2.852 7.733l-2.283-.116-.325-2.017a4.768 4.768 0 0 0 2.054-2.435H8.176V6.505h7.684z" class="cls-2" data-name="Pfad 7"/>
+            <path id="Pfad_8" d="M13.008 14.238A8 8 0 0 1 .953 11.791l2.593-2.122a4.758 4.758 0 0 0 6.854 2.436z" class="cls-3" data-name="Pfad 8"/>
+            <path id="Pfad_9" d="M13.106 1.842l-2.591 2.121A4.757 4.757 0 0 0 3.5 6.454L.895 4.321a8 8 0 0 1 12.211-2.479z" class="cls-4" data-name="Pfad 9"/>
+        </g>
+    </g>
+</svg>
