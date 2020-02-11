@@ -1,4 +1,8 @@
 development:
-  password: 87ac3049164189ffa90275308d5695e3
+  password: 39111eb35d2c2e9eb14a4aee8440e673
   theme_id: "79193473099"
   store: uptous-store.myshopify.com
+# development:
+#   password: 6573a5b52814d16625d2b5be56092e85
+#   theme_id: "80175366219"
+#   store: hellodude23.myshopify.com

@@ -8,12 +8,10 @@
     {% include 'site-nav', linklist: section.settings.main_linklist, wrapper_class: 'site-nav--centered' %}
 {% endcomment %}
 <ul class="site-nav list--inline{% if wrapper_class != blank %} {{ wrapper_class }}{% endif %}" id="SiteNav">
+  {% comment %}
   {% for link in linklists[linklist].links %}
     {%- assign child_list_handle = link.title | handleize -%}
 
-    {% comment %}
-      Check if third-level nav exists on each parent link.
-    {% endcomment %}
     {%- assign three_level_nav = false -%}
     {% if link.links != blank %}
       {% if link.levels == 2 %}
@@ -89,6 +87,24 @@
       </li>
     {% endif %}
   {% endfor %}
+
+  {% endcomment %}
+
+  <li>
+    <a href="/join-community" class="site-nav__link site-nav__link--main">
+      <span class="site-nav__label">{{ 'layout.menu_items.join_community' | t }}</span>
+    </a>
+  </li>
+  <li>
+    <a href="/about-us" class="site-nav__link site-nav__link--main">
+      <span class="site-nav__label">{{ 'layout.menu_items.about_us' | t }}</span>
+    </a>
+  </li>
+  <li>
+    <a href="/magazine" class="site-nav__link site-nav__link--main">
+      <span class="site-nav__label">{{ 'layout.menu_items.magazine' | t }}</span>
+    </a>
+  </li>
 
   {% if customer %}
     {% if shop.customer_accounts_enabled %}

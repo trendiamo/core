@@ -319,7 +319,7 @@
     "hero": {
       "heading": "Don’t miss out on a revolution!",
       "subheading": "Shop sustainable, fair and eco brands for less.",
-      "subheading2_html": "New sales promotions every week. <br /> Time limited availability. <br/> Join our club and save up to <b>30%!</b>"
+      "subheading2_html": "New sales promotions every week. <br \/> Time limited availability. <br\/> Join our club and save up to <b>30%!<\/b>"
     },
     "our_values": {
       "first_column": {
@@ -375,8 +375,8 @@
       "hours": "hours",
       "minutes": "minutes",
       "heading": "We open our sustainable lifestyle shopping club doors soon",
-      "subheading_html": "Be the first the discover and shop sustainable fashion brands with up to <b>30% discounts</b>. Join the worlds first impact shopping club and get offers tailored just for you while helping to create a better future together."
-    } ,
+      "subheading_html": "Be the first the discover and shop sustainable fashion brands with up to <b>30% discounts<\/b>. Join the worlds first impact shopping club and get offers tailored just for you while helping to create a better future together."
+    },
     "footer_subscription": {
       "heading": "Join our community and become part of a revolution",
       "subheading": "Stay tuned and be the first to join by signing up to our newsletter!"
@@ -414,8 +414,8 @@
       }
     },
     "menu_items": {
-      "join_community": "Join Community",
-      "magazine": "Magazine",
+      "join_community": "German Join",
+      "magazine": "German Magazine",
       "about_us": "About us",
       "jobs": "Jobs",
       "terms_and_conditions": "Terms and Conditions",

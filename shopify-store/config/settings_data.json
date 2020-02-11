@@ -1,95 +1,149 @@
 {
   "current": {
-    "color_text": "#3d4246",
-    "color_body_text": "#69727b",
-    "color_sale_text": "#557B97",
-    "color_button": "#557B97",
+    "color_text": "#111111",
+    "color_body_text": "#111111",
+    "color_sale_text": "#557b97",
+    "color_button": "#557b97",
     "color_button_text": "#fff",
     "color_small_button_text_border": "#3d4246",
     "color_text_field_text": "#000",
     "color_text_field_border": "#949494",
-    "color_text_field": "#fff",
+    "color_text_field": "#ffffff",
     "color_image_overlay_text": "#fff",
     "color_image_overlay": "#3d4246",
     "image_overlay_opacity": 40,
     "color_borders": "#e8e9eb",
     "color_body_bg": "#fff",
     "type_header_font": "work_sans_n6",
-    "type_header_base_size": 26,
+    "type_header_base_size": 36,
     "type_base_font": "work_sans_n4",
     "type_base_size": 16,
     "type_bold_product_titles": false,
+    "share_image": "",
     "share_facebook": true,
     "share_twitter": true,
     "share_pinterest": true,
+    "social_twitter_link": "",
+    "social_linkedin_link": "https:\/\/www.linkedin.com\/company\/uptous-positive-influence",
+    "social_facebook_link": "https:\/\/www.facebook.com\/UptousClub",
+    "social_pinterest_link": "",
+    "social_instagram_link": "https:\/\/www.instagram.com\/_uptous",
+    "social_tumblr_link": "",
+    "social_snapchat_link": "",
+    "social_youtube_link": "",
+    "social_vimeo_link": "",
+    "favicon": "",
+    "enable_ajax": true,
+    "checkout_header_image": "",
+    "checkout_logo_image": "",
+    "checkout_logo_position": "left",
+    "checkout_logo_size": "medium",
+    "checkout_body_background_image": "",
+    "checkout_body_background_color": "#fff",
+    "checkout_input_background_color_mode": "white",
+    "checkout_sidebar_background_image": "",
+    "checkout_sidebar_background_color": "#fafafa",
+    "checkout_heading_font": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'",
+    "checkout_body_font": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'",
+    "checkout_accent_color": "#197bbd",
+    "checkout_button_color": "#197bbd",
+    "checkout_error_color": "#e32c2b",
     "sections": {
       "header": {
         "type": "header",
-        "settings": {}
+        "settings": {
+          "align_logo": "left",
+          "logo": "",
+          "logo_max_width": 100,
+          "main_linklist": "main-menu",
+          "message": false,
+          "home_page_only": true,
+          "message_text": "Announce something here",
+          "message_link": "",
+          "color_bg": "#7796a8",
+          "color_text": "#fff"
+        }
       },
       "hero": {
         "type": "hero",
         "settings": {
-          "text_size": "large"
+          "image_1": "shopify:\/\/shop_images\/u2u-fashion-01.jpeg",
+          "image_2": "shopify:\/\/shop_images\/hero-05.jpg",
+          "image_3": "shopify:\/\/shop_images\/u2u-fashion-03.jpg",
+          "image_4": "shopify:\/\/shop_images\/hero-03.jpg",
+          "image_5": "shopify:\/\/shop_images\/hero-05.jpg",
+          "title": "Don’t miss out on a revolution!",
+          "text": "<p>Shop sustainable, fair and eco brands for less.<\/p>",
+          "text2": "<p>New sales promotions every week.<br>Time limited availability.<br>Join our club and save up to <strong>30%<\/strong>!<\/p>"
         }
-      },
-      "slideshow": {
-        "type": "slideshow",
-        "blocks": {
-          "slideshow-0": {
-            "type": "image",
-            "settings": {}
-          },
-          "slideshow-1": {
-            "type": "image",
-            "settings": {}
-          }
-        },
-        "block_order": [
-          "slideshow-0",
-          "slideshow-1"
-        ],
-        "settings": {}
-      },
-      "featured-collections": {
-        "type": "collection",
-        "settings": {
-          "collection": "frontpage"
-        }
-      },
-      "feature-row": {
-        "type": "feature-row",
-        "settings": {}
       },
       "footer": {
         "type": "footer",
         "blocks": {
           "link_list": {
             "type": "link_list",
-            "settings": {}
+            "settings": {
+              "title": "Get Involved",
+              "menu": "footer"
+            }
           },
-          "text": {
-            "type": "text",
-            "settings": {}
-          },
-          "newsletter": {
-            "type": "newsletter",
-            "settings": {}
+          "1581070083154": {
+            "type": "link_list",
+            "settings": {
+              "title": "Information",
+              "menu": "footer-information"
+            }
           }
         },
         "block_order": [
           "link_list",
-          "text",
-          "newsletter"
+          "1581070083154"
         ],
-        "settings": {}
+        "settings": {
+          "show_payment_icons": false,
+          "color_footer_bg": "#111111",
+          "color_footer_text": "#ffffff"
+        }
+      },
+      "1581018370117": {
+        "type": "counter",
+        "settings": {
+          "image": "",
+          "layout": "left",
+          "title": "Image with text",
+          "text": "<p>Pair large text with an image to give focus to your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
+          "button_label": "",
+          "button_link": ""
+        }
+      },
+      "1581019480886": {
+        "type": "join-community",
+        "settings": {
+          "image": "",
+          "layout": "left",
+          "title": "Image with text",
+          "text": "<p>Pair large text with an image to give focus to your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
+          "button_label": "",
+          "button_link": ""
+        }
+      },
+      "1581071192313": {
+        "type": "home-our-values",
+        "settings": {
+          "image": "",
+          "layout": "left",
+          "title": "Image with text",
+          "text": "<p>Pair large text with an image to give focus to your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
+          "button_label": "",
+          "button_link": ""
+        }
       }
     },
     "content_for_index": [
       "hero",
-      "featured-collections",
-      "feature-row",
-      "slideshow"
+      "1581018370117",
+      "1581071192313",
+      "1581019480886"
     ]
   },
   "presets": {
