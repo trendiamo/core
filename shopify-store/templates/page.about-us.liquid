@@ -1,0 +1,23 @@
+<div class="page-width">
+  <div class="section-spaceous">
+    <h3>{{ 'about_us.heading' | t }}</h3>
+    <p class="limited-text-block-small" >{{ 'about_us.subheading' | t }}</p>
+  </div>
+
+  {% section 'hero-about-us' %}
+
+  <div class="section-spaceous">
+    <h3 class="text-center" >{{ 'about_us.heading_2' | t }}</h3>
+    <p class="text-center limited-text-block" >{{ 'about_us.subheading_2' | t }}</p>
+  </div>
+
+  {% section 'about-us-middle' %}
+
+  <div class="section-spaceous">
+    {% section 'the-band' %}
+  </div>
+
+  {% section 'about-us-values' %}
+  {% section 'about-us-bottom' %}
+  {% section 'join-community' %}
+</div>

@@ -363,12 +363,92 @@
     },
     "last_part": "Join our community and become part of a revolution"
   },
+  "about_us": {
+    "heading": "Changing how we consume for the better, forever.",
+    "subheading": "We pledge ourselves to creating business that is positive for everyone - including our planet.",
+    "heading_2": "That’s why we believe in our strong vision.",
+    "subheading_2": "Where we team-up together and overcome the shortcomings of a political and ‚old world economy‘ that is ignoring social injustices and the environmental crisis.",
+    "hero": {
+      "heading": "We are on a mission",
+      "subheading": "Because the united buying power of all of us consumers, will change how businesses have to act - it’s up to us."
+    },
+    "middle": {
+      "heading": "Shaping a new way to shop",
+      "subheading": "As member of our shopping community or part of our startup team in Lisbon, you can be the change you want to see in the world."
+    },
+    "our_values": {
+      "heading": "Our Values",
+      "subheading": "We believe in a world in which everyone feels empowered to drive positive change.",
+      "item1": {
+        "text": "No green washing. We believe that being transparent about how products are produced and businesses are run is the key for trustworthy collaborations and customer relationships.",
+        "index": "01",
+        "title": "Transparency"
+      },
+      "item2": {
+        "text": "We believe authentic and relevant content created with passion and trust is the best way to get across the messages and stories of sustainable businesses.",
+        "index": "02",
+        "title": "Authenticity"
+      },
+      "item3": {
+        "text": "We believe that making sustainable businesses the leading businesses of tomorrow is only achievable through the combined power of individuals supporting it together.",
+        "index": "03",
+        "title": "Progress through teamwork"
+      },
+      "item4": {
+        "text": "We believe in open conversations, exchange of knowledge and the discussion of topics between reflective individuals and other parties without excluding anyone.",
+        "index": "04",
+        "title": "Inclusiveness"
+      },
+      "item5": {
+        "text": "We believe in a positive mindset and learning from each other to discuss how we can progress together every day, step by step. There are no barriers, anyone can participate no matter of the individual level of knowledge and sustainability.",
+        "index": "05",
+        "title": "Positivity"
+      }
+    },
+    "meet_the_band": {
+      "heading": "Meet the band behind the music",
+      "subheading": "Our founders and leading talents come from some of the biggest names in the retail and startup industry such as Outfittery, Uniplaces and GoPopUp. We are dedicated to our mission, vision and values and work together to change the way how we consume for the better, forever. ",
+      "band_members": {
+        "wolf": {
+          "name": "Wolfgang Schmidt-Ulm dos Santos",
+          "role": "Co-Founder & CEO"
+        },
+        "max": {
+          "name": "Max Chuchmai",
+          "role": "Tech"
+        },
+        "daniel": {
+          "name": "Daniel Welzel",
+          "role": "Co-Founder & Product"
+        },
+        "tommaso": {
+          "name": "Tommaso Di Stefano",
+          "role": "Growth & Marketing"
+        },
+        "diana": {
+          "name": "Diana Machado",
+          "role": "Influencer & Brand Mgmt."
+        },
+        "patrick": {
+          "name": "Patrick Burkert",
+          "role": "Marketing"
+        },
+        "bruno": {
+          "name": "Bruno Santos",
+          "role": "Operations"
+        }
+      }
+    },
+    "last_part": "Interested in working with us?"
+  },
   "layout": {
     "buttons": {
       "sign_up_with_google": "Sign up with Google",
       "sign_up_with_facebook": "Sign up with Facebook",
       "sign_up_for_free": "Sign up for Free",
-      "sign_me_up": "Sign me up"
+      "sign_me_up": "Sign me up",
+      "i_want_to_become_a_member": "I want to become a member",
+      "i_want_to_join_the_team": "I want to join the team"
     },
     "timer": {
       "days": "days",
