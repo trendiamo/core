@@ -205,6 +205,13 @@ const FacesOfDaMobile = ({ data }) => (
     <Face description={data.aboutUs.theBandMembers.diana.description} name="Diana Machado" src={dianaFace}></Face>
     <Face description={data.aboutUs.theBandMembers.patrick.description} name="Patrick Burkert" src={patrickFace}></Face>
     <Face description={data.aboutUs.theBandMembers.bruno.description} name="Bruno Santos" src={brunoFace}></Face>
+    <Face description={data.aboutUs.theBandMembers.nidhi.description} name="Nidhi Shetty" src={nidhiFace}></Face>
+    <Face
+      description={data.aboutUs.theBandMembers.ana.description}
+      name="Ana Vitória De Magalhães"
+      src={anaFace}
+    ></Face>
+    <Face description="Apply now!" name="You?" src={emptyFace}></Face>
   </FacesContainerMobile>
 )
 
