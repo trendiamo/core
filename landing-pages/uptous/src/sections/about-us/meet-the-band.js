@@ -1,7 +1,10 @@
+import anaFace from '../../images/about-us/faces-of-da-band/ana.jpg'
 import brunoFace from '../../images/about-us/faces-of-da-band/bruno.jpg'
 import danielFace from '../../images/about-us/faces-of-da-band/danielw.jpg'
 import dianaFace from '../../images/about-us/faces-of-da-band/diana.jpg'
+import emptyFace from '../../images/about-us/faces-of-da-band/placeholder.jpg'
 import maxFace from '../../images/about-us/faces-of-da-band/max.jpg'
+import nidhiFace from '../../images/about-us/faces-of-da-band/nidhi.jpg'
 import patrickFace from '../../images/about-us/faces-of-da-band/patrick.jpg'
 import React from 'react'
 import Section from '../../components/section'
@@ -86,6 +89,10 @@ const FaceContainer = styled.div`
     justify-content: center;
     flex-direction: column;
     width: 33%;
+
+    & + & {
+      margin-top: 0;
+    }
   }
 `
 
@@ -120,9 +127,21 @@ const FaceCells = styled.div`
   }
 `
 
+const FaceImageContainer = styled.div`
+  border-radius: 100%;
+  overflow: hidden;
+  width: 115px;
+  height: 115px;
+
+  max-width: 115px;
+  max-height: 115px;
+`
+
 const Face = ({ src, name, description }) => (
   <FaceContainer>
-    <FaceImage src={src}></FaceImage>
+    <FaceImageContainer>
+      <FaceImage src={src}></FaceImage>
+    </FaceImageContainer>
     <FaceTextContainer>
       <FaceText>{name}</FaceText>
       <FaceText>{description}</FaceText>
@@ -156,6 +175,15 @@ const FacesOfDaBand = ({ data }) => (
         src={patrickFace}
       ></Face>
       <Face description={data.aboutUs.theBandMembers.bruno.description} name="Bruno Santos" src={brunoFace}></Face>
+    </FaceCells>
+    <FaceCells>
+      <Face description={data.aboutUs.theBandMembers.nidhi.description} name="Nidhi Shetty" src={nidhiFace}></Face>
+      <Face
+        description={data.aboutUs.theBandMembers.ana.description}
+        name="Ana Vitória De Magalhães"
+        src={anaFace}
+      ></Face>
+      <Face description="Apply now!" name="You?" src={emptyFace}></Face>
     </FaceCells>
   </FacesContainer>
 )

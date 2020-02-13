@@ -60,6 +60,12 @@ export const query = graphql`
         tommaso {
           description
         }
+        ana {
+          description
+        }
+        nidhi {
+          description
+        }
       }
       ourValues {
         heading
