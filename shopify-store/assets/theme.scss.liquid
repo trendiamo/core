@@ -8411,10 +8411,19 @@ $transition-controls-video: color 0.2s $ease-transition, background-color 0.2s $
       flex-direction: column;
       width: 33%;
 
-      .the-band-face-image {
-        height: 115px;
+      .the-band-image-container {
         width: 115px;
-        flex: 0 0 115px;
+        height: 115px;
+        max-width: 115px;
+        max-height: 115px;
+        border-radius: 100%;
+        overflow: hidden;
+
+        .the-band-face-image {
+          height: 115px;
+          width: 115px;
+          flex: 0 0 115px;
+        }
       }
 
       .the-band-text-container {
@@ -8447,11 +8456,21 @@ $transition-controls-video: color 0.2s $ease-transition, background-color 0.2s $
       margin-top: 30px;
     }
 
-    .the-band-face-image {
-      height: 115px;
+    .the-band-image-container {
       width: 115px;
-      flex: 0 0 115px;
+      height: 115px;
+      max-width: 115px;
+      max-height: 115px;
+      border-radius: 100%;
+      overflow: hidden;
+
+      .the-band-face-image {
+        height: 115px;
+        width: 115px;
+        flex: 0 0 115px;
+      }
     }
+
     .the-band-text-container {
       margin-left: 20px;
       .the-band-text {

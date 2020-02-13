@@ -1,500 +1,96 @@
 <div>
   <h3 class="text-center" >{{ 'about_us.meet_the_band.heading' | t }}</h3>
   <p class="text-center limited-text-block" >{{ 'about_us.meet_the_band.subheading' | t }}</p>
-  <div class="the-band-container">
-    <div class="the-band-row">
-      <div class="the-band-face-container">
-        <img src="{{ section.settings.wolf_face | img_url: '400x400' }}" class="the-band-face-image">
-        <div class="the-band-text-container">
-          <div class="the-band-text">{{ 'about_us.meet_the_band.band_members.wolf.name' | t }}</div>
-          <div class="the-band-text">{{ 'about_us.meet_the_band.band_members.wolf.role' | t }}</div>
+
+  {% if section.blocks.size > 0 %}
+    <div class="the-band-container">
+      {% assign num = 0 %}
+      {% assign _id = 0 %}
+      {% assign current_limit = 2 %}
+      {% for block in section.blocks %}
+
+        {% if _id == 0 %}
+          <div class="the-band-row" >
+        {% endif %}
+
+        {% assign _id = _id | plus: 1 %}
+        {% assign num = num | plus: 1 %}
+
+        {% if num > current_limit %}
+
+          </div>
+          <div class="the-band-row">
+
+          {% assign num = 1 %}
+          {% if current_limit == 2 %}
+            {% assign current_limit = 3 %}
+          {% else %}
+            {% assign current_limit = 2 %}
+          {% endif %}
+        {% endif %}
+
+        <div class="the-band-face-container">
+          <div class="the-band-image-container" >
+            <img src="{{ block.settings.photo | img_url: '400x400' }}" class="the-band-face-image">
+          </div>
+          <div class="the-band-text-container">
+            <div class="the-band-text">{{ block.settings.name }}</div>
+            <div class="the-band-text">{{ block.settings.role }}</div>
+          </div>
         </div>
+
+      {% endfor %}
+
       </div>
-      <div class="the-band-face-container">
-        <img src="{{ section.settings.max_face | img_url: '400x400' }}" class="the-band-face-image">
-        <div class="the-band-text-container">
-          <div class="the-band-text">{{ 'about_us.meet_the_band.band_members.max.name' | t }}</div>
-          <div class="the-band-text">{{ 'about_us.meet_the_band.band_members.max.role' | t }}</div>
+    </div>
+    <div class="the-band-container-mobile">
+      {% for block in section.blocks %}
+        <div class="the-band-face-container">
+          <div class="the-band-image-container" >
+            <img src="{{ block.settings.photo | img_url: '400x400' }}" class="the-band-face-image">
+          </div>
+          <div class="the-band-text-container">
+            <div class="the-band-text">{{ block.settings.name }}</div>
+            <div class="the-band-text">{{ block.settings.role }}</div>
+          </div>
         </div>
-      </div>
+      {% endfor %}
     </div>
-    <div class="the-band-row">
-      <div class="the-band-face-container">
-        <img src="{{ section.settings.daniel_face | img_url: '400x400' }}" class="the-band-face-image">
-        <div class="the-band-text-container">
-          <div class="the-band-text">{{ 'about_us.meet_the_band.band_members.daniel.name' | t }}</div>
-          <div class="the-band-text">{{ 'about_us.meet_the_band.band_members.daniel.role' | t }}</div>
-        </div>
-      </div>
-      <div class="the-band-face-container">
-        <img src="{{ section.settings.tommaso_face | img_url: '400x400' }}" class="the-band-face-image">
-        <div class="the-band-text-container">
-          <div class="the-band-text">{{ 'about_us.meet_the_band.band_members.tommaso.name' | t }}</div>
-          <div class="the-band-text">{{ 'about_us.meet_the_band.band_members.tommaso.role' | t }}</div>
-        </div>
-      </div>
-      <div class="the-band-face-container">
-        <img src="{{ section.settings.diana_face | img_url: '400x400' }}" class="the-band-face-image">
-        <div class="the-band-text-container">
-          <div class="the-band-text">{{ 'about_us.meet_the_band.band_members.diana.name' | t }}</div>
-          <div class="the-band-text">{{ 'about_us.meet_the_band.band_members.diana.role' | t }}</div>
-        </div>
-      </div>
-    </div>
-    <div class="the-band-row">
-      <div class="the-band-face-container">
-        <img src="{{ section.settings.patrick_face | img_url: '400x400' }}" class="the-band-face-image">
-        <div class="the-band-text-container">
-          <div class="the-band-text">{{ 'about_us.meet_the_band.band_members.patrick.name' | t }}</div>
-          <div class="the-band-text">{{ 'about_us.meet_the_band.band_members.patrick.role' | t }}</div>
-        </div>
-      </div>
-      <div class="the-band-face-container">
-        <img src="{{ section.settings.bruno_face | img_url: '400x400' }}" class="the-band-face-image">
-        <div class="the-band-text-container">
-          <div class="the-band-text">{{ 'about_us.meet_the_band.band_members.bruno.name' | t }}</div>
-          <div class="the-band-text">{{ 'about_us.meet_the_band.band_members.bruno.role' | t }}</div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="the-band-container-mobile">
-    <div class="the-band-face-container">
-      <img src="{{ section.settings.wolf_face | img_url: '400x400' }}" class="the-band-face-image">
-      <div class="the-band-text-container">
-        <div class="the-band-text">{{ 'about_us.meet_the_band.band_members.wolf.name' | t }}</div>
-        <div class="the-band-text">{{ 'about_us.meet_the_band.band_members.wolf.role' | t }}</div>
-      </div>
-    </div>
-    <div class="the-band-face-container">
-      <img src="{{ section.settings.max_face | img_url: '400x400' }}" class="the-band-face-image">
-      <div class="the-band-text-container">
-        <div class="the-band-text">{{ 'about_us.meet_the_band.band_members.max.name' | t }}</div>
-        <div class="the-band-text">{{ 'about_us.meet_the_band.band_members.max.role' | t }}</div>
-      </div>
-    </div>
-    <div class="the-band-face-container">
-      <img src="{{ section.settings.daniel_face | img_url: '400x400' }}" class="the-band-face-image">
-      <div class="the-band-text-container">
-        <div class="the-band-text">{{ 'about_us.meet_the_band.band_members.daniel.name' | t }}</div>
-        <div class="the-band-text">{{ 'about_us.meet_the_band.band_members.daniel.role' | t }}</div>
-      </div>
-    </div>
-    <div class="the-band-face-container">
-      <img src="{{ section.settings.tommaso_face | img_url: '400x400' }}" class="the-band-face-image">
-      <div class="the-band-text-container">
-        <div class="the-band-text">{{ 'about_us.meet_the_band.band_members.tommaso.name' | t }}</div>
-        <div class="the-band-text">{{ 'about_us.meet_the_band.band_members.tommaso.role' | t }}</div>
-      </div>
-    </div>
-    <div class="the-band-face-container">
-      <img src="{{ section.settings.diana_face | img_url: '400x400' }}" class="the-band-face-image">
-      <div class="the-band-text-container">
-        <div class="the-band-text">{{ 'about_us.meet_the_band.band_members.diana.name' | t }}</div>
-        <div class="the-band-text">{{ 'about_us.meet_the_band.band_members.diana.role' | t }}</div>
-      </div>
-    </div>
-    <div class="the-band-face-container">
-      <img src="{{ section.settings.patrick_face | img_url: '400x400' }}" class="the-band-face-image">
-      <div class="the-band-text-container">
-        <div class="the-band-text">{{ 'about_us.meet_the_band.band_members.patrick.name' | t }}</div>
-        <div class="the-band-text">{{ 'about_us.meet_the_band.band_members.patrick.role' | t }}</div>
-      </div>
-    </div>
-    <div class="the-band-face-container">
-      <img src="{{ section.settings.bruno_face | img_url: '400x400' }}" class="the-band-face-image">
-      <div class="the-band-text-container">
-        <div class="the-band-text">{{ 'about_us.meet_the_band.band_members.bruno.name' | t }}</div>
-        <div class="the-band-text">{{ 'about_us.meet_the_band.band_members.bruno.role' | t }}</div>
-      </div>
-    </div>
-  </div>
+  {% endif %}
 </div>
 
 {% schema %}
 {
-  "name": {
-    "da": "Billede med tekstoverlejring",
-    "de": "The Band",
-    "en": "The Band",
-    "es": "Imagen con texto",
-    "fi": "Kuva päällä olevalla tekstillä",
-    "fr": "Image avec texte",
-    "hi": "पाठ ओवरले के साथ इमेज",
-    "it": "Immagine con testo",
-    "ja": "テキストオーバーレイ付き画像",
-    "ko": "텍스트 오버레이 포함 이미지",
-    "ms": "Imej dengan tindanan teks",
-    "nb": "Bilde med tekstoverlegg",
-    "nl": "Foto met tekstoverlay",
-    "pt-BR": "Imagem com texto",
-    "pt-PT": "Imagem com sobreposição de texto",
-    "sv": "Bild med textöverlagring",
-    "th": "การวางซ้อนรูปภาพพร้อมข้อความ",
-    "zh-CN": "带文本叠加的图片",
-    "zh-TW": "附文字疊加的圖片"
-  },
-  "class": "index-section index-section--flush",
-  "settings": [
-    {
-      "type": "image_picker",
-      "id": "wolf_face",
-      "label": {
-        "da": "Billede",
-        "de": "Foto",
-        "en": "Wolf Face",
-        "es": "Imagen",
-        "fi": "Kuva",
-        "fr": "Image",
-        "hi": "इमेज",
-        "it": "Immagine",
-        "ja": "画像",
-        "ko": "이미지",
-        "ms": "Imej",
-        "nb": "Bilde",
-        "nl": "Afbeelding",
-        "pt-BR": "Imagem",
-        "pt-PT": "Imagem",
-        "sv": "Bild",
-        "th": "รูปภาพ",
-        "zh-CN": "图片",
-        "zh-TW": "圖片"
-      }
-    },
-    {
-      "type": "image_picker",
-      "id": "max_face",
-      "label": {
-        "da": "Billede",
-        "de": "Foto",
-        "en": "Max Face",
-        "es": "Imagen",
-        "fi": "Kuva",
-        "fr": "Image",
-        "hi": "इमेज",
-        "it": "Immagine",
-        "ja": "画像",
-        "ko": "이미지",
-        "ms": "Imej",
-        "nb": "Bilde",
-        "nl": "Afbeelding",
-        "pt-BR": "Imagem",
-        "pt-PT": "Imagem",
-        "sv": "Bild",
-        "th": "รูปภาพ",
-        "zh-CN": "图片",
-        "zh-TW": "圖片"
-      }
-    },
-    {
-      "type": "image_picker",
-      "id": "tommaso_face",
-      "label": {
-        "da": "Billede",
-        "de": "Foto",
-        "en": "Tommaso Face",
-        "es": "Imagen",
-        "fi": "Kuva",
-        "fr": "Image",
-        "hi": "इमेज",
-        "it": "Immagine",
-        "ja": "画像",
-        "ko": "이미지",
-        "ms": "Imej",
-        "nb": "Bilde",
-        "nl": "Afbeelding",
-        "pt-BR": "Imagem",
-        "pt-PT": "Imagem",
-        "sv": "Bild",
-        "th": "รูปภาพ",
-        "zh-CN": "图片",
-        "zh-TW": "圖片"
-      }
-    },
-    {
-      "type": "image_picker",
-      "id": "diana_face",
-      "label": {
-        "da": "Billede",
-        "de": "Foto",
-        "en": "Diana Face",
-        "es": "Imagen",
-        "fi": "Kuva",
-        "fr": "Image",
-        "hi": "इमेज",
-        "it": "Immagine",
-        "ja": "画像",
-        "ko": "이미지",
-        "ms": "Imej",
-        "nb": "Bilde",
-        "nl": "Afbeelding",
-        "pt-BR": "Imagem",
-        "pt-PT": "Imagem",
-        "sv": "Bild",
-        "th": "รูปภาพ",
-        "zh-CN": "图片",
-        "zh-TW": "圖片"
-      }
-    },
-    {
-      "type": "image_picker",
-      "id": "daniel_face",
-      "label": {
-        "da": "Billede",
-        "de": "Foto",
-        "en": "Daniel Face",
-        "es": "Imagen",
-        "fi": "Kuva",
-        "fr": "Image",
-        "hi": "इमेज",
-        "it": "Immagine",
-        "ja": "画像",
-        "ko": "이미지",
-        "ms": "Imej",
-        "nb": "Bilde",
-        "nl": "Afbeelding",
-        "pt-BR": "Imagem",
-        "pt-PT": "Imagem",
-        "sv": "Bild",
-        "th": "รูปภาพ",
-        "zh-CN": "图片",
-        "zh-TW": "圖片"
-      }
-    },
-    {
-      "type": "image_picker",
-      "id": "bruno_face",
-      "label": {
-        "da": "Billede",
-        "de": "Foto",
-        "en": "Bruno Face",
-        "es": "Imagen",
-        "fi": "Kuva",
-        "fr": "Image",
-        "hi": "इमेज",
-        "it": "Immagine",
-        "ja": "画像",
-        "ko": "이미지",
-        "ms": "Imej",
-        "nb": "Bilde",
-        "nl": "Afbeelding",
-        "pt-BR": "Imagem",
-        "pt-PT": "Imagem",
-        "sv": "Bild",
-        "th": "รูปภาพ",
-        "zh-CN": "图片",
-        "zh-TW": "圖片"
-      }
-    },
-    {
-      "type": "image_picker",
-      "id": "patrick_face",
-      "label": {
-        "da": "Billede",
-        "de": "Foto",
-        "en": "Patrick Face",
-        "es": "Imagen",
-        "fi": "Kuva",
-        "fr": "Image",
-        "hi": "इमेज",
-        "it": "Immagine",
-        "ja": "画像",
-        "ko": "이미지",
-        "ms": "Imej",
-        "nb": "Bilde",
-        "nl": "Afbeelding",
-        "pt-BR": "Imagem",
-        "pt-PT": "Imagem",
-        "sv": "Bild",
-        "th": "รูปภาพ",
-        "zh-CN": "图片",
-        "zh-TW": "圖片"
-      }
-    },
-    {
-      "type": "text",
-      "id": "title",
-      "label": {
-        "da": "Overskrift",
-        "de": "Titel",
-        "en": "Heading",
-        "es": "Título",
-        "fi": "Otsake",
-        "fr": "En-tête",
-        "hi": "शीर्षक",
-        "it": "Heading",
-        "ja": "見出し",
-        "ko": "제목",
-        "ms": "Tajuk",
-        "nb": "Overskrift",
-        "nl": "Kop",
-        "pt-BR": "Título",
-        "pt-PT": "Título",
-        "sv": "Rubrik",
-        "th": "ส่วนหัว",
-        "zh-CN": "标题",
-        "zh-TW": "標題"
-      },
-      "default": {
-        "da": "Billede med tekstoverlejring",
-        "de": "Foto mit überlegtem Text",
-        "en": "Image with text overlay",
-        "es": "Imagen con texto",
-        "fi": "Kuva päällä olevalla tekstillä",
-        "fr": "Image avec superposition de texte",
-        "hi": "पाठ ओवरले के साथ इमेज",
-        "it": "Immagine con testo",
-        "ja": "テキストオーバーレイ付き画像",
-        "ko": "텍스트 오버레이 포함 이미지",
-        "ms": "Imej dengan tindanan teks",
-        "nb": "Bilde med tekstoverlegg",
-        "nl": "Foto met tekstoverlay",
-        "pt-BR": "Imagem com sobreposição de texto",
-        "pt-PT": "Imagem com sobreposição de texto",
-        "sv": "Bild med textöverlagring",
-        "th": "การวางซ้อนรูปภาพพร้อมข้อความ",
-        "zh-CN": "带文本叠加的图片",
-        "zh-TW": "附文字疊加的圖片"
-      }
-    },
-    {
-      "type": "richtext",
-      "id": "text",
-      "label": {
-        "da": "Tekst",
-        "de": "Text",
-        "en": "Text",
-        "es": "Texto",
-        "fi": "Teksti",
-        "fr": "Texte",
-        "hi": "टेक्स्ट",
-        "it": "Testo",
-        "ja": "テキスト",
-        "ko": "텍스트",
-        "ms": "Teks",
-        "nb": "Tekst",
-        "nl": "Tekst",
-        "pt-BR": "Texto",
-        "pt-PT": "Texto",
-        "sv": "Text",
-        "th": "ข้อความ",
-        "zh-CN": "文本",
-        "zh-TW": "文字"
-      },
-      "default": {
-        "da": "<p>Brug tekstoverlejring til at give dine kunder indblik i dit brand. Vælg billeder og tekst, der passer til din stil og historie.</p>",
-        "de": "<p>Nutzen Sie überlegten Text, um Kunden über Ihre Marke zu informieren. Wählen Sie Fotos und Text aus, die zu Ihrer Marke passen.</p>",
-        "en": "<p>Use overlay text to give your customers insight into your brand. Select imagery and text that relates to your style and story.</p>",
-        "es": "<p>Usa el texto superpuesto para darles información a tus clientes sobre tu marca. Selecciona imágenes y textos que se relacionen con tu estilo e historia.</p>",
-        "fi": "<p>Käytä taustan päällä olevaa tekstiä, jotta asiakkaat voivat tutustua tuotemerkkisi. Valitse tyylisi ja tarinasi liittyvät kuvat ja teksti.</p>",
-        "fr": "<p>Utilisez la superposition de texte pour donner un aperçu de votre marque à vos clients. Utilisez une image et du texte qui se rapportent au style et à l'histoire de votre marque.</p>",
-        "hi": "<p>अपने ब्रांड में अपने ग्राहकों को जानकारी देने के लिए ओवरले टेक्स्ट का उपयोग करें. अपनी स्टाइल और कहानी से संबंधित कल्पना और पाठ का चयन करें.</p>",
-        "it": "<p>Utilizza il testo in sovrapposizione per dare ai clienti informazioni sul tuo brand. Seleziona immagini e testo legati al tuo stile e alla tua storia.</p>",
-        "ja": "<p>オーバーレイテキストを使用して、お客様があなたのブランドについてよく理解できるようにします。あなたのスタイルやストーリーに関連する画像やテキストを選択してください。</p>",
-        "ko": "<p>오버레이 텍스트를 사용하여 고객에게 브랜드에 대한 통찰력을 부여하십시오. 자신의 스타일과 이야기와 관련된 이미지와 텍스트를 선택하십시오.</p>",
-        "ms": "<p>Gunakan teks tindanan untuk memberi wawasan pelanggan kepada jenama anda. Pilih pengimejan dan teks yang berkaitan dengan gaya dan cerita anda.</p>",
-        "nb": "<p>Bruk overleggstekst til å gi kundene dine innsikt i merkevaren din. Velg bildebruk og tekst som er relatert til din stil og historie.</p>",
-        "nl": "<p>Gebruik overlay-tekst om uw klanten inzicht te geven in uw merk. Selecteer afbeeldingen en tekst die betrekking hebben op je stijl en verhaal.</p>",
-        "pt-BR": "<p>Use o texto de sobreposição para apresentar informações sobre sua marca aos clientes. Selecione imagens e textos que reflitam seu estilo e sua história.</p>",
-        "pt-PT": "<p>Utilize o texto de sobreposição para fornecer informações sobre a sua marca aos clientes. Selecione imagens e textos que reflitam o seu estilo e a sua história.</p>",
-        "sv": "<p>Använd överläggningstext för att ge dina kunder inblick i ditt varumärke. Välj bildspråk och text som gäller din stil och historia.</p>",
-        "th": "<p>ใช้ข้อความซ้อนทับเพื่อให้ลูกค้าของคุณทราบถึงรายละเอียดเกี่ยวกับแบรนด์ เลือกรูปภาพและข้อความที่มีความเกี่ยวข้องกับสไตล์กับเรื่องราวของคุณ</p>",
-        "zh-CN": "<p>使用叠加文本让客户深入了解您的品牌。选择与您的风格和故事相关的图片和文本。</p>",
-        "zh-TW": "<p>運用文字疊加讓顧客更加瞭解您的品牌。選擇與您風格和品牌故事相關的圖像和文字。</p>"
-      }
-    },
-    {
-      "type": "richtext",
-      "id": "text2",
-      "label": {
-        "da": "Tekst",
-        "de": "Text",
-        "en": "Text",
-        "es": "Texto",
-        "fi": "Teksti",
-        "fr": "Texte",
-        "hi": "टेक्स्ट",
-        "it": "Testo",
-        "ja": "テキスト",
-        "ko": "텍스트",
-        "ms": "Teks",
-        "nb": "Tekst",
-        "nl": "Tekst",
-        "pt-BR": "Texto",
-        "pt-PT": "Texto",
-        "sv": "Text",
-        "th": "ข้อความ",
-        "zh-CN": "文本",
-        "zh-TW": "文字"
-      },
-      "default": {
-        "da": "<p>Brug tekstoverlejring til at give dine kunder indblik i dit brand. Vælg billeder og tekst, der passer til din stil og historie.</p>",
-        "de": "<p>Nutzen Sie überlegten Text, um Kunden über Ihre Marke zu informieren. Wählen Sie Fotos und Text aus, die zu Ihrer Marke passen.</p>",
-        "en": "<p>Use overlay text to give your customers insight into your brand. Select imagery and text that relates to your style and story.</p>",
-        "es": "<p>Usa el texto superpuesto para darles información a tus clientes sobre tu marca. Selecciona imágenes y textos que se relacionen con tu estilo e historia.</p>",
-        "fi": "<p>Käytä taustan päällä olevaa tekstiä, jotta asiakkaat voivat tutustua tuotemerkkisi. Valitse tyylisi ja tarinasi liittyvät kuvat ja teksti.</p>",
-        "fr": "<p>Utilisez la superposition de texte pour donner un aperçu de votre marque à vos clients. Utilisez une image et du texte qui se rapportent au style et à l'histoire de votre marque.</p>",
-        "hi": "<p>अपने ब्रांड में अपने ग्राहकों को जानकारी देने के लिए ओवरले टेक्स्ट का उपयोग करें. अपनी स्टाइल और कहानी से संबंधित कल्पना और पाठ का चयन करें.</p>",
-        "it": "<p>Utilizza il testo in sovrapposizione per dare ai clienti informazioni sul tuo brand. Seleziona immagini e testo legati al tuo stile e alla tua storia.</p>",
-        "ja": "<p>オーバーレイテキストを使用して、お客様があなたのブランドについてよく理解できるようにします。あなたのスタイルやストーリーに関連する画像やテキストを選択してください。</p>",
-        "ko": "<p>오버레이 텍스트를 사용하여 고객에게 브랜드에 대한 통찰력을 부여하십시오. 자신의 스타일과 이야기와 관련된 이미지와 텍스트를 선택하십시오.</p>",
-        "ms": "<p>Gunakan teks tindanan untuk memberi wawasan pelanggan kepada jenama anda. Pilih pengimejan dan teks yang berkaitan dengan gaya dan cerita anda.</p>",
-        "nb": "<p>Bruk overleggstekst til å gi kundene dine innsikt i merkevaren din. Velg bildebruk og tekst som er relatert til din stil og historie.</p>",
-        "nl": "<p>Gebruik overlay-tekst om uw klanten inzicht te geven in uw merk. Selecteer afbeeldingen en tekst die betrekking hebben op je stijl en verhaal.</p>",
-        "pt-BR": "<p>Use o texto de sobreposição para apresentar informações sobre sua marca aos clientes. Selecione imagens e textos que reflitam seu estilo e sua história.</p>",
-        "pt-PT": "<p>Utilize o texto de sobreposição para fornecer informações sobre a sua marca aos clientes. Selecione imagens e textos que reflitam o seu estilo e a sua história.</p>",
-        "sv": "<p>Använd överläggningstext för att ge dina kunder inblick i ditt varumärke. Välj bildspråk och text som gäller din stil och historia.</p>",
-        "th": "<p>ใช้ข้อความซ้อนทับเพื่อให้ลูกค้าของคุณทราบถึงรายละเอียดเกี่ยวกับแบรนด์ เลือกรูปภาพและข้อความที่มีความเกี่ยวข้องกับสไตล์กับเรื่องราวของคุณ</p>",
-        "zh-CN": "<p>使用叠加文本让客户深入了解您的品牌。选择与您的风格和故事相关的图片和文本。</p>",
-        "zh-TW": "<p>運用文字疊加讓顧客更加瞭解您的品牌。選擇與您風格和品牌故事相關的圖像和文字。</p>"
-      }
-    }
-  ],
-  "presets": [
-    {
-      "name": {
-        "da": "Billede med tekstoverlejring",
-        "de": "The Band",
-        "en": "The Band",
-        "es": "Imagen con texto",
-        "fi": "Kuva päällä olevalla tekstillä",
-        "fr": "Image avec superposition de texte",
-        "hi": "पाठ ओवरले के साथ इमेज",
-        "it": "Immagine con testo",
-        "ja": "テキストオーバーレイ付き画像",
-        "ko": "텍스트 오버레이 포함 이미지",
-        "ms": "Imej dengan tindanan teks",
-        "nb": "Bilde med tekstoverlegg",
-        "nl": "Foto met tekstoverlay",
-        "pt-BR": "Imagem com sobreposição de texto",
-        "pt-PT": "Imagem com sobreposição de texto",
-        "sv": "Bild med textöverlagring",
-        "th": "การวางซ้อนรูปภาพพร้อมข้อความ",
-        "zh-CN": "带文本叠加的图片",
-        "zh-TW": "附文字疊加的圖片"
-      },
-      "category": {
-        "da": "Billede",
-        "de": "Foto",
-        "en": "Image",
-        "es": "Imagen",
-        "fi": "Kuva",
-        "fr": "Image",
-        "hi": "इमेज",
-        "it": "Immagine",
-        "ja": "画像",
-        "ko": "이미지",
-        "ms": "Imej",
-        "nb": "Bilde",
-        "nl": "Afbeelding",
-        "pt-BR": "Imagem",
-        "pt-PT": "Imagem",
-        "sv": "Bild",
-        "th": "รูปภาพ",
-        "zh-CN": "图片",
-        "zh-TW": "圖片"
-      }
-    }
-  ]
+    "name": "The Band",
+    "class": "js-section__about-the_band",
+    "blocks": [
+        {
+            "type": "band_member",
+            "name": "Member",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "photo",
+                    "label": "Photo"
+                },
+                {
+                  "type": "text",
+                  "id": "name",
+                  "label": "Name"
+                },
+                {
+                  "type": "text",
+                  "id": "role",
+                  "label": "Role"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "The Band",
+            "category": "Promotional"
+        }
+    ]
 }
 {% endschema %}
