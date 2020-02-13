@@ -42,7 +42,6 @@ scp $SSH_OPTIONS -q $ENV_SERVER:/var/dotenv/plugin-base/.env ../plugin-base/.env
 cd ../plugin-base && yarn && yarn install-p && yarn build && cd ../plugiamo && \
 yarn build && \
 copy_files && \
-deploy/notify-rollbar && \
 ([ -f .env~ ] && mv .env~ .env || true) && \
 ([ -f ../plugin-base/.env~ ] && mv ../plugin-base/.env~ ../plugin-base/.env || true) && \
 rm build/*.js && \

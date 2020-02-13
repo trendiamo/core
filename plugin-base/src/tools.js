@@ -55,11 +55,12 @@ const validateEmail = email => {
 const stringifyRect = imgRect => imgRect && `${imgRect.x},${imgRect.y},${imgRect.width},${imgRect.height}`
 
 const imgixUrl = (url, imgixParams) => {
-  if (url.lastIndexOf(process.env.IMG_BUCKET_ENDPOINT, 0) !== 0 || url.match(/\.gif$/i)) return url
-  const urlObj = new URL(url)
-  const dpr = window.devicePixelRatio || 1
-  const search = { ...parse(urlObj.search.substr(1)), dpr, ...imgixParams }
-  return `${process.env.IMGIX_ENDPOINT}${urlObj.pathname}?${stringify(search)}`
+  return url
+  // if (url.lastIndexOf(process.env.IMG_BUCKET_ENDPOINT, 0) !== 0 || url.match(/\.gif$/i)) return url
+  // const urlObj = new URL(url)
+  // const dpr = window.devicePixelRatio || 1
+  // const search = { ...parse(urlObj.search.substr(1)), dpr, ...imgixParams }
+  // return `${process.env.IMGIX_ENDPOINT}${urlObj.pathname}?${stringify(search)}`
 }
 
 const sellerImg = (seller, useSellerAnimation) => {

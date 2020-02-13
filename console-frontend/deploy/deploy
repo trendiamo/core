@@ -32,7 +32,6 @@ cd ../plugin-base && yarn install-p && yarn build && cd ../console-frontend && \
 yarn build && \
 cp deploy/.htaccess build/.htaccess && \
 rsync -azh -e "$SSH" --delete-after --ignore-errors build/ $SERVER:/var/www/admin/html && \
-deploy/notify-rollbar && \
 rm -rf build/ && \
 rm .env && \
 rm ../plugin-base/.env && \
