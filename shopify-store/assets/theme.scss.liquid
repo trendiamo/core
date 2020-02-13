@@ -8520,3 +8520,110 @@ $transition-controls-video: color 0.2s $ease-transition, background-color 0.2s $
     margin: 0 -22px;
   }
 }
+
+//----------------------------------------
+
+.collapsible {
+  display: flex;
+  flex-direction: column;
+  border-width: 2px 0px;
+  border-style: solid solid;
+  border-color: #111;
+  border-image: initial;
+  border-left: 0px;
+  border-right: 0px;
+
+  & + & {
+    border-top: 0px;
+  }
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+
+  .collapsible-header {
+    text-align: left;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    padding: 20px 0px;
+
+    h3 {
+      margin: 0;
+    }
+
+    .collapsible-icon-container {
+      display: flex;
+      width: 18px;
+      height: 18px;
+      align-items: center;
+      justify-content: center;
+
+      .collapsible-icon {
+        position: relative;
+        width: 4px;
+        height: 20px;
+        background: rgb(51, 51, 51);
+        transition: transform 0.6s ease 0.3s;
+
+        &::before {
+          content: "";
+          position: absolute;
+          top: 50%;
+          left: -8px;
+          right: -8px;
+          height: 4px;
+          transform: translateY(-50%);
+          background: rgb(51, 51, 51);
+          transition: transform 0.2s ease 0s;
+        }
+      }
+    }
+  }
+
+  .collapsible-content-container {
+    max-height: 0px;
+    overflow: hidden;
+    transition: height 1s ease 0s;
+    margin-top: 20px;
+
+    .collapsible-content {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+
+      @include media-query($small) {
+        align-items: initial;
+      }
+
+      .job-types {
+        color: rgb(187, 187, 187);
+        font-weight: 900;
+        text-align: left;
+        margin: 30px 0;
+      }
+    }
+  }
+
+  &.open {
+    .collapsible-content-container {
+      height: 100%;
+      max-height: 100%;
+      margin-bottom: 40px;
+      overflow: hidden;
+      transition: height 1s ease 0s;
+    }
+    .collapsible-header {
+      .collapsible-icon-container {
+        .collapsible-icon {
+          transform: rotate(90deg);
+          &:before {
+            transform: translateY(-50%) scaleX(0);
+          }
+        }
+      }
+    }
+  }
+}

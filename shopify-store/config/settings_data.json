@@ -137,6 +137,103 @@
           "button_label": "",
           "button_link": ""
         }
+      },
+      "hero-about-us": {
+        "type": "hero-about-us",
+        "settings": {
+          "image_1": "shopify:\/\/shop_images\/water.jpg",
+          "image_2": "shopify:\/\/shop_images\/girl.jpg",
+          "image_3": "shopify:\/\/shop_images\/programmers.jpg",
+          "image_4": "shopify:\/\/shop_images\/grass.jpg",
+          "image_5": "shopify:\/\/shop_images\/coffee.jpg",
+          "image_6": "shopify:\/\/shop_images\/water.jpg",
+          "title": "Image with text overlay",
+          "text": "<p>Use overlay text to give your customers insight into your brand. Select imagery and text that relates to your style and story.<\/p>",
+          "text2": "<p>Use overlay text to give your customers insight into your brand. Select imagery and text that relates to your style and story.<\/p>"
+        }
+      },
+      "about-us-middle": {
+        "type": "about-us-middle",
+        "settings": {
+          "image": "shopify:\/\/shop_images\/people-hands.jpg",
+          "title": "Image with text overlay",
+          "text": "<p>Use overlay text to give your customers insight into your brand. Select imagery and text that relates to your style and story.<\/p>",
+          "text2": "<p>Use overlay text to give your customers insight into your brand. Select imagery and text that relates to your style and story.<\/p>"
+        }
+      },
+      "the-band": {
+        "type": "the-band",
+        "settings": {
+          "wolf_face": "shopify:\/\/shop_images\/wolfgang.jpg",
+          "max_face": "shopify:\/\/shop_images\/max.jpg",
+          "tommaso_face": "shopify:\/\/shop_images\/tommaso.jpg",
+          "diana_face": "shopify:\/\/shop_images\/diana.jpg",
+          "daniel_face": "shopify:\/\/shop_images\/danielw.jpg",
+          "bruno_face": "shopify:\/\/shop_images\/bruno.jpg",
+          "patrick_face": "shopify:\/\/shop_images\/patrick.jpg",
+          "title": "Image with text overlay",
+          "text": "<p>Use overlay text to give your customers insight into your brand. Select imagery and text that relates to your style and story.<\/p>",
+          "text2": "<p>Use overlay text to give your customers insight into your brand. Select imagery and text that relates to your style and story.<\/p>"
+        }
+      },
+      "hero-jobs": {
+        "type": "hero-jobs",
+        "settings": {
+          "image_1": "shopify:\/\/shop_images\/hero-04.jpg",
+          "image_2": "shopify:\/\/shop_images\/hero-02.jpg",
+          "image_3": "shopify:\/\/shop_images\/hero-05.jpg",
+          "image_4": "shopify:\/\/shop_images\/hero-01.jpg",
+          "image_5": "shopify:\/\/shop_images\/hero-03_cffe40d7-19a8-49aa-95f4-344305486076.jpg",
+          "image_6": "shopify:\/\/shop_images\/hero-01.jpg",
+          "title": "Image with text overlay",
+          "text": "<p>Use overlay text to give your customers insight into your brand. Select imagery and text that relates to your style and story.<\/p>",
+          "text2": "<p>Use overlay text to give your customers insight into your brand. Select imagery and text that relates to your style and story.<\/p>"
+        }
+      },
+      "jobs-careers": {
+        "type": "jobs-careers",
+        "blocks": {
+          "1581592710536": {
+            "type": "job",
+            "settings": {
+              "heading": "Seller \/ Curator \/ Stylist",
+              "types": "Part-time, Internship, Contract, Commission",
+              "description": "<p>We are an international fashion platform startup building a direct-to-consumer way of e-commerce, focussed on creating sustainability through 10x efficiency (cutting out the middlemen\/-women, sourcing&amp;production on-demand, etc.).<br><br>As a company and team, we are on a mission to educate ourselves as well as the consumers to live and consume with reduced impact on our environment.<br><br>As Stylist \/ Curator \/ Seller, you are the representative of our company towards the market and our customers. You are the host of our weekly brand and product presentation videos and pictures, that are meant to inform and excite our customers.<br><br>Your main job is to be extremely passionate about what you do presenting and selling sustainable fashion pieces. You always have one or two models with you infront of the camera that you can present on.<br><br>We consider you to be an entrepreneur in the company, sharing and living our big vision that we can create major positive impact together &lsquo;cleaning up&rsquo; one of the largest and most polluting industries on the planet. You are clear that the path is the goal - and that it&rsquo;s about entering and being active in unknown territory with maximum creativity and ownership.<br><br>We expect you to think and act outside the box and get the job done, no matter what.<br><br>Your main goal is to create a community around the sales videos and pictures you create, with the main KPI being: sales volume as well as engagement rate.<br><br>What we offer to you is an opportunity for maximum professional and personal growth. Through our open, entrepreneurial, creative and free work environment, our mission is to empower you to become the best version of yourself and create positive impact with us together.<br><br>We invite you to become part of our free-spirited team and create a story of success you can be truly proud of in every way!<\/p>"
+            }
+          },
+          "1581592769930": {
+            "type": "job",
+            "settings": {
+              "heading": "Model for Fashion Photo and Video Shoots",
+              "types": "Part-time, Contract",
+              "description": "<p>We are an international fashion platform startup building a direct-to-consumer way of e-commerce, focussed on creating sustainability through 10x efficiency (direct-to-consumer, sourcing\/production on-demand).<br><br>As a company and team, we are on a mission to educate ourselves as well as the consumers to learn about how we can live and consume with reduced impact on our environment.<br><br>As Sustainable Fashion Model (m\/f\/d), you are the face of the company to our customers. For our weekly Newsletters, Social Media Campaigns and Sales Auction, we are doing weekly photo and video shoots that you will be featured in wearing the according clothing, shoes and accessories.<br><br>Your main job is be passionate about what you do and have an energy that will convey the message in our videos and photos.<br><br>What we offer to you is an opportunity for maximum professional and personal growth. Through our open, entrepreneurial and free work environment, our mission is to empower you to become the best version of yourself and create positive impact with us together.<br><br>We invite you to become part of our free-spirited team and create a story of success you can be truly proud of in every way!<\/p>"
+            }
+          },
+          "1581592786326": {
+            "type": "job",
+            "settings": {
+              "heading": "Content Creator \/ Editor for Sustainable Fashion",
+              "types": "Full-time, Part-time",
+              "description": "<p>We are an international fashion platform startup building up a direct-to-consumer way of e-commerce, focussed on creating sustainability through 10x efficiency (direct-to-consumer, sourcing\/production on-demand). As a company and team, we are on a mission to educate ourselves as well as the consumers to learn about how we can live and consume with reduced impact on our environment.<br><br>As Content Creator \/ Editor, you are responsible to create videos and texts about how fashion can be created and distributed in a more sustainable way.<br><br>Your main job is to generate information through market research, interviews with specialists in their field as well as brands about what the main challenges are (in production, fabric sourcing, distribution, etc.) - and put this information together in informative and enticing newsletters, written articles as well as videos.<br><br>You are an entrepreneur in the company, sharing and living our big vision that we can create major positive impact &lsquo;cleaning up&rsquo; one of the largest and most polluting industries on the planet. You are clear that the path is the goal - and that it&rsquo;s about entering and being active in unknown territory with maximum creativity and ownership. We expect you to think and act outside the box and get the job done, no matter what.<br><br>Your main goal is to create a community around the topic and our company with the KPI: engagement rate.<br><br>What we offer to you is an opportunity for maximum professional and personal growth. Through our open, entrepreneurial and free work environment, our mission is to empower you to become the best version of yourself and create positive impact with us together.<br><br>We invite you to become part of our free-spirited team and create a story of success you can be truly proud of in every way!<\/p>"
+            }
+          },
+          "1581592804158": {
+            "type": "job",
+            "settings": {
+              "heading": "COO \/ Head of Operations",
+              "types": "Full-time",
+              "description": "<p>We are an international fashion platform startup creating a direct-to-consumer way of e-commerce focussed to create sustainability through efficiency (direct-to-consumer, sourcing\/production on-demand).<br><br>As the COO \/ Head of Operations, you are responsible to lead the daily to do&rsquo;s of our business team (Sales, Marketing, Product and Operations). Based on our strategy and business plan, you execute and do whatever is necessary to achieve our weekly, monthly and annual goals.<br><br>You lead an international growing team of currently 4 people through your strong leadership skills (daily standups, goal settings, feedback talks, etc.). You know what excellent execution means and are fully aware of how essential your high energy and can-do, hands-on mentality is for the success of the team and thus the company - and you own your work like an entrepreneur.<br><br>You are obsessed about transparency, processes, structure and numbers. Your main success KPI is: revenue and growth speed according to our business plan. What you cannot measure does not exist for you.<br><br>You have a proven track-record of having led teams successfully and highly dynamic environments. Your English skills are excellent and your attitude is &lsquo;execution wins over strategy and talking&rsquo;.<br><br>What we offer to you is an opportunity for maximum professional and personal growth. Through our open, entrepreneurial and free work environment, our mission is to empower you to become the best version of yourself. Thus, we invite you to become part of our free-spirited team and create a story of success you can be truly proud of in every way.<\/p>"
+            }
+          }
+        },
+        "block_order": [
+          "1581592710536",
+          "1581592769930",
+          "1581592786326",
+          "1581592804158"
+        ],
+        "settings": {
+        }
       }
     },
     "content_for_index": [
@@ -173,12 +270,12 @@
       "sections": {
         "header": {
           "type": "header",
-          "settings": {}
+          "settings": {
+          }
         },
         "hero": {
           "type": "hero",
           "settings": {
-            "text_size": "large"
           }
         },
         "slideshow": {
@@ -186,18 +283,21 @@
           "blocks": {
             "slideshow-0": {
               "type": "image",
-              "settings": {}
+              "settings": {
+              }
             },
             "slideshow-1": {
               "type": "image",
-              "settings": {}
+              "settings": {
+              }
             }
           },
           "block_order": [
             "slideshow-0",
             "slideshow-1"
           ],
-          "settings": {}
+          "settings": {
+          }
         },
         "featured-collections": {
           "type": "collection",
@@ -207,22 +307,26 @@
         },
         "feature-row": {
           "type": "feature-row",
-          "settings": {}
+          "settings": {
+          }
         },
         "footer": {
           "type": "footer",
           "blocks": {
             "link_list": {
               "type": "link_list",
-              "settings": {}
+              "settings": {
+              }
             },
             "text": {
               "type": "text",
-              "settings": {}
+              "settings": {
+              }
             },
             "newsletter": {
               "type": "newsletter",
-              "settings": {}
+              "settings": {
+              }
             }
           },
           "block_order": [
@@ -230,7 +334,8 @@
             "text",
             "newsletter"
           ],
-          "settings": {}
+          "settings": {
+          }
         }
       },
       "content_for_index": [
@@ -303,9 +408,6 @@
         "hero": {
           "type": "hero",
           "settings": {
-            "alignment": "center",
-            "hero_size": "x-large",
-            "text_size": "large"
           }
         },
         "slideshow": {
@@ -371,20 +473,23 @@
         },
         "1492033809691": {
           "type": "map",
-          "settings": {}
+          "settings": {
+          }
         },
         "1492033877875": {
           "type": "quotes",
           "blocks": {
             "1492033877875-0": {
               "type": "quote",
-              "settings": {}
+              "settings": {
+              }
             }
           },
           "block_order": [
             "1492033877875-0"
           ],
-          "settings": {}
+          "settings": {
+          }
         },
         "1492033924902": {
           "type": "custom-content",
@@ -410,15 +515,18 @@
           "blocks": {
             "1492096252560-0": {
               "type": "featured_collection",
-              "settings": {}
+              "settings": {
+              }
             },
             "1492096252560-1": {
               "type": "featured_collection",
-              "settings": {}
+              "settings": {
+              }
             },
             "1492096252560-2": {
               "type": "featured_collection",
-              "settings": {}
+              "settings": {
+              }
             }
           },
           "block_order": [
@@ -457,15 +565,18 @@
           "blocks": {
             "link_list": {
               "type": "link_list",
-              "settings": {}
+              "settings": {
+              }
             },
             "text": {
               "type": "text",
-              "settings": {}
+              "settings": {
+              }
             },
             "newsletter": {
               "type": "newsletter",
-              "settings": {}
+              "settings": {
+              }
             }
           },
           "block_order": [
@@ -473,7 +584,8 @@
             "text",
             "newsletter"
           ],
-          "settings": {}
+          "settings": {
+          }
         }
       },
       "content_for_index": [

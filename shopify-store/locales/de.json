@@ -441,6 +441,18 @@
     },
     "last_part": "Interested in working with us?"
   },
+  "jobs": {
+    "hero": {
+      "heading": "Fashion reverse-engineered",
+      "subheading": "We are an international sustainable fashion startup based in Lisbon, Europe’s green capital for conscious clothing, building a new direct-to-consumer way of online shopping. Become part of it!"
+    },
+    "careers": {
+      "heading": "Career Opportunities in Lisbon"
+    },
+    "types": "Job Types",
+    "heading": "Help us fixing the way we consume fashion",
+    "subheading": "Our team is building a new direct-to-consumer way in e-commerce, focussed on creating sustainability through efficiency by taking out the unfair and intransparent mechanisms in the old industry value chain of fashion, from creation to production to selling. As a company and team, we are on a mission to educate ourselves and our customers to live and consume with reduced impact on our environment - join our team and help us fixing the fashion industry for the better."
+  },
   "layout": {
     "buttons": {
       "sign_up_with_google": "Sign up with Google",
@@ -448,7 +460,8 @@
       "sign_up_for_free": "Sign up for Free",
       "sign_me_up": "Sign me up",
       "i_want_to_become_a_member": "I want to become a member",
-      "i_want_to_join_the_team": "I want to join the team"
+      "i_want_to_join_the_team": "I want to join the team",
+      "apply_for_this_job": "Apply for this job"
     },
     "timer": {
       "days": "days",

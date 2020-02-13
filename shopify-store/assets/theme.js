@@ -5136,10 +5136,37 @@ var updateTimer = function() {
   document.getElementById('counter-minutes').innerText = parts.minutes;
 }
 
+var openCollapsible = function(jobId) {
+  var jobElement = $('#job-' + jobId);
+  if (!jobElement) return;
+  jobElement.toggleClass('open');
+  window.location.hash = '';
+  window.location.hash = "#job-" + jobId;
+}
+
+var openCollapsibleIfInHash = function() {
+  if (window.location.hash){
+    var hash = window.location.hash.split('-');
+    if (hash[0] === '#job') {
+      $('#job-' + hash[1]).toggleClass('open');
+      window.setTimeout(
+        function(){
+          window.location.hash = '';
+          window.location.hash = '#job-' + hash[1];
+        },
+        500
+      )
+    }
+  }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
   var openingCounter = document.getElementById('opening-counter');
   if (openingCounter){
     updateTimer();
     window.setInterval(updateTimer, 1000);
   }
+
+  openCollapsibleIfInHash();
+
 })
