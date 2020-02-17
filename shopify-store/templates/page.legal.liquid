@@ -1,0 +1,22 @@
+<div class="page-width">
+  <h3>{{ page.title }}</h3>
+  <br><br>
+  {{ page.content }}
+
+  <script type="text/javascript" >
+
+  console.log('a');
+
+    !(function(a, b) {
+      function load() {
+        var s1 = b.createElement('script'),
+          s2 = b.getElementsByTagName('script')[0];
+        s1.src = 'https://cdn.iubenda.com/iubenda.js';
+        s1.charset = 'utf-8';
+        s2.parentNode.insertBefore(s1, s2);
+      }
+      b.readyState === 'complete' ? load() : a.addEventListener('DOMContentLoaded', load);
+    })(window, document);
+  </script>
+
+</div>

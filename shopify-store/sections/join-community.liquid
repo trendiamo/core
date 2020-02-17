@@ -9,7 +9,7 @@
     <div class="sign-me-up-section">
       <input type="submit" name="subscribe" value="{{ 'layout.buttons.sign_me_up' | t }}" class="btn-signup btn-signup-for-free btn-sm btn-full-width-mobile" />
     </div>
-    <p class="text-xs text-center" >{{ 'layout.form.clicking_agreement_html' | t }}</p>
+    <p class="text-xs text-center" >{{ 'layout.form.clicking_agreement_html' | t: link: pages['terms-and-conditions'].url }}</p>
   </form>
 </div>
 

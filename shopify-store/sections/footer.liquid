@@ -117,17 +117,17 @@
         <p class="h4">{{ 'layout.footer.menu.information' | t }}</p>
         <ul class="site-footer__linklist">
           <li class="site-footer__linklist-item">
-            <a href="/magazine/newsletter-signup">
+            <a href="{{ pages['terms-and-conditions'].url }}">
               {{ 'layout.menu_items.terms_and_conditions' | t }}
             </a>
           </li>
           <li class="site-footer__linklist-item">
-            <a href="/magazine">
+            <a href="{{ pages['privacy-policy'].url }}">
               {{ 'layout.menu_items.privacy_policy' | t }}
             </a>
           </li>
           <li class="site-footer__linklist-item">
-            <a href="{{ pages['about-us'].url }}">
+            <a href="{{ pages['cookie-policy'].url }}">
               {{ 'layout.menu_items.cookie_policy' | t }}
             </a>
           </li>
