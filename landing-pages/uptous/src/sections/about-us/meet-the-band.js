@@ -2,7 +2,7 @@ import anaFace from '../../images/about-us/faces-of-da-band/ana.jpg'
 import brunoFace from '../../images/about-us/faces-of-da-band/bruno.jpg'
 import danielFace from '../../images/about-us/faces-of-da-band/danielw.jpg'
 import dianaFace from '../../images/about-us/faces-of-da-band/diana.jpg'
-import emptyFace from '../../images/about-us/faces-of-da-band/placeholder.jpg'
+import diogoFace from '../../images/about-us/faces-of-da-band/diogo.jpg'
 import maxFace from '../../images/about-us/faces-of-da-band/max.jpg'
 import nidhiFace from '../../images/about-us/faces-of-da-band/nidhi.jpg'
 import patrickFace from '../../images/about-us/faces-of-da-band/patrick.jpg'
@@ -161,11 +161,7 @@ const FacesOfDaBand = ({ data }) => (
     </FaceCells>
     <FaceCells>
       <Face description={data.aboutUs.theBandMembers.daniel.description} name="Daniel Welzel" src={danielFace}></Face>
-      <Face
-        description={data.aboutUs.theBandMembers.tommaso.description}
-        name="Tommaso Di Stefano"
-        src={tommasoFace}
-      ></Face>
+      <Face description={data.aboutUs.theBandMembers.diogo.description} name="Diogo Freitas" src={diogoFace}></Face>
       <Face description={data.aboutUs.theBandMembers.diana.description} name="Diana Machado" src={dianaFace}></Face>
     </FaceCells>
     <FaceCells>
@@ -174,7 +170,11 @@ const FacesOfDaBand = ({ data }) => (
         name="Patrick Burkert"
         src={patrickFace}
       ></Face>
-      <Face description={data.aboutUs.theBandMembers.bruno.description} name="Bruno Santos" src={brunoFace}></Face>
+      <Face
+        description={data.aboutUs.theBandMembers.tommaso.description}
+        name="Tommaso Di Stefano"
+        src={tommasoFace}
+      ></Face>
     </FaceCells>
     <FaceCells>
       <Face description={data.aboutUs.theBandMembers.nidhi.description} name="Nidhi Shetty" src={nidhiFace}></Face>
@@ -183,7 +183,7 @@ const FacesOfDaBand = ({ data }) => (
         name="Ana Vitória De Magalhães"
         src={anaFace}
       ></Face>
-      <Face description="Apply now!" name="You?" src={emptyFace}></Face>
+      <Face description={data.aboutUs.theBandMembers.bruno.description} name="Bruno Santos" src={brunoFace}></Face>
     </FaceCells>
   </FacesContainer>
 )
@@ -197,21 +197,21 @@ const FacesOfDaMobile = ({ data }) => (
     ></Face>
     <Face description={data.aboutUs.theBandMembers.max.description} name="Max Chuchmai" src={maxFace}></Face>
     <Face description={data.aboutUs.theBandMembers.daniel.description} name="Daniel Welzel" src={danielFace}></Face>
+    <Face description={data.aboutUs.theBandMembers.diogo.description} name="Diogo Freitas" src={diogoFace}></Face>
+    <Face description={data.aboutUs.theBandMembers.diana.description} name="Diana Machado" src={dianaFace}></Face>
+    <Face description={data.aboutUs.theBandMembers.patrick.description} name="Patrick Burkert" src={patrickFace}></Face>
     <Face
       description={data.aboutUs.theBandMembers.tommaso.description}
       name="Tommaso Di Stefano"
       src={tommasoFace}
     ></Face>
-    <Face description={data.aboutUs.theBandMembers.diana.description} name="Diana Machado" src={dianaFace}></Face>
-    <Face description={data.aboutUs.theBandMembers.patrick.description} name="Patrick Burkert" src={patrickFace}></Face>
-    <Face description={data.aboutUs.theBandMembers.bruno.description} name="Bruno Santos" src={brunoFace}></Face>
     <Face description={data.aboutUs.theBandMembers.nidhi.description} name="Nidhi Shetty" src={nidhiFace}></Face>
     <Face
       description={data.aboutUs.theBandMembers.ana.description}
       name="Ana Vitória De Magalhães"
       src={anaFace}
     ></Face>
-    <Face description="Apply now!" name="You?" src={emptyFace}></Face>
+    <Face description={data.aboutUs.theBandMembers.bruno.description} name="Bruno Santos" src={brunoFace}></Face>
   </FacesContainerMobile>
 )
 
