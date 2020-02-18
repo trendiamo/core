@@ -7,7 +7,7 @@ import { BASE_API_URL } from 'utils/shared'
 import { Divider } from 'shared/form-elements'
 import { showUpToUsBranding } from 'utils'
 
-const oAuthUrl = `${BASE_API_URL}/users/auth/google_oauth2`
+const oAuthUrl = `${BASE_API_URL}/users/oauth/google`
 
 const GoogleLogo = styled.img`
   width: ${showUpToUsBranding() ? '24px' : '18px'};

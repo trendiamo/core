@@ -37,14 +37,18 @@
           <button class="btn-signup btn-lg btn-full-width btn-signup-for-free" >
             {{ 'layout.buttons.sign_up_for_free' | t }}
           </button>
-          <button class="btn-signup btn-lg btn-full-width btn-signup-with-facebook" >
-            <img src="{{ '../assets/icon-facebook-2.svg' | asset_url }}" alt="">
-            {{ 'layout.buttons.sign_up_with_facebook' | t }}
-          </button>
-          <button class="btn-signup btn-lg btn-full-width btn-signup-with-google" >
-            <img src="{{ '../assets/icon-google.svg' | asset_url }}" alt="">
-            {{ 'layout.buttons.sign_up_with_google' | t }}
-          </button>
+          <a href="https://api.uptous.co/shopify_store_api/v1/oauth/facebook" >
+            <button class="btn-signup btn-lg btn-full-width btn-signup-with-facebook" >
+              <img src="{{ '../assets/icon-facebook-2.svg' | asset_url }}" alt="">
+              {{ 'layout.buttons.sign_up_with_facebook' | t }}
+            </button>
+          </a>
+          <a href="https://api.uptous.co/shopify_store_api/v1/oauth/google" >
+            <button class="btn-signup btn-lg btn-full-width btn-signup-with-google" >
+              <img src="{{ '../assets/icon-google.svg' | asset_url }}" alt="">
+              {{ 'layout.buttons.sign_up_with_google' | t }}
+            </button>
+          </a>
         </div>
         <p class="text-xs text-center" >{{ 'layout.form.clicking_agreement_html' | t: link: pages['terms-and-conditions'].url }}</p>
       </div>

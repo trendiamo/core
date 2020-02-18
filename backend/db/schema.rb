@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191107135811) do
+ActiveRecord::Schema.define(version: 20200217115157) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -232,6 +232,16 @@ ActiveRecord::Schema.define(version: 20191107135811) do
     t.index ["account_id"], name: "index_sellers_on_account_id"
     t.index ["animated_img_id"], name: "index_sellers_on_animated_img_id"
     t.index ["img_id"], name: "index_sellers_on_img_id"
+  end
+
+  create_table "shopify_customers", force: :cascade do |t|
+    t.string "email", null: false
+    t.string "password", null: false
+    t.string "oauth_provider"
+    t.json "answers"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_shopify_customers_on_email", unique: true
   end
 
   create_table "showcases", force: :cascade do |t|
