@@ -61,9 +61,11 @@
             </span>
           {%- endif -%}
 
-          <p class="text-center">
-            <input type="submit" value="{{ 'customer.register.submit' | t }}" class="btn">
-          </p>
+          <div class="btn-container">
+            <button type="submit" class="btn btn-black btn-sm btn-full-width-mobile">
+              {{ 'customer.register.submit' | t }}
+            </button>
+          </div>
 
         {% endform %}
       </div>

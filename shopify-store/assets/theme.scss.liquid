@@ -2374,11 +2374,11 @@ textarea {
     margin-right: 5px;
   }
 
-  [type="submit"],
-  .btn {
-    display: inline-block;
-    width: auto;
-  }
+  // [type="submit"],
+  // .btn {
+  //   display: inline-block;
+  //   width: auto;
+  // }
 }
 
 
@@ -8086,6 +8086,43 @@ $transition-controls-video: color 0.2s $ease-transition, background-color 0.2s $
   }
 }
 
+.btn {
+  &.btn-lg {
+    text-transform: uppercase;
+    font-size: 20px;
+    padding: 16px 14px 12px;
+
+    @include media-query($small) {
+      font-size: 14px;
+      padding: 13px 12px 11px;
+      margin-top: 10px;
+    }
+  }
+
+  &.btn-sm {
+    font-weight: 900;
+    font-size: 16px;
+    padding: 12px 75px;
+    border-radius: 3px;
+
+    @include media-query($small) {
+      font-size: 16px;
+      padding: 12px;
+      margin-top: 10px;
+    }
+  }
+
+  &.btn-full-width {
+    width: 100%;
+  }
+
+  &.btn-full-width-mobile {
+    @include media-query($small) {
+      width: 100%;
+    }
+  }
+}
+
 .nl-input {
   display: block;
   border: 1px solid #c1c1c1;
@@ -8414,8 +8451,8 @@ $transition-controls-video: color 0.2s $ease-transition, background-color 0.2s $
       .the-band-image-container {
         width: 115px;
         height: 115px;
-        max-width: 115px;
-        max-height: 115px;
+        min-width: 115px;
+        min-height: 115px;
         border-radius: 100%;
         overflow: hidden;
 
@@ -8459,8 +8496,8 @@ $transition-controls-video: color 0.2s $ease-transition, background-color 0.2s $
     .the-band-image-container {
       width: 115px;
       height: 115px;
-      max-width: 115px;
-      max-height: 115px;
+      min-width: 115px;
+      min-height: 115px;
       border-radius: 100%;
       overflow: hidden;
 
@@ -8606,12 +8643,12 @@ $transition-controls-video: color 0.2s $ease-transition, background-color 0.2s $
     max-height: 0px;
     overflow: hidden;
     transition: height 1s ease 0s;
-    margin-top: 20px;
 
     .collapsible-content {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
+      margin-top: 20px;
 
       @include media-query($small) {
         align-items: initial;
@@ -8644,5 +8681,15 @@ $transition-controls-video: color 0.2s $ease-transition, background-color 0.2s $
         }
       }
     }
+  }
+}
+
+.btn-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @include media-query($small) {
+    width: 100%;
   }
 }

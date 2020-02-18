@@ -14,7 +14,7 @@
 
           {%- if form.errors -%}
             <div class="form-message form-message--error">
-              <h2 class="h3 form-message__title " tabindex="-1" data-form-status>{{ 'contact.form.error_heading' | t }}</h2>
+              <h3 class="h3 form-message__title " tabindex="-1" data-form-status>{{ 'contact.form.error_heading' | t }}</h3>
               {{ form.errors | default_errors }}
             </div>
           {%- endif -%}
@@ -52,8 +52,13 @@
               <p><a href="#recover" id="RecoverPassword">{{ 'customer.login.forgot_password' | t }}</a></p>
             {% endif %}
 
-            <input type="submit" class="btn" value="{{ 'customer.login.sign_in' | t }}">
-
+            <div class="btn-container">
+              <button type="submit" class="btn btn-black btn-sm btn-full-width-mobile">
+                {{ 'customer.login.sign_in' | t }}
+              </button>
+            </div>
+            <br />
+            <br />
             <p>
               {{ 'layout.customer.create_account' | t | customer_register_link }}
             </p>
@@ -65,8 +70,8 @@
       <div id="RecoverPasswordForm" class="hide">
 
         <div class="text-center">
-          <h2 id="RecoverHeading">{{ 'customer.recover_password.title' | t }}</h2>
-          <p>{{ 'customer.recover_password.subtext' | t }}</p>
+          <h3 id="RecoverHeading">{{ 'customer.recover_password.title' | t }}</h3>
+          <p>{{ 'customer.recover_password.subtext' | t }}<br/><br/></p>
         </div>
 
         <div class="form-vertical">
@@ -102,10 +107,13 @@
             {%- endif -%}
 
             <div class="text-center">
-              <p>
-                <input type="submit" class="btn" value="{{ 'customer.recover_password.submit' | t }}">
-              </p>
-
+              <div class="btn-container">
+                <button type="submit" class="btn btn-black btn-sm btn-full-width-mobile">
+                  {{ 'customer.recover_password.submit' | t }}
+                </button>
+              </div>
+              <br />
+              <br />
               <a href="#LoginHeading" id="HideRecoverPasswordLink">{{ 'customer.recover_password.cancel' | t }}</a>
             </div>
           {% endform %}
@@ -120,10 +128,14 @@
       {% if shop.checkout.guest_login %}
         <div class="text-center">
           <hr class="hr--invisible">
-          <h2>{{ 'customer.login.guest_title' | t }}</h2>
+          <h3>{{ 'customer.login.guest_title' | t }}</h3>
 
           {% form 'guest_login' %}
-            <input type="submit" class="btn" value="{{ 'customer.login.guest_continue' | t }}">
+            <div class="btn-container">
+              <button type="submit" class="btn btn-black btn-sm btn-full-width-mobile">
+                {{ 'customer.login.guest_continue' | t }}
+              </button>
+            </div>
           {% endform %}
         </div>
       {% endif %}
