@@ -50,6 +50,7 @@ module ShopifyStoreApi
           second_name: auth.info.family_name,
           password: source_password,
           password_confirmation: source_password,
+          verified_email: true,
         }
       end
 
