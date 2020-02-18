@@ -33,10 +33,11 @@
           <div class="hero-description2" >
             <p>{{ 'homepage.hero.subheading2_html' | t }}</p>
           </div>
-          <input class="nl-input nl-input-full-width" type="email" value="" placeholder="{{ 'layout.form.your_email_address' | t }}" />
-          <button class="btn-signup btn-lg btn-full-width btn-signup-for-free" >
-            {{ 'layout.buttons.sign_up_for_free' | t }}
-          </button>
+          <a href="https://uptous-store.myshopify.com/account/register" >
+            <button class="btn-signup btn-lg btn-full-width btn-signup-for-free" >
+              {{ 'layout.buttons.sign_up_with_email' | t }}
+            </button>
+          </a>
           <a href="https://api.uptous.co/shopify_store_api/v1/oauth/facebook" >
             <button class="btn-signup btn-lg btn-full-width btn-signup-with-facebook" >
               <img src="{{ '../assets/icon-facebook-2.svg' | asset_url }}" alt="">
