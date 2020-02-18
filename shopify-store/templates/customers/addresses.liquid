@@ -71,7 +71,7 @@
           {{ form.set_as_default_checkbox }}
           <label for="address_default_address_new">{{ 'customer.addresses.set_default' | t }}</label>
 
-          <div><input type="submit" class="btn" value="{{ 'customer.addresses.add' | t }}"></div>
+          <div><input type="submit" class="btn btn-sm btn-black" value="{{ 'customer.addresses.add' | t }}"></div>
           <div><button type="button" class="text-link address-new-toggle">{{ 'customer.addresses.cancel' | t }}</button></div>
 
         {% endform %}
@@ -176,7 +176,7 @@
                   {{ form.set_as_default_checkbox }}
                   <label for="address_default_address_{{ form.id }}">{{ 'customer.addresses.set_default' | t }}</label>
 
-                  <div><input type="submit" class="btn" value="{{ 'customer.addresses.update' | t }}"></div>
+                  <div><input type="submit" class="btn btn-sm btn-black" value="{{ 'customer.addresses.update' | t }}"></div>
                   <div><button type="button" class="text-link address-edit-toggle" data-form-id="{{ form.id }}">{{ 'customer.addresses.cancel' | t }}</button></div>
                 </div>
 
