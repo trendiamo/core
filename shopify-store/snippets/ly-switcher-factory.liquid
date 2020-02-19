@@ -1,12 +1,13 @@
 {% assign languages = shop.enabled_locales %}
-{% assign baseSettings = shop.metafields.global.ly_switcher_data_203157 %}
+{% assign baseSettings = shop.metafields.global.ly_switcher_data_203157 %} 
 {% assign languageDetection = baseSettings.languageDetection %}
 {% assign customCSS = baseSettings.customCSS %}
 {% for breakpoint in shop.metafields.global.ly_switcher_data_203157.breakpoints %}
   {% capture switcher %}
     {% assign switcherData = shop.metafields.global.ly_switcher_data_203157.breakpoints[forloop.index0].config %}
-    {% assign type = switcherData.type %}
+    {% assign type = switcherData.type %} 
     {% assign show_name = switcherData.show_name %}
+    {% assign show_custom_name = switcherData.show_custom_name %}
     {% assign show_iso_code = switcherData.show_iso_code %}
     {% assign show_flags = switcherData.show_flags%}
     {% assign round_flags = switcherData.round_flags%}
@@ -20,7 +21,7 @@
       {% when 'custom' %}
         {% if corner == 'bottom_left' or corner == 'bottom_right' or corner == 'bottom' %}
           {% assign is_dropup = true %}
-        {% else %}
+        {% else %}        
           {% assign is_dropup = false %}
         {% endif %}
         <div data-dropup="{{ is_dropup }}" data-breakpoint="{{ breakpoint.key }}" onclick="langify.switcher.toggleSwitcherOpen(this)" class="ly-languages-switcher ly-custom-dropdown-switcher{% unless is_dark %} ly-bright-theme{% endunless %}{% if is_dropup %} ly-is-dropup{% endif %}{% if is_transparent %} ly-is-transparent{% endif %} {{ position }} {% if position != 'custom' %}{{ corner }}{% else %}ly-custom{% endif %} ly-breakpoint-{{ forloop.index }} ly-hide" {% if position != 'custom' %}style="margin: {{ v_space }}px {{ h_space }}px"{% endif %}>
@@ -28,6 +29,7 @@
             {% if show_flags %}<i class="ly-icon ly-flag-icon ly-flag-icon-{{ request.locale.iso_code }}"></i>{% endif %}
             <span class="ly-custom-dropdown-current-inner ly-custom-dropdown-current-inner-text">
               {% if show_name %}{{ request.locale.name }}{% endif %}
+              {% if show_custom_name %}{% assign lang_key = 'ly-' | append: request.locale.iso_code %}{{ shop.metafields.v2_lang_name_map[lang_key] }}{% endif %}
               {% if show_iso_code %}{{ request.locale.iso_code | upcase }}{% endif %}
             </span>
             <span class="ly-custom-dropdown-current-inner {% if is_dropup %}ly-arrow-up{% else %}ly-arrow-down{% endif %} {% if is_dark %}ly-arrow-white{% else %}ly-arrow-black{% endif %}"></span>
@@ -41,6 +43,7 @@
                     {% if show_flags %}<i class="ly-icon ly-flag-icon ly-flag-icon-{{ language.iso_code }}"></i>{% endif %}
                     <span class="ly-custom-dropdown-list-element-right">
                       {% if show_name %}{{language.name}}{% endif %}
+                      {% if show_custom_name %}{% assign lang_key = 'ly-' | append: language.iso_code %}{{ shop.metafields.v2_lang_name_map[lang_key] }}{% endif %}
                       {% if show_iso_code %}{{ language.iso_code | upcase }}{% endif %}
                     </span>
                   </a>
@@ -55,6 +58,7 @@
             {% assign current_root_url = request.locale.root_url | append: '/' %}{% assign path = request.path | replace_first: current_root_url, '/' %}{% if path == request.locale.root_url %}{% assign path = '' %}{% endif %}{% assign url = language.root_url | append: path | replace: '//', '/' | replace: '///', '/' %}
             <option key="{{language.iso_code}}" {% if request.locale.iso_code == language.iso_code %}selected="selected"{% endif %} class="{% if request.locale.iso_code == language.iso_code %}current_lang{% endif %}" value="{{language.iso_code}}" data-url="{{url}}">
               {% if show_name %}{{ language.name }}{% endif %}
+              {% if show_custom_name %}{% assign lang_key = 'ly-' | append: language.iso_code %}{{ shop.metafields.v2_lang_name_map[lang_key] }}{% endif %}
               {% if show_iso_code %}{{ language.iso_code | upcase }}{% endif %}
             </option>
           {% endfor %}
@@ -67,6 +71,7 @@
               <a href="{% if request.locale.iso_code == language.iso_code %}#{% else %}{{url}}{% endif %}" data-ly-code="{{language.iso_code}}" data-ly-locked="true" class="ly-languages-switcher-link{% if request.locale.iso_code == language.iso_code %} current_lang{% endif %}">
                 {% if show_flags %}<i class="ly-icon ly-flag-icon ly-flag-icon-{{ language.iso_code }}"></i>{% endif %}
                 {% if show_name %}{{ language.name }}{% endif %}
+                {% if show_custom_name %}{% assign lang_key = 'ly-' | append: language.iso_code %}{{ shop.metafields.v2_lang_name_map[lang_key] }}{% endif %}
                 {% if show_iso_code %}{{ language.iso_code | upcase }}{% endif %}
               </a>
             </li>
@@ -80,6 +85,7 @@
               <a href="{% if request.locale.iso_code == language.iso_code %}#{% else %}{{url}}{% endif %}" data-ly-code="{{language.iso_code}}"  data-ly-locked="true" class="ly-languages-switcher-link{% if request.locale.iso_code == language.iso_code %} current_lang{% endif %}">
                 {% if show_flags %}<i class="ly-icon ly-flag-icon ly-flag-icon-{{ language.iso_code }}"></i>{% endif %}
                 {% if show_name %}{{ language.name }}{% endif %}
+                {% if show_custom_name %}{% assign lang_key = 'ly-' | append: language.iso_code %}{{ shop.metafields.v2_lang_name_map[lang_key] }}{% endif %}
                 {% if show_iso_code %}{{ language.iso_code | upcase }}{% endif %}
               </a>
             {% endfor %}
@@ -90,7 +96,7 @@
 
   {{ switcher }}
 {% endfor %}
-
+           
 
 <style>
   {%- for breakpoint in shop.metafields.global.ly_switcher_data_203157.breakpoints -%}
@@ -128,15 +134,15 @@
   .ly-languages-switcher {
     white-space: nowrap;
   }
-  .ly-languages-switcher.fixed {
+  .ly-languages-switcher.fixed { 
     position: fixed;
     z-index: 1000;
   }
-  .ly-languages-switcher.absolute {
+  .ly-languages-switcher.absolute { 
     position: absolute;
     z-index: 1000;
   }
-  .ly-languages-switcher.fixed.top_left,
+  .ly-languages-switcher.fixed.top_left, 
   .ly-languages-switcher.absolute.top_left {
     top: 0;
     left: 0;
@@ -172,7 +178,7 @@
   .ly-icon {
     margin-right: 5px;
   }
-
+  
   .ly-arrow-white  {
     background:url(data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCAxMjkgMTI5IiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCAxMjkgMTI5IiB3aWR0aD0iMTZweCIgaGVpZ2h0PSIxNnB4Ij4KICA8Zz4KICAgIDxwYXRoIGQ9Im0xMjEuMywzNC42Yy0xLjYtMS42LTQuMi0xLjYtNS44LDBsLTUxLDUxLjEtNTEuMS01MS4xYy0xLjYtMS42LTQuMi0xLjYtNS44LDAtMS42LDEuNi0xLjYsNC4yIDAsNS44bDUzLjksNTMuOWMwLjgsMC44IDEuOCwxLjIgMi45LDEuMiAxLDAgMi4xLTAuNCAyLjktMS4ybDUzLjktNTMuOWMxLjctMS42IDEuNy00LjIgMC4xLTUuOHoiIGZpbGw9IiNGRkZGRkYiLz4KICA8L2c+Cjwvc3ZnPgo=) no-repeat top left;
     display: inline-block;
@@ -286,7 +292,7 @@
   .ly-arrow-up {
     transform: rotateZ(180deg);
   }
-
+  
   .ly-is-open .ly-custom-dropdown-list {
     display: inline-block !important;
   }
@@ -298,7 +304,7 @@
   .ly-is-open .ly-arrow-black.ly-arrow-up {
     transform: rotate(360deg);
   }
-
+  
   .ly-is-dropup .ly-custom-dropdown-list {
     bottom: 100%;
   }
@@ -358,4 +364,4 @@
 </script>
 {% endif %}
 
-<!--[[{"type":"custom","show_name":true,"show_iso_code":false,"show_flags":true,"round_flags":false,"is_transparent":false,"is_dark":false,"position":"fixed","corner":"bottom_right","h_space":0,"v_space":0,"customCSS":"","languageDetection":false,"breakpoints":[{"key":1200,"label":"1200px","active":true,"config":{"type":"custom","corner":"bottom_right","position":"fixed","show_flags":true,"show_name":true,"show_iso_code":false,"round_flags":false,"is_dark":false,"is_transparent":false,"dropdown_open":false,"h_space":0,"v_space":0}},{"key":0,"label":"0px","active":false,"config":{"type":"custom","corner":"bottom_right","position":"fixed","show_flags":true,"show_name":true,"show_iso_code":false,"round_flags":false,"is_dark":false,"is_transparent":false,"dropdown_open":false,"h_space":0,"v_space":0}}]}]]-->
+<!--[[{"customCSS":"","languageDetection":false,"breakpoints":[{"key":1200,"label":"1200px","active":true,"config":{"type":"custom","corner":"top_right","position":"absolute","show_flags":false,"show_name":false,"show_iso_code":true,"round_flags":false,"is_dark":false,"is_transparent":false,"dropdown_open":false,"h_space":0,"v_space":0,"show_label":true,"show_custom_name":false,"switcherLabel":"show_iso_code"}},{"key":0,"label":"0px","active":false,"config":{"type":"custom","corner":"bottom_right","position":"fixed","show_flags":true,"show_name":true,"show_iso_code":false,"round_flags":false,"is_dark":false,"is_transparent":false,"dropdown_open":false,"h_space":0,"v_space":0,"show_label":true,"show_custom_name":false,"switcherLabel":"show_name"}}]}]]-->

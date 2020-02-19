@@ -32,7 +32,7 @@
     "social_snapchat_link": "",
     "social_youtube_link": "",
     "social_vimeo_link": "",
-    "favicon": "",
+    "favicon": "shopify:\/\/shop_images\/favicon.png",
     "enable_ajax": true,
     "checkout_header_image": "",
     "checkout_logo_image": "",
@@ -163,18 +163,101 @@
       },
       "the-band": {
         "type": "the-band",
-        "settings": {
-          "wolf_face": "shopify:\/\/shop_images\/wolfgang.jpg",
-          "max_face": "shopify:\/\/shop_images\/max.jpg",
-          "tommaso_face": "shopify:\/\/shop_images\/tommaso.jpg",
-          "diana_face": "shopify:\/\/shop_images\/diana.jpg",
-          "daniel_face": "shopify:\/\/shop_images\/danielw.jpg",
-          "bruno_face": "shopify:\/\/shop_images\/bruno.jpg",
-          "patrick_face": "shopify:\/\/shop_images\/patrick.jpg",
-          "title": "Image with text overlay",
-          "text": "<p>Use overlay text to give your customers insight into your brand. Select imagery and text that relates to your style and story.<\/p>",
-          "text2": "<p>Use overlay text to give your customers insight into your brand. Select imagery and text that relates to your style and story.<\/p>"
-        }
+        "blocks": {
+          "1581602700005": {
+            "type": "band_member",
+            "settings": {
+              "photo": "shopify:\/\/shop_images\/wolfgang.jpg",
+              "name": "Wolfgang Schmidt-Ulm dos Santos",
+              "role": "Co-Founder & CEO"
+            }
+          },
+          "1581602763807": {
+            "type": "band_member",
+            "settings": {
+              "photo": "shopify:\/\/shop_images\/max.jpg",
+              "name": "Max Chuchmai",
+              "role": "Tech"
+            }
+          },
+          "1581602726224": {
+            "type": "band_member",
+            "settings": {
+              "photo": "shopify:\/\/shop_images\/danielw.jpg",
+              "name": "Daniel",
+              "role": "Co-Founder & Product"
+            }
+          },
+          "1581950292506": {
+            "type": "band_member",
+            "settings": {
+              "photo": "shopify:\/\/shop_images\/diogo.jpg",
+              "name": "Diogo Freitas",
+              "role": "COO"
+            }
+          },
+          "1581602753184": {
+            "type": "band_member",
+            "settings": {
+              "photo": "shopify:\/\/shop_images\/diana.jpg",
+              "name": "Diana",
+              "role": "Influencer & Brand Mgmt."
+            }
+          },
+          "1581602739617": {
+            "type": "band_member",
+            "settings": {
+              "photo": "shopify:\/\/shop_images\/patrick.jpg",
+              "name": "Patrick",
+              "role": "Marketing"
+            }
+          },
+          "1581602713090": {
+            "type": "band_member",
+            "settings": {
+              "photo": "shopify:\/\/shop_images\/tommaso.jpg",
+              "name": "Tommaso",
+              "role": "Growth & Marketing"
+            }
+          },
+          "1581610221374": {
+            "type": "band_member",
+            "settings": {
+              "photo": "shopify:\/\/shop_images\/nidhi.jpg",
+              "name": "Nidhi Shetty",
+              "role": "Social Media Manager"
+            }
+          },
+          "1581610252557": {
+            "type": "band_member",
+            "settings": {
+              "photo": "shopify:\/\/shop_images\/ana.jpg",
+              "name": "Ana Vitória De Magalhães",
+              "role": "Content Editor"
+            }
+          },
+          "1581602779090": {
+            "type": "band_member",
+            "settings": {
+              "photo": "shopify:\/\/shop_images\/bruno.jpg",
+              "name": "Bruno",
+              "role": "Operations"
+            }
+          }
+        },
+        "block_order": [
+          "1581602700005",
+          "1581602763807",
+          "1581602726224",
+          "1581950292506",
+          "1581602753184",
+          "1581602739617",
+          "1581602713090",
+          "1581610221374",
+          "1581610252557",
+          "1581602779090"
+        ],
+        "settings": {}
       },
       "hero-jobs": {
         "type": "hero-jobs",
@@ -216,23 +299,39 @@
               "types": "Full-time, Part-time",
               "description": "<p>We are an international fashion platform startup building up a direct-to-consumer way of e-commerce, focussed on creating sustainability through 10x efficiency (direct-to-consumer, sourcing\/production on-demand). As a company and team, we are on a mission to educate ourselves as well as the consumers to learn about how we can live and consume with reduced impact on our environment.<br><br>As Content Creator \/ Editor, you are responsible to create videos and texts about how fashion can be created and distributed in a more sustainable way.<br><br>Your main job is to generate information through market research, interviews with specialists in their field as well as brands about what the main challenges are (in production, fabric sourcing, distribution, etc.) - and put this information together in informative and enticing newsletters, written articles as well as videos.<br><br>You are an entrepreneur in the company, sharing and living our big vision that we can create major positive impact &lsquo;cleaning up&rsquo; one of the largest and most polluting industries on the planet. You are clear that the path is the goal - and that it&rsquo;s about entering and being active in unknown territory with maximum creativity and ownership. We expect you to think and act outside the box and get the job done, no matter what.<br><br>Your main goal is to create a community around the topic and our company with the KPI: engagement rate.<br><br>What we offer to you is an opportunity for maximum professional and personal growth. Through our open, entrepreneurial and free work environment, our mission is to empower you to become the best version of yourself and create positive impact with us together.<br><br>We invite you to become part of our free-spirited team and create a story of success you can be truly proud of in every way!<\/p>"
             }
-          },
-          "1581592804158": {
-            "type": "job",
-            "settings": {
-              "heading": "COO \/ Head of Operations",
-              "types": "Full-time",
-              "description": "<p>We are an international fashion platform startup creating a direct-to-consumer way of e-commerce focussed to create sustainability through efficiency (direct-to-consumer, sourcing\/production on-demand).<br><br>As the COO \/ Head of Operations, you are responsible to lead the daily to do&rsquo;s of our business team (Sales, Marketing, Product and Operations). Based on our strategy and business plan, you execute and do whatever is necessary to achieve our weekly, monthly and annual goals.<br><br>You lead an international growing team of currently 4 people through your strong leadership skills (daily standups, goal settings, feedback talks, etc.). You know what excellent execution means and are fully aware of how essential your high energy and can-do, hands-on mentality is for the success of the team and thus the company - and you own your work like an entrepreneur.<br><br>You are obsessed about transparency, processes, structure and numbers. Your main success KPI is: revenue and growth speed according to our business plan. What you cannot measure does not exist for you.<br><br>You have a proven track-record of having led teams successfully and highly dynamic environments. Your English skills are excellent and your attitude is &lsquo;execution wins over strategy and talking&rsquo;.<br><br>What we offer to you is an opportunity for maximum professional and personal growth. Through our open, entrepreneurial and free work environment, our mission is to empower you to become the best version of yourself. Thus, we invite you to become part of our free-spirited team and create a story of success you can be truly proud of in every way.<\/p>"
-            }
           }
         },
         "block_order": [
           "1581592710536",
           "1581592769930",
-          "1581592786326",
-          "1581592804158"
+          "1581592786326"
         ],
+        "settings": {}
+      },
+      "about-us-values": {
+        "type": "about-us-values",
         "settings": {
+          "image": "",
+          "layout": "left",
+          "title": "Image with text",
+          "text": "<p>Pair large text with an image to give focus to your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
+          "button_label": "",
+          "button_link": ""
+        }
+      },
+      "about-us-bottom": {
+        "type": "about-us-bottom",
+        "settings": {}
+      },
+      "join-community": {
+        "type": "join-community",
+        "settings": {
+          "image": "",
+          "layout": "left",
+          "title": "Image with text",
+          "text": "<p>Pair large text with an image to give focus to your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
+          "button_label": "",
+          "button_link": ""
         }
       }
     },
@@ -270,34 +369,29 @@
       "sections": {
         "header": {
           "type": "header",
-          "settings": {
-          }
+          "settings": {}
         },
         "hero": {
           "type": "hero",
-          "settings": {
-          }
+          "settings": {}
         },
         "slideshow": {
           "type": "slideshow",
           "blocks": {
             "slideshow-0": {
               "type": "image",
-              "settings": {
-              }
+              "settings": {}
             },
             "slideshow-1": {
               "type": "image",
-              "settings": {
-              }
+              "settings": {}
             }
           },
           "block_order": [
             "slideshow-0",
             "slideshow-1"
           ],
-          "settings": {
-          }
+          "settings": {}
         },
         "featured-collections": {
           "type": "collection",
@@ -307,26 +401,22 @@
         },
         "feature-row": {
           "type": "feature-row",
-          "settings": {
-          }
+          "settings": {}
         },
         "footer": {
           "type": "footer",
           "blocks": {
             "link_list": {
               "type": "link_list",
-              "settings": {
-              }
+              "settings": {}
             },
             "text": {
               "type": "text",
-              "settings": {
-              }
+              "settings": {}
             },
             "newsletter": {
               "type": "newsletter",
-              "settings": {
-              }
+              "settings": {}
             }
           },
           "block_order": [
@@ -334,8 +424,7 @@
             "text",
             "newsletter"
           ],
-          "settings": {
-          }
+          "settings": {}
         }
       },
       "content_for_index": [
@@ -407,8 +496,7 @@
         },
         "hero": {
           "type": "hero",
-          "settings": {
-          }
+          "settings": {}
         },
         "slideshow": {
           "type": "slideshow",
@@ -473,23 +561,20 @@
         },
         "1492033809691": {
           "type": "map",
-          "settings": {
-          }
+          "settings": {}
         },
         "1492033877875": {
           "type": "quotes",
           "blocks": {
             "1492033877875-0": {
               "type": "quote",
-              "settings": {
-              }
+              "settings": {}
             }
           },
           "block_order": [
             "1492033877875-0"
           ],
-          "settings": {
-          }
+          "settings": {}
         },
         "1492033924902": {
           "type": "custom-content",
@@ -515,18 +600,15 @@
           "blocks": {
             "1492096252560-0": {
               "type": "featured_collection",
-              "settings": {
-              }
+              "settings": {}
             },
             "1492096252560-1": {
               "type": "featured_collection",
-              "settings": {
-              }
+              "settings": {}
             },
             "1492096252560-2": {
               "type": "featured_collection",
-              "settings": {
-              }
+              "settings": {}
             }
           },
           "block_order": [
@@ -565,18 +647,15 @@
           "blocks": {
             "link_list": {
               "type": "link_list",
-              "settings": {
-              }
+              "settings": {}
             },
             "text": {
               "type": "text",
-              "settings": {
-              }
+              "settings": {}
             },
             "newsletter": {
               "type": "newsletter",
-              "settings": {
-              }
+              "settings": {}
             }
           },
           "block_order": [
@@ -584,8 +663,7 @@
             "text",
             "newsletter"
           ],
-          "settings": {
-          }
+          "settings": {}
         }
       },
       "content_for_index": [

@@ -1,7 +1,6 @@
 {% comment %}ly_liquid_scripts_begin{% endcomment %}{% capture ly_liquid_content %}{% comment %}ly_liquid_scripts_end{% endcomment %}<!doctype html>
 <html class="no-js" lang="{{ shop.locale }}">
 <head>
-{% include 'easylockdown_head' %}
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -130,7 +129,7 @@
   <div class="page-container" id="PageContainer">
 
     <main class="main-content js-focus-hidden" id="MainContent" role="main" tabindex="-1">
-      {% comment %}{{ content_for_layout }}{% endcomment %}{% include 'easylockdown_body' %}
+      {{ content_for_layout }}
     </main>
 
     {% section 'footer' %}

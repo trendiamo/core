@@ -8,7 +8,7 @@
           </div>
         {%- endif -%}
         <ul class="grid grid--uniform grid--view-items">
-          {%- for product in recommendations.products -%}
+          {%- for product in recommendations.products -%}{% include 'easylockdown_filter_collection' with product %}
             <li class="grid__item small--one-half medium-up--one-quarter">
               {% include 'product-card-grid', max_height: 250, product: product, show_vendor: section.settings.show_vendor %}
             </li>
