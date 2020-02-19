@@ -90,15 +90,19 @@
 
             <ul class="list--inline article__meta-buttons">
               <li>
-                <a href="{{ article.url }}" class="btn btn--tertiary btn--small" aria-label="{{ 'blogs.article.read_more_title' | t: title: article.title }}">
-                  {{ 'blogs.article.read_more' | t }}
+                <a href="{{ article.url }}" aria-label="{{ 'blogs.article.read_more_title' | t: title: article.title }}">
+                  <button class="btn btn--tertiary btn-black btn-sm" type="button" >
+                    {{ 'blogs.article.read_more' | t }}
+                  </button>
                 </a>
               </li>
 
               {% if blog.comments_enabled? and article.comments_count > 0 %}
                 <li>
-                  <a href="{{ article.url }}#comments" class="article__comment-count btn btn--tertiary btn--small">
-                    {{ 'blogs.comments.comments_with_count' | t: count: article.comments_count }}
+                  <a href="{{ article.url }}#comments" class="article__comment-count">
+                    <button class="btn btn--tertiary btn-black btn-sm" type="button" >
+                      {{ 'blogs.comments.comments_with_count' | t: count: article.comments_count }}
+                    </button>
                   </a>
                 </li>
               {% endif %}
@@ -175,8 +179,10 @@
 
                 <ul class="list--inline article__meta-buttons">
                   <li>
-                    <a href="{{ article.url }}" class="btn btn--tertiary btn--small" aria-label="{{ 'blogs.article.read_more_title' | t: title: article.title }}">
-                      {{ 'blogs.article.read_more' | t }}
+                    <a href="{{ article.url }}" aria-label="{{ 'blogs.article.read_more_title' | t: title: article.title }}">
+                      <button class="btn btn--tertiary btn-black btn-sm" type="button" >
+                        {{ 'blogs.article.read_more' | t }}
+                      </button>
                     </a>
                   </li>
 

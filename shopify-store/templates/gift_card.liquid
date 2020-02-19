@@ -58,12 +58,13 @@
     <ul class="giftcard-action-list text-center">
       <li class="giftcard-action-list__item">
         <a href="{{ shop.url }}"
-          class="btn btn-sm btn-black"
           target="_blank"
           rel="noopener"
           aria-describedby="a11y-new-window-message">
+          <button type="button" class="btn btn-sm btn-black" >
             {{ 'gift_cards.issued.shop_link' | t }}
             {% include 'icon-arrow-right' %}
+          </button>
         </a>
       </li>
       <li>
