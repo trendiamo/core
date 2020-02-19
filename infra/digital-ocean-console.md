@@ -23,6 +23,7 @@ cat <pub-key-file> | ssh root@46.101.129.17 "sudo sshcommand acl-add dokku <key-
 dokku plugin:install https://github.com/dokku/dokku-postgres.git
 dokku plugin:install https://github.com/dokku/dokku-redis.git redis
 dokku plugin:install https://github.com/iloveitaly/dokku-rollbar.git
+dokku plugin:install https://github.com/dokku/dokku-letsencrypt.git
 
 # Install certbot:
 
@@ -103,6 +104,14 @@ cp /etc/letsencrypt/live/api.frekkls.com/privkey.pem /home/dokku/console-backend
 cp /etc/letsencrypt/live/api.frekkls.com/fullchain.pem /home/dokku/shopify-app/tls/server.crt
 cp /etc/letsencrypt/live/api.frekkls.com/privkey.pem /home/dokku/shopify-app/tls/server.key
 service nginx restart
+
+# To setup auto-renewals
+dokku letsencrypt console-backend
+# Check if the certificate was applied
+dokku letsencrypt:ls
+# Add cron job for the renewals
+dokku letsencrypt:cron-job --add
+# If necessary, do it with other apps
 
 # Backups
 
