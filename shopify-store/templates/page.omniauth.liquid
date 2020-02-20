@@ -20,7 +20,17 @@
     document.getElementsByName('customer[password]')[0].value = password;
     document.getElementById('oauth-form').submit();
   }
+
+  var useCorrectLocaleForOauth = function() {
+    var currentOauthLocale = window.localStorage.getItem('oauth-locale');
+    if (currentOauthLocale && currentOauthLocale !== 'en') {
+      var correctAction = 'https://uptous-store.myshopify.com' + (currentOauthLocale ? ('/' + currentOauthLocale) : '') + '/account/login';
+      document.getElementById('oauth-form').setAttribute('action', correctAction);
+    }
+  }
+
   document.addEventListener('DOMContentLoaded', function(){
+    useCorrectLocaleForOauth();
     oAuthLogin();
   });
 </script>

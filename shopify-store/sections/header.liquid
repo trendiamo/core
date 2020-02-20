@@ -166,6 +166,19 @@
   {% endif %}
 </div>
 
+<script>
+  var setOauthLocale = function() {
+    if (window.location.pathname !== '/pages/oauth'){
+      window.localStorage.setItem('oauth-locale', "{{ shop.locale }}");
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    setOauthLocale();
+  });
+
+</script>
+
 
 
 <script type="application/ld+json">

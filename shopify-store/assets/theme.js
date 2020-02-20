@@ -5160,6 +5160,20 @@ var openCollapsibleIfInHash = function() {
   }
 }
 
+var openUptousVideo = function(collectionId) {
+  var el = $('#uptous-outfit-' + collectionId);
+  var videoContainer = el.find('.outfit-video-container').first();
+  var videoUrl = videoContainer.attr('data-uptous-video-url');
+  if (videoUrl){
+    var videoId = videoUrl.replace('https://youtu.be/', '');
+    videoContainer.addClass('clicked');
+    window.setTimeout(function() {
+      var iframe = '<iframe width="940" height="529" src="https://www.youtube.com/embed/' + videoId + '?autoplay=1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+      videoContainer.find('.outfit-video-placeholder').first().replaceWith(iframe);
+    }, 400);
+  }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
   var openingCounter = document.getElementById('opening-counter');
   if (openingCounter){

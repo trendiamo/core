@@ -1455,6 +1455,18 @@ h6 {
   @extend h6;
 }
 
+.bold-900 {
+  font-weight: 900;
+}
+
+.bold-700 {
+  font-weight: 900;
+}
+
+.size-18 {
+  font-size: 18px;
+}
+
 /*================ RTE headings ================*/
 .rte {
   color: $color-body-text;
@@ -8955,4 +8967,197 @@ body.ly-force-off .ly-languages-switcher {
 // -------------------------------------------------------------
 .shopify-challenge__button {
   background: #111;
+}
+
+
+// ------------------------------------------------------------- PLP
+
+.uptous-main-container {
+  display: flex;
+}
+
+.uptous-sidebar-container {
+  width: 220px;
+
+  .uptous-sidebar-block {
+
+    & + .uptous-sidebar-block {
+      margin-top: 32px;
+    }
+
+    .uptous-sidebar-block-header {
+      font-size: 18px;
+      font-weight: 900;
+      line-height: 1.39;
+      margin-bottom: 16px;
+    }
+    .uptous-sidebar-block a {
+      position: relative;
+      display: block;
+      font-size: 18px;
+      color: #111;
+      padding: 4px 0;
+
+      &::before {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 84px;
+        height: 2px;
+        background: #111;
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.4s;
+      }
+
+      &:hover {
+        &::before {
+          transform: scaleX(1);
+        }
+      }
+
+      &.active {
+        &::before {
+
+        }
+      }
+    }
+  }
+}
+
+.uptous-main-content {
+  display: flex;
+  width: 940px;
+}
+
+.outfit-container {
+
+  .outfit-video-container {
+    position: relative;
+    font-size: 0;
+    background: #000;
+  }
+
+  .outfit-video-placeholder {
+    position: relative;
+    font-size: 0;
+    transition: opacity 0.4s;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      transition: all 0.3s;
+    }
+  }
+
+  .outfit-video-overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0,0,0,0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    cursor: pointer;
+
+    .outfit-video-overlay-content {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+
+      transition: all 0.3s cubic-bezier(0.54, -0.5, 0.53, 1.01);
+
+      .outfit-video-icon {
+        font-size: 0;
+        margin: 0;
+        width: 0px;
+        height: 0px;
+        border-top: 35px solid transparent;
+        border-bottom: 35px solid transparent;
+        border-left: 60px solid white;
+        margin-top: 10px;
+      }
+
+      .outfit-video-note {
+        color: #fff;
+        font-size: 22px;
+        margin-top: 10px;
+      }
+    }
+  }
+
+  .outfit-video-container.clicked {
+    .outfit-video-overlay {
+      .outfit-video-overlay-content{
+        opacity: 0;
+        transform: scale(0);
+      }
+    }
+    .outfit-video-placeholder {
+      opacity: 0;
+      img {
+        transform: scale(1.1);
+      }
+    }
+  }
+
+  .outfit-bottom-container {
+    display: flex;
+    margin-top: 30px;
+
+    .outfit-image-container {
+      width: 50%;
+    }
+
+    .outfit-products-container {
+      padding-left: 30px;
+      overflow: hidden;
+      width: 50%;
+
+      .outfit-products {
+        display: flex;
+        flex-wrap: wrap;
+        margin: -10px;
+      }
+
+      .outfit-product {
+        width: 50%;
+        padding: 10px;
+
+        a{
+          display: flex;
+          flex-direction: column;
+        }
+
+        .outfit-product-vendor {
+          font-size: 18px;
+          font-weight: 900;
+          margin: 0;
+        }
+
+        .outfit-product-name {
+          font-size: 18px;
+        }
+
+        .outfit-product-image-container {
+          width: 100%;
+          font-size: 0;
+          margin-bottom: 10px;
+
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
+        }
+      }
+    }
+  }
+
 }

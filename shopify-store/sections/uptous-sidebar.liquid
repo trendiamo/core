@@ -1,0 +1,59 @@
+<div class="uptous-sidebar-container">
+
+  <div class="uptous-sidebar-block">
+    <p class="uptous-sidebar-block-header" >Highlights</p>
+    <ul class="uptous-sidebar-block">
+      <li>
+        <a href="#">Female outfits</a>
+      </li>
+      <li>
+        <a href="#">Male outfits</a>
+      </li>
+    </ul>
+  </div>
+
+  {% for block in section.blocks %}
+    {%- assign collection = collections[block.settings.collection] -%}
+    <div class="uptous-sidebar-block">
+      <p class="uptous-sidebar-block-header" >{{ collection.title }}</p>
+      <ul class="uptous-sidebar-block" >
+        <li>
+          <a href="{{ collection.url }}" title="All Products" >All Products</a>
+        </li>
+        {% for product_vendor in collection.all_vendors %}
+          <li>
+            {{ product_vendor | link_to_vendor }}
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endfor %}
+</div>
+
+{% schema %}
+  {
+    "name": "Collection list",
+    "max_blocks": 100,
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Collection list"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "collection",
+        "name": "Collection",
+        "settings": [
+          {
+            "label": "Collection",
+            "id": "collection",
+            "type": "collection"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
