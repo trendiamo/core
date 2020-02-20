@@ -17,6 +17,13 @@
 {% assign easylockdownOldestPlacedOrder = customer.orders.last.created_at | date:'%s' %}
 {% assign easylockdownDateDifference = easylockdownNow | minus: easylockdownPlacedOrder %}
 
+{% assign easylockdownLocaleRootUrl = '' %}
+{% for locale in shop.published_locales %}
+  {% if shop.locale == locale.iso_code %}
+    {% unless locale.primary %}{% assign easylockdownLocaleRootUrl = locale.root_url %}{% endunless %}{% break %}
+  {% endif %}
+{% endfor %}
+
 <script type='text/javascript'>var easylockdownLocationDisabled = true;</script>
 <script type='text/javascript' src='//{{ shop.domain }}/apps/easylockdown/easylockdown-1.0.4.min.js' data-no-instant></script>
 <script type='text/javascript'>if( typeof InstantClick == 'object' ) easylockdown.clearData();</script>
@@ -60,59 +67,9 @@
 {% if easylockdownON or easylockdownPasswordProtectedContent %}<meta name="robots" content="noindex,nofollow">{% endif %}
 
 <script type='text/javascript'>
-  var shopLocale = "{{ shop.locale }}" !== 'en' ? "/{{ shop.locale }}" : '';
-
-  var customRouter = function(e){
-    e && !easylockdown.previewMode ? ("login" == e && (e = "/account/login?checkout_url=" + window.location.href),
-      window.location.href = shopLocale + e) : easylockdown.onReady(function(t) {
-          easylockdown.jq("#easylockdown404").removeAttr("style"),
-          easylockdown.previewMode && e && easylockdown.jq("#easylockdown404 .easylockdown-title-404").html("Redirecting to " + e),
-          easylockdown.jq(".easylockdown-content").remove()
-      })
-  }
-
-  var customRouterByLocation = function() {
-      function e() {
-          var e = !1
-            , t = ""
-            , n = ""
-            , o = "";
-          easylockdown.routeListByLocation.can.length ? easylockdown.jq.each(easylockdown.routeListByLocation.can, function(r, i) {
-              if (easylockdown.currentISO == i.loc)
-                  return e = !0,
-                  !1;
-              t || (t = i.url),
-              n = i.title404,
-              o = i.message404
-          }) : easylockdown.routeListByLocation.cannot.length && (e = !0,
-          easylockdown.jq.each(easylockdown.routeListByLocation.cannot, function(r, i) {
-              if (easylockdown.currentISO == i.loc)
-                  return e = !1,
-                  t = i.url,
-                  n = i.title404,
-                  o = i.message404,
-                  !1
-          })),
-          e || (easylockdown.jslocked = !0,
-          t && !easylockdown.previewMode ? ("login" == t && (t = "/account/login?checkout_url=" + window.location.href),
-          window.location.href = shopLocale + t) : easylockdown.onReady(function() {
-              easylockdown.previewMode && t && (n = "Redirecting to " + t),
-              easylockdown.jq(".easylockdown-content").remove();
-              var e = easylockdown.jq("#easylockdown404");
-              e.find(".easylockdown-title-404").html(n),
-              e.find(".easylockdown-message-404").html(o),
-              e.removeAttr("style"),
-              easylockdown.jq("#easylockdown-hpbtn-style").remove(),
-              easylockdown.jq("#easylockdown-password-form").remove()
-          }))
-      }
-      (easylockdown.routeListByLocation.can.length || easylockdown.routeListByLocation.cannot.length) && (easylockdown.currentISO ? e() : easylockdown.onGeoISOAllow(function(t) {
-          e()
-      }))
-  }
-
   if( typeof easylockdown == 'object' ) {
-    {% if easylockdownON %}customRouter('{{ easylockdownRedirectURL }}'); {% else %}customRouterByLocation(); {% endif %}
+    easylockdown.localeRootUrl = '{{ easylockdownLocaleRootUrl }}';
+    {% if easylockdownON %}easylockdown.router('{{ easylockdownRedirectURL }}'); {% else %}easylockdown.routerByLocation(); {% endif %}
 
     easylockdown.onReady(function(e){
       easylockdown.hideAllLinks();
