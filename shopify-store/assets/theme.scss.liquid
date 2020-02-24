@@ -853,6 +853,7 @@ sub {
 img {
   max-width: 100%;
   border: 0;
+  user-select: none;
 }
 
 button,
@@ -1467,6 +1468,22 @@ h6 {
   font-size: 18px;
 }
 
+.p2 {
+  font-size: 18px;
+  font-weight: 900;
+  line-height: 1.39;
+  margin-bottom: 16px;
+  margin: 0;
+}
+
+.p3 {
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.39;
+  margin-bottom: 16px;
+  margin: 0;
+}
+
 /*================ RTE headings ================*/
 .rte {
   color: $color-body-text;
@@ -1899,6 +1916,18 @@ a[href^="tel"] {
   &:not([disabled]):hover,
   &:focus {
     background: #222;
+  }
+}
+
+.btn-outlined {
+  background-color: #fff;
+  color: #111;
+  border: 1px solid #111;
+
+  &:not([disabled]):hover,
+  &:focus {
+    background: #222;
+    color: #fff;
   }
 }
 
@@ -2527,6 +2556,33 @@ textarea {
     & + li {
       a {
         padding-left: 30px;
+      }
+    }
+
+    a {
+      span {
+        position: relative;
+        &::before {
+          content: '';
+          position: absolute;
+          bottom: -14px;
+          left: 50%;
+          transform: translateX(-50%) scaleX(0);
+          height: 2px;
+          background: #111;
+          transition: transform 0.3s;
+          width: 100%;
+        }
+      }
+    }
+
+    &.active {
+      a {
+        span {
+          &::before {
+            transform: translateX(-50%) scaleX(1);
+          }
+        }
       }
     }
   }
@@ -4490,6 +4546,7 @@ $color-blankstate-background: rgba($color-body-text, 0.1);
 
   @include media-query($medium-up) {
     display: block;
+    flex: 1;
   }
 }
 
@@ -5037,11 +5094,14 @@ $color-blankstate-background: rgba($color-body-text, 0.1);
 .pagination {
   text-align: center;
   list-style: none;
-  font-size: em(15);
+  font-size: 0;
   padding-top: $section-spacing;
 
   li {
     display: inline-block;
+    &:first-child {
+      margin-right: 20px;
+    }
   }
 
   .icon {
@@ -8133,6 +8193,10 @@ $transition-controls-video: color 0.2s $ease-transition, background-color 0.2s $
       width: 100%;
     }
   }
+
+  &.btn-lowercase {
+    text-transform: none;
+  }
 }
 
 .nl-input {
@@ -8974,10 +9038,13 @@ body.ly-force-off .ly-languages-switcher {
 
 .uptous-main-container {
   display: flex;
+  justify-content: center;
 }
 
 .uptous-sidebar-container {
   width: 220px;
+  position: sticky;
+  top: 80px;
 
   .uptous-sidebar-block {
 
@@ -8991,35 +9058,40 @@ body.ly-force-off .ly-languages-switcher {
       line-height: 1.39;
       margin-bottom: 16px;
     }
-    .uptous-sidebar-block a {
-      position: relative;
-      display: block;
-      font-size: 18px;
-      color: #111;
-      padding: 4px 0;
 
-      &::before {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 84px;
-        height: 2px;
-        background: #111;
-        transform: scaleX(0);
-        transform-origin: left;
-        transition: transform 0.4s;
-      }
+    .uptous-sidebar-block {
+      a {
+        position: relative;
+        display: block;
+        font-size: 18px;
+        color: #111;
+        padding: 4px 0;
 
-      &:hover {
         &::before {
-          transform: scaleX(1);
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 84px;
+          height: 2px;
+          background: #111;
+          transform: scaleX(0);
+          transform-origin: left;
+          transition: transform 0.4s;
+        }
+
+        &:hover {
+          &::before {
+            transform: scaleX(1);
+          }
         }
       }
 
-      &.active {
-        &::before {
-
+      > li.active {
+        a {
+          &::before {
+            transform: scaleX(1);
+          }
         }
       }
     }
@@ -9028,6 +9100,7 @@ body.ly-force-off .ly-languages-switcher {
 
 .uptous-main-content {
   display: flex;
+  flex-direction: column;
   width: 940px;
 }
 
@@ -9159,5 +9232,66 @@ body.ly-force-off .ly-languages-switcher {
       }
     }
   }
+}
 
+.site-nav-container {
+  display: flex;
+  justify-content: space-between;
+  height: 100%;
+  > ul:first-child {
+    margin-left: 80px;
+    margin-right: 10px;
+  }
+}
+
+// ==================================================
+
+.uptous-collection-container {
+  overflow: hidden;
+}
+
+.uptous-collection {
+  margin: -10px;
+}
+
+.uptous-grid-container {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.uptous-grid-item {
+  width: 33.33%;
+  padding: 10px;
+}
+
+.uptous-product-details {
+  display: flex;
+  margin-top: 12px;
+
+  .product-description {
+    width: 80%;
+  }
+
+  .product-prices {
+    width: 20%;
+
+    .product-price {
+      text-align: right;
+      text-decoration: line-through;
+      font-weight: 400;
+    }
+
+    .product-price-discounted {
+      color: #be3c3c;
+      text-align: right;
+    }
+
+    .product-price-discount {
+      color: #be3c3c;
+      font-size: 30px;
+      font-weight: 900;
+      text-align: right;
+    }
+  }
 }

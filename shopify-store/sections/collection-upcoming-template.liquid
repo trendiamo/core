@@ -1,0 +1,49 @@
+<div class="uptous-main-content">
+  <div data-section-id="{{ section.id }}" data-section-type="collection-template">
+    <div class="uptous-collection-container" id="Collection">
+      <div class="uptous-collection">
+        <ul class="uptous-grid-container">
+          {% for block in section.blocks %}
+            <li class="uptous-grid-item">
+              {% include 'product-card-upcoming', block: block %}
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Product list",
+    "blocks": [
+      {
+        "name": "Product",
+        "type": "product",
+        "settings": [
+          {
+            "label": "Vendor",
+            "id": "vendor",
+            "type": "text"
+          },
+          {
+            "label": "Product Title",
+            "id": "title",
+            "type": "text"
+          },
+          {
+            "label": "Discount (in %)",
+            "id": "discount",
+            "type": "text"
+          },
+          {
+            "label": "Image",
+            "id": "image",
+            "type": "image_picker"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

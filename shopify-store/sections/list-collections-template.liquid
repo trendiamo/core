@@ -1,7 +1,7 @@
 <div class="uptous-main-content">
   {% for block in section.blocks %}
     {%- assign collection = collections[block.settings.collection] -%}
-    <div class="outfit-container" id="uptous-outfit-{{ collection.id }}">
+    <div class="outfit-container" style="display: none;" data-outfit-type="{{ collection.metafields.custom_fields['type'] }}" id="uptous-outfit-{{ collection.id }}" >
       {% if collection.metafields.custom_fields["video_placeholder_image"] != blank %}
       <div class="outfit-video-container" onclick="openUptousVideo('{{ collection.id }}')" data-uptous-video-url="{{ collection.metafields.custom_fields['video_url'] }}">
         <div class="outfit-video-placeholder">
@@ -22,8 +22,44 @@
         <div class="outfit-products-container">
           <p class="bold-900" >Products in this Outfit</p>
           <div class="outfit-products">
-            {% for product in collection.products %}
+            {% if block.settings.product_1 != blank %}
+              {%- assign product_1 = all_products[block.settings.product_1] -%}
               <div class="outfit-product">
+                <a href="{{ product_1.url }}">
+                  <div class="outfit-product-image-container">
+                    <img src="{{ product_1.featured_image.src | img_url: image_size, scale: 2 }}" alt="">
+                  </div>
+                  <p class="outfit-product-vendor">{{ product_1.vendor }}</p>
+                  <p class="outfit-product-name">{{ product_1.title }}</p>
+                </a>
+              </div>
+              {% if block.settings.product_2 != blank %}
+                {%- assign product_2 = all_products[block.settings.product_2] -%}
+                <div class="outfit-product">
+                  <a href="{{ product_2.url }}">
+                    <div class="outfit-product-image-container">
+                      <img src="{{ product_2.featured_image.src | img_url: image_size, scale: 2 }}" alt="">
+                    </div>
+                    <p class="outfit-product-vendor">{{ product_2.vendor }}</p>
+                    <p class="outfit-product-name">{{ product_2.title }}</p>
+                  </a>
+                </div>
+              {% endif %}
+              {% if block.settings.product_3 != blank %}
+                {%- assign product_3 = all_products[block.settings.product_3] -%}
+                <div class="outfit-product">
+                  <a href="{{ product_3.url }}">
+                    <div class="outfit-product-image-container">
+                      <img src="{{ product_3.featured_image.src | img_url: image_size, scale: 2 }}" alt="">
+                    </div>
+                    <p class="outfit-product-vendor">{{ product_3.vendor }}</p>
+                    <p class="outfit-product-name">{{ product_3.title }}</p>
+                  </a>
+                </div>
+              {% endif %}
+            {% else %}
+              {% for product in collection.products %}
+                <div class="outfit-product">
                   <a href="{{ product.url }}">
                     <div class="outfit-product-image-container">
                       <img src="{{ product.featured_image.src | img_url: image_size, scale: 2 }}" alt="">
@@ -31,8 +67,9 @@
                     <p class="outfit-product-vendor">{{ product.vendor }}</p>
                     <p class="outfit-product-name">{{ product.title }}</p>
                   </a>
-              </div>
-            {% endfor %}
+                </div>
+              {% endfor %}
+            {% endif %}
           </div>
         </div>
       </div>
@@ -43,15 +80,6 @@
 {% schema %}
   {
     "name": "Collection list",
-    "max_blocks": 100,
-    "settings": [
-      {
-        "type": "text",
-        "id": "title",
-        "label": "Heading",
-        "default": "Collection list"
-      }
-    ],
     "blocks": [
       {
         "type": "collection",
@@ -61,6 +89,21 @@
             "label": "Collection",
             "id": "collection",
             "type": "collection"
+          },
+          {
+            "label": "Product 1",
+            "id": "product_1",
+            "type": "product"
+          },
+          {
+            "label": "Product 2",
+            "id": "product_2",
+            "type": "product"
+          },
+          {
+            "label": "Product 3",
+            "id": "product_3",
+            "type": "product"
           }
         ]
       }

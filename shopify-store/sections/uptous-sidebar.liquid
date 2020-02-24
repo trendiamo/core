@@ -1,13 +1,12 @@
 <div class="uptous-sidebar-container">
-
   <div class="uptous-sidebar-block">
     <p class="uptous-sidebar-block-header" >Highlights</p>
     <ul class="uptous-sidebar-block">
-      <li>
-        <a href="#">Female outfits</a>
+      <li id="uptous-sidebar-outfits-women" >
+        <a href="{{ routes.collections_url }}">Female outfits</a>
       </li>
-      <li>
-        <a href="#">Male outfits</a>
+      <li id="uptous-sidebar-outfits-men" >
+        <a href="{{ routes.collections_url }}?type=men">Male outfits</a>
       </li>
     </ul>
   </div>
@@ -17,12 +16,12 @@
     <div class="uptous-sidebar-block">
       <p class="uptous-sidebar-block-header" >{{ collection.title }}</p>
       <ul class="uptous-sidebar-block" >
-        <li>
+        <li id="uptous-sidebar-all-{{ collection.handle }}" >
           <a href="{{ collection.url }}" title="All Products" >All Products</a>
         </li>
         {% for product_vendor in collection.all_vendors %}
-          <li>
-            {{ product_vendor | link_to_vendor }}
+          <li id="uptous-sidebar-{{ product_vendor | replace: '/', '-' | replace: ' ', '-' }}" >
+            <a href="{{ product_vendor | url_for_vendor }}">{{ product_vendor | remove_first: "Women/" | remove_first: "Men/" }}</a>
           </li>
         {% endfor %}
       </ul>
@@ -32,7 +31,7 @@
 
 {% schema %}
   {
-    "name": "Collection list",
+    "name": "Uptous Sidebar",
     "max_blocks": 100,
     "settings": [
       {

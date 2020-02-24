@@ -333,6 +333,150 @@
           "button_label": "",
           "button_link": ""
         }
+      },
+      "list-collections-template": {
+        "type": "list-collections-template",
+        "blocks": {
+          "1582226107480": {
+            "type": "collection",
+            "settings": {
+              "collection": "outfit-123",
+              "product_1": "nice-crop-top",
+              "product_2": "basic-sweatpants",
+              "product_3": "super-nice-sneakers"
+            }
+          },
+          "1582226115994": {
+            "type": "collection",
+            "settings": {
+              "collection": "outfit-124",
+              "product_1": "",
+              "product_2": "",
+              "product_3": ""
+            }
+          }
+        },
+        "block_order": [
+          "1582226107480",
+          "1582226115994"
+        ],
+        "settings": {}
+      },
+      "uptous-sidebar": {
+        "type": "uptous-sidebar",
+        "blocks": {
+          "1582218428214": {
+            "type": "collection",
+            "settings": {
+              "collection": "women"
+            }
+          },
+          "1582218435475": {
+            "type": "collection",
+            "settings": {
+              "collection": "men"
+            }
+          }
+        },
+        "block_order": [
+          "1582218428214",
+          "1582218435475"
+        ],
+        "settings": {
+          "title": "Collection list"
+        }
+      },
+      "collection-template": {
+        "type": "collection-template",
+        "settings": {
+          "layout": "grid",
+          "grid": 3,
+          "rows": 2,
+          "show_collection_image": false,
+          "show_vendor": true,
+          "sort_enable": true,
+          "tags_enable": true
+        }
+      },
+      "collection-upcoming-template": {
+        "type": "collection-upcoming-template",
+        "blocks": {
+          "1582555588680": {
+            "type": "product",
+            "settings": {
+              "vendor": "Nae Vegan Shoes",
+              "title": "Hello",
+              "discount": "30%",
+              "image": "shopify:\/\/shop_images\/fezbot2000-nahUo1GhcrA-unsplash.jpg"
+            }
+          },
+          "1582557173334": {
+            "type": "product",
+            "settings": {
+              "vendor": "Nae Vegan Shoes",
+              "title": "Shoe",
+              "discount": "10%",
+              "image": "shopify:\/\/shop_images\/tamara-bellis-pONwcn4IcVU-unsplash.jpg"
+            }
+          },
+          "1582557232568": {
+            "type": "product",
+            "settings": {
+              "vendor": "Nae Vegan Shoes",
+              "title": "Shoes",
+              "discount": "5%",
+              "image": "shopify:\/\/shop_images\/brooke-cagle-z1B9f48F5dc-unsplash.jpg"
+            }
+          },
+          "1582557260293": {
+            "type": "product",
+            "settings": {
+              "vendor": "Shoes",
+              "title": "Shoe",
+              "discount": "30%",
+              "image": "shopify:\/\/shop_images\/frank-flores-eyFcZLLYvfA-unsplash.jpg"
+            }
+          },
+          "1582557292269": {
+            "type": "product",
+            "settings": {
+              "vendor": "Red shirts company",
+              "title": "Red Shirt",
+              "discount": "30%",
+              "image": "shopify:\/\/shop_images\/calvin-lupiya--yPg8cusGD8-unsplash.jpg"
+            }
+          },
+          "1582557318918": {
+            "type": "product",
+            "settings": {
+              "vendor": "Man company",
+              "title": "Black Sweater",
+              "discount": "30%",
+              "image": "shopify:\/\/shop_images\/mubariz-mehdizadeh-o-wlIFT4zE4-unsplash.jpg"
+            }
+          }
+        },
+        "block_order": [
+          "1582555588680",
+          "1582557173334",
+          "1582557232568",
+          "1582557260293",
+          "1582557292269",
+          "1582557318918"
+        ],
+        "settings": {}
+      },
+      "timer-sale-starts-in": {
+        "type": "timer-sale-starts-in",
+        "settings": {
+          "datetime": "2020-03-03T03:30:34"
+        }
+      },
+      "timer-shopping-time-left": {
+        "type": "timer-shopping-time-left",
+        "settings": {
+          "datetime": "2020-03-03T03:30:34"
+        }
       }
     },
     "content_for_index": [

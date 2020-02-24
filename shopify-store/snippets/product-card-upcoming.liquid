@@ -1,0 +1,25 @@
+{% capture img_id %}ProductCardImage-{{ section.id }}-{{ block.id }}{% endcapture %}
+{%- assign img_url = block.settings.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+
+<div class="product-card-container" >
+  <div class="product-content">
+    <div class="product-image-container">
+      <img id="{{ img_id }}"
+            class="grid-view-item__image lazyload"
+            data-src="{{ img_url }}"
+            data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
+            data-aspectratio="{{ product.image.aspect_ratio }}"
+            data-sizes="auto"
+            data-image>
+    </div>
+  </div>
+  <div class="uptous-product-details">
+    <div class="product-description">
+      <p class="p2">{{ block.settings.vendor }}</p>
+      <p class="p3">{{ block.settings.title }}</p>
+    </div>
+    <div class="product-prices">
+      <p class="product-price-discount" >{{ block.settings.discount }}</p>
+    </div>
+  </div>
+</div>

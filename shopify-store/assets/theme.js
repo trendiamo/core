@@ -5117,9 +5117,9 @@ var addZero = function(digit) {
 }
 
 var updateTimer = function() {
-  const difference = +new Date(date) - +new Date();
+  var difference = +new Date(date) - +new Date();
 
-  const parts = {
+  var parts = {
     days: Math.floor(difference / (1000 * 60 * 60 * 24)),
     hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
     minutes: Math.floor((difference / 1000 / 60) % 60),
@@ -5164,7 +5164,7 @@ var openUptousVideo = function(collectionId) {
   var el = $('#uptous-outfit-' + collectionId);
   var videoContainer = el.find('.outfit-video-container').first();
   var videoUrl = videoContainer.attr('data-uptous-video-url');
-  if (videoUrl){
+  if (videoUrl) {
     var videoId = videoUrl.replace('https://youtu.be/', '');
     videoContainer.addClass('clicked');
     window.setTimeout(function() {
@@ -5172,6 +5172,124 @@ var openUptousVideo = function(collectionId) {
       videoContainer.find('.outfit-video-placeholder').first().replaceWith(iframe);
     }, 400);
   }
+}
+
+var utils = {
+  isOutfitsPage: function() {
+    return window.location.pathname === '/collections'
+          || window.location.pathname === '/products'
+          || window.location.pathname === '/de/collections'
+          || window.location.pathname === '/de/products';
+  },
+  isVendorsPage: function() {
+    return window.location.pathname === '/collections/vendors'
+          || window.location.pathname === '/de/collections/vendors';
+  },
+  isCollectionAllPage: function() {
+    return window.location.pathname.match(/\/collections\/(.+)|\/de\/collections\/(.+)/);
+  },
+  isUpcomingPage: function() {
+    return window.location.pathname.match(/\/pages\/upcoming/);
+  },
+  getSplitDate: function(dateStart, dateEnd, shouldAddZero, callback) {
+    var difference = +dateEnd - +dateStart;
+
+    var parts = {
+      days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+      hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+      minutes: Math.floor((difference / 1000 / 60) % 60),
+      seconds: Math.floor((difference / 1000) % 60),
+    }
+
+    if (shouldAddZero){
+      parts.days = addZero(parts.days);
+      parts.hours = addZero(parts.hours);
+      parts.minutes = addZero(parts.minutes);
+      parts.seconds = addZero(parts.seconds);
+    }
+
+
+    callback(parts.seconds, parts.minutes, parts.hours, parts.days);
+  }
+}
+
+var getUrlParam = function(key) {
+  var urlParams = new URLSearchParams(window.location.search);
+  return urlParams.get(key);
+}
+
+var organizeOutfits = function() {
+  if (!utils.isOutfitsPage()){
+    return false;
+  }
+  var currentType = getUrlParam('type');
+
+  var outfits = $('.outfit-container');
+  outfits.each(function(index, outfit) {
+    var outfitElement = $(outfit);
+    var outfitType = outfitElement.attr('data-outfit-type');
+    if ((currentType !== 'men' && outfitType === 'women') || outfitType === currentType) {
+      outfitElement.css('display', '');
+    }
+  });
+}
+
+var replaceVendor = function(string) {
+  return string.replace(/\/|\s/g, '-');
+}
+
+var checkLinksToHighlight = function() {
+  var elementId = '';
+  if (utils.isVendorsPage()) {
+    var currentVendor = getUrlParam('q');
+    if (currentVendor){
+      elementId = 'uptous-sidebar-' + replaceVendor(currentVendor);
+    }
+  } else {
+    var isCollectionAllPage = utils.isCollectionAllPage();
+    if (isCollectionAllPage && isCollectionAllPage.length > 1){
+      elementId = 'uptous-sidebar-all-' + isCollectionAllPage[1];
+    } else if (utils.isOutfitsPage()) {
+      elementId = 'uptous-sidebar-outfits-' + (getUrlParam('type') === 'men' ? 'men' : 'women');
+    }
+  }
+  $('#' + elementId).addClass('active');
+
+}
+
+var topMenuHighlight = function() {
+  if (utils.isVendorsPage() || utils.isCollectionAllPage() || utils.isOutfitsPage()) {
+    return $('#uptous-collections-link').addClass('active');
+  }
+  if (utils.isUpcomingPage()){
+    return $('#uptous-upcoming-page-link').addClass('active');
+  }
+}
+
+var fillSimpleTimer = function(timerElement, dateValue) {
+  utils.getSplitDate(new Date(), new Date(dateValue), false, function(seconds, minutes, hours, days) {
+    timerElement.find('span[data-type="days"]').text(days);
+    timerElement.find('span[data-type="hours"]').text(hours);
+    timerElement.find('span[data-type="minutes"]').text(minutes);
+  });
+}
+
+var activateTimer = function(timerId) {
+  var timerSaleStartsIn = $('#' + timerId);
+  if (timerSaleStartsIn){
+    var dateValue = timerSaleStartsIn.attr('data-timer-date');
+    if (dateValue) {
+      fillSimpleTimer(timerSaleStartsIn, dateValue);
+      window.setTimeout(function() {
+        fillSimpleTimer(timerSaleStartsIn, dateValue);
+      }, 1000);
+    }
+  }
+}
+
+var findTimersAndActivateThem = function() {
+  activateTimer('timer-sale-starts-in');
+  activateTimer('timer-shopping-time-left');
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -5183,4 +5301,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
   openCollapsibleIfInHash();
 
+  organizeOutfits();
+
+  topMenuHighlight();
+  checkLinksToHighlight();
+
+  findTimersAndActivateThem();
 })

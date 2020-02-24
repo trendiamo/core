@@ -1,0 +1,24 @@
+<p id="timer-shopping-time-left" data-timer-date="{{ section.settings.datetime }}" >
+  <b>{{ "layout.timer.shopping_time_left" | t }}</b>
+  <span data-type="days" ></span>
+  <span>{{ 'layout.timer.days' | t }}</span>
+  <span data-type="hours" ></span>
+  <span>{{ 'layout.timer.hours' | t }}</span>
+  <span data-type="minutes" ></span>
+  <span>{{ 'layout.timer.minutes' | t }}</span>
+</p>
+<br />
+
+{% schema %}
+{
+  "name": "Timer",
+  "settings": [
+    {
+      "type": "text",
+      "id": "datetime",
+      "label": "DateTime (UTC)"
+    }
+  ]
+}
+
+{% endschema %}

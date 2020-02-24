@@ -3,7 +3,6 @@
     Accepts:
     - variant: {Object} Variant Liquid object (optional)
     - product: {Object} Product Liquid object (optional)
-    - show_vendor: {Boolean} Show the product's vendor depending on the section setting (optional)
 
     Usage:
     {% include 'product-price', variant: current_variant, product: product %}
@@ -26,17 +25,6 @@
   {% if available and variant.unit_price_measurement %} price--unit-available {% endif %}"
   data-price
 >
-
-  {% if show_vendor and product %}
-    <div class="price__vendor">
-      <dt>
-        <span class="visually-hidden">{{ 'products.product.vendor' | t }}</span>
-      </dt>
-      <dd>
-        {{ product.vendor }}
-      </dd>
-    </div>
-  {% endif %}
 
   <div class="price__regular">
     <dt>

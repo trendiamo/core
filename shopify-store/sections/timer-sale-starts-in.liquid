@@ -1,0 +1,28 @@
+<div class="uptous-main-container" >
+  <div class="uptous-main-content" >
+    <p id="timer-sale-starts-in" data-timer-date="{{ section.settings.datetime }}" >
+      <b>{{ "layout.timer.sale_starts_in" | t }}</b>
+      <span data-type="days" ></span>
+      <span>{{ 'layout.timer.days' | t }}</span>
+      <span data-type="hours" ></span>
+      <span>{{ 'layout.timer.hours' | t }}</span>
+      <span data-type="minutes" ></span>
+      <span>{{ 'layout.timer.minutes' | t }}</span>
+    </p>
+    <br />
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Timer",
+  "settings": [
+    {
+      "type": "text",
+      "id": "datetime",
+      "label": "DateTime (UTC)"
+    }
+  ]
+}
+
+{% endschema %}
