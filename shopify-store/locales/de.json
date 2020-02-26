@@ -524,6 +524,7 @@
       "sold_out": "Ausverkauft",
       "unavailable": "Nicht verfügbar",
       "on_sale": "Angebot",
+      "sale_off": "{{ discount }}% off",
       "sale_price": "Sonderpreis",
       "quantity": "Menge",
       "add_to_cart": "In den Warenkorb legen",
@@ -535,7 +536,8 @@
       "shipping_policy_html": "zzgl. <a href=\"{{ link }}\">Versandkosten<\/a>",
       "unit_price_label": "Einzelpreis",
       "view_cart": "Warenkorb einsehen",
-      "availability": "Verfügbarkeit"
+      "availability": "Verfügbarkeit",
+      "products_left": "{{ count }} products left"
     }
   },
   "gift_cards": {

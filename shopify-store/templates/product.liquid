@@ -1,7 +1,20 @@
 {% comment %}
   The contents of the product.liquid template can be found in /sections/product-template.liquid
 {% endcomment %}
-
+<div class="page-width">
+  <div class="pdp-top-container">
+    <div class="pdp-shopping-time-left-container" >
+      {% section 'timer-shopping-time-left' %}
+    </div>
+    <div class="pdp-stock-note-container">
+      {% for variant in product.variants %}
+        <p id="pdp-stock-note-{{ variant.id }}" class="pdp-stock-note{% if product.selected_or_first_available_variant.id != variant.id %} hide{% endif %}" >
+          {{ 'products.product.products_left' | t: count: variant.inventory_quantity }}
+        </p>
+      {% endfor %}
+    </div>
+  </div>
+</div>
 {% section 'product-template' %}
 {% section 'product-recommendations' %}
 

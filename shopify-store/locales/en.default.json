@@ -525,6 +525,7 @@
       "unavailable": "Unavailable",
       "availability": "Availability",
       "on_sale": "Sale",
+      "sale_off": "{{ discount }}% off",
       "sale_price": "Sale price",
       "quantity": "Quantity",
       "add_to_cart": "Add to cart",
@@ -535,7 +536,8 @@
       "include_taxes": "Tax included.",
       "shipping_policy_html": "<a href=\"{{ link }}\">Shipping<\/a> calculated at checkout.",
       "unit_price_label": "Unit price",
-      "view_cart": "View cart"
+      "view_cart": "View cart",
+      "products_left": "{{ count }} products left"
     }
   },
   "gift_cards": {

@@ -3938,13 +3938,14 @@ theme.Product = (function() {
       errorMessage: '[data-error-message]',
       errorMessageWrapper: '[data-error-message-wrapper]',
       productImageWraps: '.product-single__photo',
+      productImageWrapsContainer: '.product-single__photo-wrapper',
       productThumbImages: '.product-single__thumbnail--' + sectionId,
       productThumbs: '.product-single__thumbnails-' + sectionId,
       productThumbListItem: '.product-single__thumbnails-item',
       productFeaturedImage: '.product-featured-img',
       productThumbsWrapper: '.thumbnails-wrapper',
       saleLabel: '.product-price__sale-label-' + sectionId,
-      singleOptionSelector: '.single-option-selector-' + sectionId,
+      singleOptionSelector: '.variant__input-' + sectionId,
       shopifyPaymentButton: '.shopify-payment-button',
       priceContainer: '[data-price]',
       regularPrice: '[data-regular-price]',
@@ -4482,11 +4483,11 @@ theme.Product = (function() {
 
     _switchImage: function(imageId) {
       var $newImage = $(
-        this.selectors.productImageWraps + "[data-image-id='" + imageId + "']",
+        this.selectors.productImageWrapsContainer + "[data-image-id='" + imageId + "']",
         this.$container
       );
       var $otherImages = $(
-        this.selectors.productImageWraps +
+        this.selectors.productImageWrapsContainer +
           ":not([data-image-id='" +
           imageId +
           "'])",
@@ -4668,6 +4669,17 @@ theme.Product = (function() {
       this._updateLiveRegion(evt);
 
       this._updatePrice(evt);
+
+      this._updateProductsLeft(evt);
+    },
+
+    _updateProductsLeft: function(evt) {
+      $('.pdp-stock-note-container').find('p').addClass('hide');
+      if (evt.variant) {
+        $('#pdp-stock-note-' + evt.variant.id).removeClass('hide');
+      } else {
+        //
+      }
     },
 
     _updateImages: function(evt) {

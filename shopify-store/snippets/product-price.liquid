@@ -19,7 +19,14 @@
 
 {%- assign money_price = price | money -%}
 
+{% if variant.compare_at_price > variant.price %}
+  {%- assign discount_percentage = variant.compare_at_price | minus:variant.price | times:100 | divided_by:variant.compare_at_price -%}
+{% else %}
+  {%- assign discount_percentage = 0 -%}
+{% endif %}
+
 <dl class="price
+  pdp-price
   {% if available == false %} price--sold-out {% endif %}
   {% if available and compare_at_price > price %} price--on-sale {% endif %}
   {% if available and variant.unit_price_measurement %} price--unit-available {% endif %}"
@@ -41,18 +48,24 @@
       <span class="visually-hidden visually-hidden--inline">{{ 'products.product.regular_price' | t }}</span>
     </dt>
     <dd>
-      <s class="price-item price-item--regular" data-regular-price>
-        {{ compare_at_price | money }}
-      </s>
+      <span class="price-item price-item--sale" data-sale-price>
+        {{ money_price }}
+      </span>
     </dd>
     <dt>
       <span class="visually-hidden visually-hidden--inline">{{ 'products.product.sale_price' | t }}</span>
     </dt>
     <dd>
-      <span class="price-item price-item--sale" data-sale-price>
-        {{ money_price }}
+      <span class="price-item price-item--regular" data-regular-price>
+        {{ compare_at_price | money }}
       </span>
-      <span class="price-item__label price-item__label--sale" aria-hidden="true">{{ 'products.product.on_sale' | t }}</span>
+    </dd>
+    <dd>
+      <span class="price-item__label price-item__label--sale" aria-hidden="true">
+        {%- if discount_percentage != blank -%}
+          {{ 'products.product.sale_off' | t: discount: discount_percentage }}
+        {%- endif -%}
+      </span>
     </dd>
   </div>
   <div class="price__unit">
