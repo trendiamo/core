@@ -46,7 +46,7 @@
         <p class="p3">{{ product.title }}</p>
       </div>
       <div class="product-prices">
-        <p class="p2 product-price">{{ money_price }}</p>
+        <p class="p2 product-price{% if compare_at_price %} line-through{% endif %}">{{ compare_at_price | money }}</p>
         <p class="p2 product-price-discounted">{{ money_price }}</p>
       </div>
     </div>

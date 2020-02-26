@@ -9347,8 +9347,11 @@ body.ly-force-off .ly-languages-switcher {
 
     .product-price {
       text-align: right;
-      text-decoration: line-through;
-      font-weight: 400;
+      font-weight: 900;
+      &.line-through {
+        font-weight: 400;
+        text-decoration: line-through;
+      }
     }
 
     .product-price-discounted {
