@@ -56,6 +56,10 @@
     {% endif %}
   {% endif %}
 
+  {% unless customer == empty %}
+    <div style="display: none;" id="uptous-customer-orders-count">{{ customer.orders_count }}</div>
+  {% endunless %}
+
   <header class="site-header{% if section.settings.align_logo == 'left' %} logo--left{% else %} logo--center{% endif %}" role="banner">
     <div class="site-header-content" >
 

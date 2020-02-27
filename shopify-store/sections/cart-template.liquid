@@ -266,6 +266,10 @@
               {%- endif -%}
             {%- endcapture -%}
             <div class="cart__shipping rte">{{ taxes_shipping_checkout }}</div>
+            <button style="margin-bottom: 10px; display: none;" class="btn btn-black btn-sm" id="uptous-btn-renounce-returns" type="button" onclick="toggleReturns(event)" >
+              <span id="text-renounce-returns" >Renounce Returns</span>
+              <span style="display: none;" id="text-keep-returns" >Keep Returns</span>
+            </button>
             <div class="cart__buttons-container">
               <div class="cart__submit-controls">
                 {%- unless section.settings.cart_ajax_enable -%}

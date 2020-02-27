@@ -5167,7 +5167,7 @@ var openCollapsibleIfInHash = function() {
           window.location.hash = '#job-' + hash[1];
         },
         500
-      )
+      );
     }
   }
 }
@@ -5224,6 +5224,18 @@ var utils = {
     callback(parts.seconds, parts.minutes, parts.hours, parts.days);
   }
 }
+
+var isLocalStorageSupported = function() {
+  var test = 'test';
+  try {
+    localStorage.setItem(test, test);
+    localStorage.removeItem(test);
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
 
 var getUrlParam = function(key) {
   var urlParams = new URLSearchParams(window.location.search);
@@ -5304,6 +5316,95 @@ var findTimersAndActivateThem = function() {
   activateTimer('timer-shopping-time-left');
 }
 
+var getUptousDiscount = function() {
+  return localStorage.getItem('uptous-discount');
+}
+
+var setUptousDiscount = function(value) {
+  return localStorage.setItem('uptous-discount', value);
+}
+
+var registerRedirectSetup = function() {
+
+  // This was created for the case when customer registers / logs in more than once in 24 hours and sees the recaptcha
+  // form created by shopify to prevent from bot spam.
+  if($('#g-recaptcha').length) {
+    var returnUrl = '/collections';
+    if (location.pathname === '/de/challenge'){
+      returnUrl = '/de/collections';
+    }
+    var $newInput = $('<input type="hidden" name="return_to" value="' + returnUrl +'" />');
+    $newInput.insertBefore($('.shopify-challenge__container input[type="submit"]'));
+  }
+}
+
+var executeReturns = function(discountCode, callback) {
+  $.get('/discount/' + discountCode)
+    .done(function(){
+      setUptousDiscount(discountCode);
+      if (callback) {
+        callback();
+      }
+    })
+    .fail(function() {
+      return false;
+    });
+}
+
+var toggleReturns = function() {
+  var ordersCount = $('#uptous-customer-orders-count').text();
+  if (!isLocalStorageSupported() || !ordersCount){
+    return false;
+  }
+  var uptousDiscount = getUptousDiscount();
+
+  var newUptousDiscount = 'NO-DISCOUNT';
+  if (ordersCount === "0") {
+    newUptousDiscount = uptousDiscount === 'UPTOUS' ? 'UPTOUS-RENOUNCE-20' : 'UPTOUS' ;
+  } else {
+    newUptousDiscount = uptousDiscount === 'UPTOUS' || uptousDiscount === 'NO-DISCOUNT' ? 'UPTOUS-RENOUNCE-10' : 'NO-DISCOUNT';
+  }
+
+  executeReturns(newUptousDiscount, function() {
+    checkRenounceReturnsButton(ordersCount);
+  });
+}
+
+var checkDiscountCode = function(ordersCount) {
+  var uptousDiscount = getUptousDiscount();
+
+  if (!uptousDiscount) {
+    executeReturns(ordersCount === "0" ? 'UPTOUS' : 'NO-DISCOUNT');
+  }
+}
+
+var checkRenounceReturnsButton = function(ordersCount) {
+  var uptousDiscount = getUptousDiscount();
+  var renounceReturnsButton = $('#uptous-btn-renounce-returns');
+  renounceReturnsButton.show();
+
+  if (uptousDiscount === 'UPTOUS-RENOUNCE-20' || uptousDiscount === 'UPTOUS-RENOUNCE-10'){
+    renounceReturnsButton.addClass('btn-outlined').removeClass('btn-black');
+    $('#text-renounce-returns').hide();
+    $('#text-keep-returns').show();
+    return false;
+  }
+
+  renounceReturnsButton.addClass('btn-black').removeClass('btn-outlined');
+  $('#text-renounce-returns').show();
+  $('#text-keep-returns').hide();
+}
+
+var checkDiscountCodesLogic = function() {
+  var ordersCount = $('#uptous-customer-orders-count').text();
+  if (!isLocalStorageSupported() || !ordersCount){
+    return false;
+  }
+
+  checkDiscountCode(ordersCount);
+  checkRenounceReturnsButton(ordersCount);
+}
+
 document.addEventListener('DOMContentLoaded', function() {
   var openingCounter = document.getElementById('opening-counter');
   if (openingCounter){
@@ -5319,4 +5420,8 @@ document.addEventListener('DOMContentLoaded', function() {
   checkLinksToHighlight();
 
   findTimersAndActivateThem();
+
+  registerRedirectSetup();
+
+  checkDiscountCodesLogic();
 })
