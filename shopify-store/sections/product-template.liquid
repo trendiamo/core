@@ -113,7 +113,9 @@
 
     <div class="product-description-container">
       <div class="product-single__meta">
-        <p class="bold-900" >{{ product.vendor | remove_first: "Women/" | remove_first: "Men/" }}</p>
+        <a class="underline-on-hover" href="{{ product.vendor | url_for_vendor }}">
+          <p class="bold-900" >{{ product.vendor | remove_first: "Women/" | remove_first: "Men/" }}</p>
+        </a>
         <h4 class="product-single__title">{{ product.title }}</h4>
 
           <div class="product__price">
@@ -151,15 +153,15 @@
                           {% for value in option.values %}
                           <div class="uptous-option-rectangle {% if option.selected_value == value %} selected{% endif %}">
                             {%- if option.name == 'Color' -%}
-                            <input {% if option.selected_value == value %}checked="checked"{% endif %} name="{{ option.name }}" value="{{ value }}" type="radio" data-index="option{{ forloopindex }}" name="{{ option.name }}" class="variant__input-{{ section.id}}" id="ProductSelect-{{ section.id }}-option-{{ option.name | handle }}-{{ value }}" >
+                            <input {% if option.selected_value == value %}checked="checked"{% endif %} value="{{ value }}" type="radio" data-index="option{{ forloopindex }}" name="{{ option.name }}" class="variant__input-{{ section.id}}" id="ProductSelect-{{ section.id }}-option-{{ option.name | handle }}-{{ value }}" >
                             <label for="ProductSelect-{{ section.id }}-option-{{ option.name | handle }}-{{ value }}" ></label>
                             <div style="background-color: {{ value }}" class="uptous-option-color-square"></div>
                             {%- endif -%}
                             {%- if option.name == 'Size' -%}
-                            <input {% if option.selected_value == value %}checked="checked"{% endif %} name="{{ option.name }}" value="{{ value }}" type="radio" data-index="option{{ forloopindex }}" name="{{ option.name }}" class="variant__input-{{ section.id }}" id="ProductSelect-{{ section.id }}-option-{{ option.name | handle }}-{{ value }}" >
+                            <input {% if option.selected_value == value %}checked="checked"{% endif %} value="{{ value }}" type="radio" data-index="option{{ forloopindex }}" name="{{ option.name }}" class="variant__input-{{ section.id }}" id="ProductSelect-{{ section.id }}-option-{{ option.name | handle }}-{{ value }}" >
                             <label for="ProductSelect-{{ section.id }}-option-{{ option.name | handle }}-{{ value }}"></label>
                             <div class="uptous-option-size">
-                              {{ value }}
+                              {{- value -}}
                             </div>
                             {%- endif -%}
                           </div>
