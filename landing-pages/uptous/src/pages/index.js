@@ -1,7 +1,6 @@
 import BottomHeadline from '../sections/bottom-headline'
 import Hero from '../sections/hero'
 import Layout from '../layout'
-import OpeningCounter from '../sections/opening-counter'
 import OurGoals from '../sections/our-goals'
 import React from 'react'
 import { graphql } from 'gatsby'
@@ -9,7 +8,6 @@ import { graphql } from 'gatsby'
 const IndexPage = ({ data }) => (
   <Layout data={data}>
     <Hero data={data} />
-    <OpeningCounter data={data} />
     <OurGoals data={data} />
     <BottomHeadline data={data} />
   </Layout>

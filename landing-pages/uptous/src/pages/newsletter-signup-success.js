@@ -1,5 +1,4 @@
 import Layout from '../layout'
-import OpeningCounter from '../sections/opening-counter'
 import React from 'react'
 import SignupSuccessHero from '../sections/signup-success-hero'
 import { graphql } from 'gatsby'
@@ -7,7 +6,6 @@ import { graphql } from 'gatsby'
 const NewsletterSignupSuccess = ({ data }) => (
   <Layout data={data} hideNewsletter>
     <SignupSuccessHero data={data} />
-    <OpeningCounter data={data} />
   </Layout>
 )
 

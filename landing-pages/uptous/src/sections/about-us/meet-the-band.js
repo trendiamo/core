@@ -157,27 +157,11 @@ const FacesOfDaBand = ({ data }) => (
         name="Wolfgang Schmidt-Ulm dos Santos"
         src={wolfFace}
       ></Face>
-      <Face description={data.aboutUs.theBandMembers.max.description} name="Max Chuchmai" src={maxFace}></Face>
-    </FaceCells>
-    <FaceCells>
       <Face description={data.aboutUs.theBandMembers.daniel.description} name="Daniel Welzel" src={danielFace}></Face>
-      <Face description={data.aboutUs.theBandMembers.diogo.description} name="Diogo Freitas" src={diogoFace}></Face>
-      <Face description={data.aboutUs.theBandMembers.diana.description} name="Diana Machado" src={dianaFace}></Face>
     </FaceCells>
+    <br />
+    <br />
     <FaceCells>
-      <Face
-        description={data.aboutUs.theBandMembers.patrick.description}
-        name="Patrick Burkert"
-        src={patrickFace}
-      ></Face>
-      <Face
-        description={data.aboutUs.theBandMembers.tommaso.description}
-        name="Tommaso Di Stefano"
-        src={tommasoFace}
-      ></Face>
-    </FaceCells>
-    <FaceCells>
-      <Face description={data.aboutUs.theBandMembers.nidhi.description} name="Nidhi Shetty" src={nidhiFace}></Face>
       <Face
         description={data.aboutUs.theBandMembers.ana.description}
         name="Ana Vitória De Magalhães"
@@ -195,17 +179,7 @@ const FacesOfDaMobile = ({ data }) => (
       name="Wolfgang Schmidt-Ulm dos Santos"
       src={wolfFace}
     ></Face>
-    <Face description={data.aboutUs.theBandMembers.max.description} name="Max Chuchmai" src={maxFace}></Face>
     <Face description={data.aboutUs.theBandMembers.daniel.description} name="Daniel Welzel" src={danielFace}></Face>
-    <Face description={data.aboutUs.theBandMembers.diogo.description} name="Diogo Freitas" src={diogoFace}></Face>
-    <Face description={data.aboutUs.theBandMembers.diana.description} name="Diana Machado" src={dianaFace}></Face>
-    <Face description={data.aboutUs.theBandMembers.patrick.description} name="Patrick Burkert" src={patrickFace}></Face>
-    <Face
-      description={data.aboutUs.theBandMembers.tommaso.description}
-      name="Tommaso Di Stefano"
-      src={tommasoFace}
-    ></Face>
-    <Face description={data.aboutUs.theBandMembers.nidhi.description} name="Nidhi Shetty" src={nidhiFace}></Face>
     <Face
       description={data.aboutUs.theBandMembers.ana.description}
       name="Ana Vitória De Magalhães"
