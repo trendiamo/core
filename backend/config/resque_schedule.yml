@@ -1,7 +1,0 @@
-fetch_orders:
-  cron: '0 1 * * *'
-  class: FetchOrdersJob
-  rails_env: production
-  queue: high
-  args:
-  description: Fetch orders from mixpanel every day at 01:00

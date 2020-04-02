@@ -1,8 +1,0 @@
-{
-  "scripts": {
-    "dokku": {
-      "predeploy": "cp Procfile.prod Procfile",
-      "postdeploy": "bin/rails db:migrate"
-    }
-  }
-}

@@ -1,8 +1,0 @@
-ruby "2.4.6"
-source "https://rubygems.org"
-
-gem "activesupport"
-gem "async-websocket"
-gem "dotenv"
-gem "rubocop"
-gem "slack-ruby-bot"

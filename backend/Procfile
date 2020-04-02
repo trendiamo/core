@@ -1,4 +1,0 @@
-web: bin/rails s
-resque: redis-server
-worker: bin/rails resque:work QUEUE=*
-scheduler: bin/rails resque:scheduler
