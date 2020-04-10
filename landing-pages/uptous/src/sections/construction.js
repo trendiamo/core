@@ -1,4 +1,5 @@
 import backgroundImage from '../images/astronaut.jpg'
+import borderImage from '../images/space_button.png'
 import React, { useCallback, useMemo } from 'react'
 import Section from '../components/section'
 import styled from 'styled-components'
@@ -9,6 +10,8 @@ const HeroImagesContainer = styled.div`
   @media (min-width: 1000px) {
     margin: 0 -5px;
     width: auto;
+    border: 1px solid #1d6e94;
+    padding: 8px;
   }
 `
 
@@ -25,7 +28,7 @@ const ImageContainer = styled.div`
   @media (min-width: 1000px) {
     width: 100%;
     height: 100%;
-    margin: 0 5px;
+    margin: 0;
     display: block;
   }
 `
@@ -36,7 +39,7 @@ const BannerContainer = styled.div`
   right: 20px;
   top: calc(50% - 180px);
 
-  border: 1px solid white;
+  border: 1px solid #1d6e94;
   background: rgba(0, 0, 0, 0.5);
   padding: 20px;
   color: white;
@@ -59,9 +62,11 @@ const BannerHeader = styled.div`
   font-weight: 700;
   margin-top: 10px;
   color: white;
+  line-height: 24px;
 
   @media (min-width: 1000px) {
     font-size: 32px;
+    line-height: 36px;
   }
 `
 
@@ -81,25 +86,30 @@ const BannerDescription = styled.div`
 const BannerButton = styled.input`
   appearance: none;
   outline: none;
-  background: white;
-  color: black;
+  height: 46px;
+  width: 100%;
+  border: 1px solid transparent;
+  border-image: url('${borderImage}');
+  border-image-slice: 100 100 fill;
+  border-image-width: 100px;
+  background: transparent;
+  color: white;
   font-size: 18px;
   padding: 8px;
   font-weight: 700;
   cursor: pointer;
-  border-radius: 3px;
-  width: 100%;
 
   @media (min-width: 1000px) {
     width: auto;
     padding: 8px 90px;
+    width: 90% !important;
   }
 `
 
 const BannerInput = styled.input`
   font-family: 'Avenir', sans-serif;
   appearance: none;
-  border: 1px solid white;
+  border: 1px solid #1d6e94;
   width: 100%;
   font-size: 18px;
   outline: none;
@@ -110,7 +120,7 @@ const BannerInput = styled.input`
   display: flex;
   justify-content: center;
   border-radius: 0px;
-  background: rgba(255, 255, 255, 0.5);
+  background: rgba(5, 38, 62, 0.58);
   color: white;
 
   @media (min-width: 1000px) {
@@ -172,7 +182,7 @@ const MailchimpForm = ({ data }) => {
           name="subscribe"
           onClick={onSubscribeClick}
           type="submit"
-          value={data.layout.value.buttons.signMeUp}
+          value={"Enable The New System"}
         />
       </BannerButtonContainer>
       <BannerFooterText dangerouslySetInnerHTML={{ __html: termsAndConditionsText }}></BannerFooterText>
@@ -182,8 +192,8 @@ const MailchimpForm = ({ data }) => {
 
 const Banner = ({ data }) => (
   <BannerContainer>
-    <BannerHeader>We are equipping the crew of #spaceshipearth with sustainable fashion.</BannerHeader>
-    <BannerDescription dangerouslySetInnerHTML={{ __html: "We are currently re-working this website. Stay tuned and subscribe to our newsletter to be in the loop!" }} />
+    <BannerHeader>Let's equip the crew of #spaceshipearth with life sustaining fashion together, with you.</BannerHeader>
+    <BannerDescription dangerouslySetInnerHTML={{ __html: "We are launching the first produce on demand fashion platform soon. Subscribe to stay in the loop!" }} />
     <MailchimpForm data={data} />
   </BannerContainer>
 )

@@ -13,7 +13,6 @@ const AboutUs = ({ data }) => (
   <Layout data={data} highlightUrl="/about-us">
     <Hero data={data} />
     <MainImages data={data} />
-    <StrongVision data={data} />
     <MeetTheBand data={data} />
     <OurValues data={data} />
   </Layout>

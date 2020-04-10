@@ -3,7 +3,7 @@ import Section from '../../components/section'
 import styled from 'styled-components'
 
 const HeaderText = styled.h2`
-  color: #111;
+  color: white;
   font-weight: 900;
   font-size: 26px;
   text-align: left;
@@ -15,7 +15,7 @@ const HeaderText = styled.h2`
 `
 
 const MainDescription = styled.div`
-  color: #111;
+  color: white;
   margin-top: 32px;
   line-height: 1.36;
   width: 100%;

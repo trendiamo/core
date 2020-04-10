@@ -50,7 +50,7 @@ const Link = styled.a`
     font-size: 20px;
 
     & + & {
-      border-left: 2px solid #fff;
+      border-left: 3px solid #00e7ff;
     }
   }
 `
@@ -286,7 +286,6 @@ const Footer = styled(({ className, hideNewsletter, data }) => {
     }
     a {
       display: block;
-      line-height: 1.8;
       color: #272a32;
       text-decoration: none;
       color: #fff;

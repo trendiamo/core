@@ -6,6 +6,7 @@ import diogoFace from '../../images/about-us/faces-of-da-band/diogo.jpg'
 import maxFace from '../../images/about-us/faces-of-da-band/max.jpg'
 import nidhiFace from '../../images/about-us/faces-of-da-band/nidhi.jpg'
 import patrickFace from '../../images/about-us/faces-of-da-band/patrick.jpg'
+import jamesFace from '../../images/about-us/faces-of-da-band/james.jpg'
 import React from 'react'
 import Section from '../../components/section'
 import styled from 'styled-components'
@@ -23,7 +24,7 @@ const Container = styled.div`
 `
 
 const HeaderText = styled.div`
-  color: #111;
+  color: white;
   font-weight: 900;
   font-size: 26px;
   text-align: center;
@@ -31,6 +32,7 @@ const HeaderText = styled.div`
   @media (min-width: 1000px) {
     font-size: 36px;
     text-align: center;
+    margin-bottom: 20px;
   }
 `
 
@@ -168,6 +170,7 @@ const FacesOfDaBand = ({ data }) => (
         src={anaFace}
       ></Face>
       <Face description={data.aboutUs.theBandMembers.bruno.description} name="Bruno Santos" src={brunoFace}></Face>
+      <Face description="Art Director" name="James McBreen" src={jamesFace}></Face>
     </FaceCells>
   </FacesContainer>
 )
@@ -192,7 +195,8 @@ const FacesOfDaMobile = ({ data }) => (
 const MeetTheBand = ({ data }) => (
   <Section>
     <Container>
-      <HeaderText>{data.aboutUs.theBandHeading}</HeaderText>
+      <HeaderText>We share a strong vision</HeaderText>
+      <MainDescription>Being part of new world economy that is the integral driver for positive contribution to the whole</MainDescription>
       <FacesOfDaBand data={data} />
       <FacesOfDaMobile data={data} />
     </Container>

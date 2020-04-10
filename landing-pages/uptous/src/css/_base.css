@@ -11,7 +11,7 @@
 }
 
 html {
-  color: #272a32;
+  color: white;
   font-family: 'Avenir', sans-serif;
   font-size: 24px;
   scroll-behavior: smooth;
@@ -19,6 +19,8 @@ html {
 
 body {
   overflow-x: hidden;
+  background-image: url("../images/space_background.jpg");
+  background-size: cover;
 }
 
 h1,

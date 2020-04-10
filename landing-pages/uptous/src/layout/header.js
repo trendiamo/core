@@ -25,7 +25,7 @@ const HamburgerTicks = styled.div`
   display: block;
   width: 100%;
   height: 1px;
-  background-color: #111;
+  background-color: white;
   font-size: 0;
   transition: background-color 0.3s cubic-bezier(0.32, 0.74, 0.57, 1);
   user-select: none;
@@ -37,7 +37,7 @@ const HamburgerTicks = styled.div`
     left: 0;
     width: 75%;
     height: 100%;
-    background-color: #111;
+    background-color: white;
     transition: transform 0.35s, width 0.2s cubic-bezier(0.32, 0.74, 0.57, 1);
   }
   &:before {
@@ -74,7 +74,7 @@ const StyledSection = styled(Section)`
 const HeaderLink = styled(Link)`
   display: none;
   font-size: 20px;
-  color: #111;
+  color: #00e7ff;
   text-decoration: none;
   white-space: nowrap;
   letter-spacing: 0.4px;
@@ -93,7 +93,7 @@ const HeaderLink = styled(Link)`
 const HeaderLinkA = styled.a`
   display: none;
   font-size: 20px;
-  color: #111;
+  color: #00e7ff;
   text-decoration: none;
   white-space: nowrap;
   letter-spacing: 0.4px;

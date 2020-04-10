@@ -93,7 +93,7 @@ const BannerButton = styled.input`
   appearance: none;
   border: 1px solid #111;
   outline: none;
-  background: #111;
+  background: black;
   color: #fff;
   font-size: 18px;
   padding: 8px;

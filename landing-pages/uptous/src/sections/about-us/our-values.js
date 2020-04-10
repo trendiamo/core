@@ -9,7 +9,7 @@ const HeaderContainer = styled.div`
   z-index: 1;
   width: 100%;
   padding: 35px 0;
-  background: #fff;
+  background: #293D58;
 
   @media (min-width: 1000px) {
     padding: 35px 10px;
@@ -23,7 +23,7 @@ const Container = styled.div`
 
 const HeaderText = styled.div`
   font-weight: 900;
-  color: #111;
+  color: white;
   font-weight: 900;
   font-size: 26px;
   text-align: center;
@@ -35,7 +35,7 @@ const HeaderText = styled.div`
 `
 
 const MainDescription = styled.div`
-  color: #111;
+  color: white;
   line-height: 1.36;
   width: 100%;
   font-size: 20px;

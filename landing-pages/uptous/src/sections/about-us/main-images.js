@@ -1,11 +1,11 @@
-import coffee from '../../images/about-us/coffee.jpg'
-import girl from '../../images/about-us/girl.jpg'
-import grass from '../../images/about-us/grass.jpg'
-import programmers from '../../images/about-us/programmers.jpg'
+import coffee from '../../images/about-us/kite.jpg'
+import girl from '../../images/about-us/compass.jpg'
+import grass from '../../images/about-us/music.jpg'
+import programmers from '../../images/about-us/hiking.jpg'
 import React from 'react'
 import Section from '../../components/section'
 import styled from 'styled-components'
-import water from '../../images/about-us/water.jpg'
+import water from '../../images/about-us/space.jpg'
 
 const Container = styled.div`
   display: flex;
