@@ -39,8 +39,8 @@ const Container = styled.div`
 const AboutUsHero = ({ data }) => (
   <Section>
     <Container>
-      <HeaderText>{data.aboutUs.heroHeading}</HeaderText>
-      <MainDescription>{data.aboutUs.heroSubHeading}</MainDescription>
+      <HeaderText>Unlocking the best prices for the best, sustainable products</HeaderText>
+      <MainDescription>in order to unleash a fashion industry that is affordable and good for everyone - including our planet</MainDescription>
     </Container>
   </Section>
 )

@@ -55,3 +55,7 @@ button {
   margin-bottom: 1rem;
   line-height: 1.2;
 }
+
+input::placeholder {
+  color: white;
+}

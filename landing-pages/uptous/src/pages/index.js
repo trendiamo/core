@@ -1,15 +1,11 @@
-import BottomHeadline from '../sections/bottom-headline'
-import Hero from '../sections/hero'
+import Construction from '../sections/construction'
 import Layout from '../layout'
-import OurGoals from '../sections/our-goals'
 import React from 'react'
 import { graphql } from 'gatsby'
 
 const IndexPage = ({ data }) => (
   <Layout data={data}>
-    <Hero data={data} />
-    <OurGoals data={data} />
-    <BottomHeadline data={data} />
+    <Construction data={data} />
   </Layout>
 )
 
@@ -57,8 +53,6 @@ export const query = graphql`
         menu {
           magazine
           aboutUs
-          jobs
-          joinCommunity
         }
         timer {
           heading

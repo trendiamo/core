@@ -38,8 +38,8 @@ const MainDescription = styled.div`
 const StrongVision = ({ data }) => (
   <Section>
     <Container>
-      <HeaderText>{data.aboutUs.middleHeading}</HeaderText>
-      <MainDescription>{data.aboutUs.middleSubHeading}</MainDescription>
+      <HeaderText>We share a strong vision</HeaderText>
+      <MainDescription>to be part of new world economy that is the integral driver for positive contribution to the whole</MainDescription>
     </Container>
   </Section>
 )

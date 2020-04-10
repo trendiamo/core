@@ -95,7 +95,7 @@ const BannerDescription = styled.div`
 const Banner = ({ data }) => (
   <BannerContainer>
     <BannerHeader>{data.aboutUs.mainBannerHeading}</BannerHeader>
-    <BannerDescription>{data.aboutUs.mainBannerSubHeading}</BannerDescription>
+    <BannerDescription>to reverse-engineer the fashion industry together with you, to work demand first - supply second</BannerDescription>
   </BannerContainer>
 )
 

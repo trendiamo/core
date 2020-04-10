@@ -180,7 +180,6 @@ const NewsletterBanner = ({ data }) => (
 const FooterLinks = ({ data }) => (
   <FooterLinksContainer>
     <Link href="https://uptous.co/magazine">{data.layout.value.footer.magazine}</Link>
-    <Link href="/jobs">{data.layout.value.footer.jobs}</Link>
     <Link href="/terms-and-conditions">{data.layout.value.footer.termsAndConditions}</Link>
     <Link href="/privacy-policy">{data.layout.value.legalPageNames.privacyPolicy}</Link>
     <Link href="/cookie-policy">{data.layout.value.legalPageNames.cookiePolicy}</Link>
@@ -225,13 +224,6 @@ const Footer = styled(({ className, hideNewsletter, data }) => {
 
   return (
     <footer className={className}>
-      {!hideNewsletter && (
-        <GreySection>
-          <Section fullWidth>
-            <NewsletterBanner data={data} />
-          </Section>
-        </GreySection>
-      )}
       <DarkSection fullWidth>
         <DarkSectionFlex>
           <FooterLinks data={data} />

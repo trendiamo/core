@@ -193,7 +193,6 @@ const MeetTheBand = ({ data }) => (
   <Section>
     <Container>
       <HeaderText>{data.aboutUs.theBandHeading}</HeaderText>
-      <MainDescription dangerouslySetInnerHTML={{ __html: data.aboutUs.theBandSubHeading.childMarkdownRemark.html }} />
       <FacesOfDaBand data={data} />
       <FacesOfDaMobile data={data} />
     </Container>

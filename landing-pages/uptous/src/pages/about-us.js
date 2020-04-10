@@ -14,10 +14,8 @@ const AboutUs = ({ data }) => (
     <Hero data={data} />
     <MainImages data={data} />
     <StrongVision data={data} />
-    <MiddleImage data={data} />
     <MeetTheBand data={data} />
     <OurValues data={data} />
-    <Interested data={data} />
   </Layout>
 )
 
@@ -100,8 +98,6 @@ export const query = graphql`
         menu {
           magazine
           aboutUs
-          jobs
-          joinCommunity
         }
         timer {
           heading

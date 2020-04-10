@@ -70,8 +70,8 @@ const BannerDescription = styled.div`
 
 const Banner = ({ data }) => (
   <BannerContainer>
-    <BannerHeader>{data.aboutUs.middleBannerHeading}</BannerHeader>
-    <BannerDescription>{data.aboutUs.middleBannerSubHeading}</BannerDescription>
+    <BannerHeader>You are at the center of what we are creating</BannerHeader>
+    <BannerDescription>Because your input acts as a blueprint for what we are building.</BannerDescription>
   </BannerContainer>
 )
 
