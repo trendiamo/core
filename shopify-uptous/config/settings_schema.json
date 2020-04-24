@@ -56,26 +56,37 @@
         "type": "color",
         "id": "color_p1",
         "label": {
-          "da": "Overskrifter og links",
           "de": "Farbe 1",
-          "en": "Color 1",
-          "es": "Títulos y enlaces",
-          "fi": "Otsikot ja linkit",
-          "fr": "En-têtes et liens",
-          "hi": "शीर्षक और लिंक",
-          "it": "Titoli e link",
-          "ja": "見出しとリンク",
-          "ko": "제목 및 링크",
-          "nb": "Overskrifter og koblinger",
-          "nl": "Koppen en links",
-          "pt-BR": "Títulos e links",
-          "pt-PT": "Títulos e ligações",
-          "sv": "Rubriker och länkar",
-          "th": "หัวเรื่องและลิงก์",
-          "zh-CN": "标题和链接",
-          "zh-TW": "標題和連結"
+          "en": "Color 1"
         },
         "default": "#771336"
+      },
+      {
+        "type": "color",
+        "id": "color_p2",
+        "label": {
+          "de": "Farbe 2",
+          "en": "Color 2"
+        },
+        "default": "#12386C"
+      },
+      {
+        "type": "color",
+        "id": "color_p3",
+        "label": {
+          "de": "Farbe 3",
+          "en": "Color 3"
+        },
+        "default": "#FFADCA"
+      },
+      {
+        "type": "color",
+        "id": "color_p4",
+        "label": {
+          "de": "Farbe 4",
+          "en": "Color 4"
+        },
+        "default": "#A3C0DC"
       },
       {
         "type": "header",

@@ -105,6 +105,11 @@
   <script src="{{ 'theme.js' | asset_url }}" defer="defer"></script>
 
   {{ content_for_header }}
+
+  <script src="https://code.jquery.com/jquery-3.5.0.min.js" integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ="crossorigin="anonymous">
+    var amount = $(".result").val();
+    alert("TEST TEST TEST");
+  </script>
 </head>
 
 <body class="template-{{ request.page_type | handle }}">
