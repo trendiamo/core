@@ -495,7 +495,6 @@ h1 {
 
 .u2u-team-member-3 {
   float: left;
-  margin-left: 60px;
 }
 
 .u2u-team-member-pic-3 {
@@ -506,7 +505,7 @@ h1 {
 
 .u2u-team-member-4 {
   float: left;
-  margin-left: 60px;
+  margin-left: 40px;
 }
 
 .u2u-team-member-pic-4 {
@@ -549,6 +548,7 @@ h1 {
   .u2u-team-member-3 {
     float: left;
     margin-top: 30px;
+    margin-left: 60px;
   }
 
   .u2u-team-member-pic-3 {
@@ -596,6 +596,59 @@ h1 {
   text-transform: uppercase;
   color: white;
   margin-bottom: 30px;
+}
+
+.u2u-content-showcase-video {
+  width: 100%;
+  height: auto;
+}
+
+@media only screen and (min-width: 1000px) {
+
+  .u2u-content-showcase-video {
+    width: 560px;
+    height: 315px;
+  }
+}
+
+/*====INSTAGRAM FEED (FIXES)====*/
+
+.u2u-ig-section-fix {
+  background-color: {{ settings.color_p1 }};
+}
+
+.u2u-ig-fix {
+  margin: 0 auto !important;
+}
+
+.ooo-instagram-container {
+  padding: 0 !important;
+  margin-bottom: 60px !important;
+  padding-left: 22px !important;
+  padding-right: 22px !important;
+}
+
+.ooo-instagram-header__title {
+  font-family: 'Proxima Nova Regular', sans-serif !important;
+  font-size: 26px;
+  text-transform: uppercase;
+  color: white;
+  text-align: left;
+  letter-spacing: normal;
+  color: white !important;
+  font-weight: normal !important;
+}
+
+@media only screen and (min-width: 1000px) {
+
+  .ooo-instagram-container {
+    margin-bottom: 120px !important;
+  }
+
+  .u2u-ig-fix {
+    padding-left: 55px !important;
+    padding-right: 55px !important;
+  }
 }
 
 /*====FOOTER (AND OVERRIDES)====*/
@@ -649,6 +702,22 @@ h1 {
 .site-footer small,
 .site-footer__copyright-content a {
   color: white !important;
+}
+
+@media only screen and (max-width: 1000px) {
+
+  .site-footer h4, .site-footer .h4 {
+    font-size: 26px;
+  }
+
+  .site-footer__linklist-item {
+    padding: 8px 0 !important;
+    font-size: 20px !important;
+  }
+
+  .disclosure {
+    margin-top: 30px;
+  }
 }
 
 /*============================================================================

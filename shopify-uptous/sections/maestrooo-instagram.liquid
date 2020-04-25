@@ -40,7 +40,7 @@ what you are doing, as you may break the app.
 }
 {%- endcapture -%}
 
-<section class="ooo-instagram" data-section-id="{{ section.id }}" data-section-type="app-section-feed" data-section-settings='{{ section_settings }}'>
+<section class="ooo-instagram page-width u2u-ig-fix" data-section-id="{{ section.id }}" data-section-type="app-section-feed" data-section-settings='{{ section_settings }}'>
   <div class="ooo-instagram-container">
     {%- if section.settings.title != blank or section.settings.subheading != blank -%}
       <header class="ooo-instagram-header">
@@ -455,6 +455,7 @@ what you are doing, as you may break the app.
     "fr": "Flux Instagram",
     "ja": "Instagramフィード"
   },
+  "class": "index-section u2u-ig-section-fix",
   "settings": [
     {
       "type": "text",
