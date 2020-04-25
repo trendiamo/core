@@ -1,0 +1,37 @@
+<div class="page-width u2u-content-showcase-wrapper">
+  <div class="u2u-content-showcase-headline">{{ section.settings.heading }}</div>
+  <div class="u2u-content-showcase-subheadline">Watch our videos</div>
+  <iframe width="560" height="315" src="https://www.youtube.com/embed/videoseries?list=UUnEQGnoZb_jEjMtgNsvLMVQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
+{% schema %}
+{
+  "name": {
+    "de": "Content Showcase",
+    "en": "Content Showcase"
+  },
+  "class": "index-section u2u-index-section-content-showcase",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": {
+        "de": "Überschrift",
+        "en": "Heading"
+      }
+    }
+  ],
+  "presets": [
+    {
+      "name": {
+        "de": "Content Showcase",
+        "en": "Content Showcase"
+      },
+      "category": {
+        "de": "Video",
+        "en": "Video"
+      }
+    }
+  ]
+}
+{% endschema %}
