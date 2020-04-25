@@ -187,13 +187,15 @@
                 {% unless product.has_only_default_variant %}
                   <div class="u2u-configurator-controls product-form__controls-group">
                     {% for option in product.options_with_values %}
+                    {% if option.name == 'Color' %}
                       <div class="selector-wrapper js product-form__item">
-                        <select class="u2u-color-picker single-option-selector single-option-selector-{{ section.id }} product-form__input" id="SingleOptionSelector-{{ section.id }}-{{ forloop.index0 }}" data-index="option{{ forloop.index }}">
+                        <select class="u2u-option single-option-selector single-option-selector-{{ section.id }} product-form__input" id="SingleOptionSelector-{{ section.id }}-{{ forloop.index0 }}" data-index="option{{ forloop.index }}">
                           {% for value in option.values %}
                             <option value="{{ value | escape }}"{% if option.selected_value == value %} selected="selected"{% endif %}>{{ value }}</option>
                           {% endfor %}
                         </select>
                       </div>
+                    {% endif %}
                     {% endfor %}
                   </div>
                 {% endunless %}
@@ -211,7 +213,22 @@
             </div>
 
               <div class="u2u-configurator-step2">
-                <div class="u2u-configurator-step-heading">Upload your logo</div>
+                <div id="step2-heading" class="u2u-configurator-step-heading">Do you want your logo on the mask?</div>
+                <div class="u2u-configurator-prices">
+                  <div class="u2u-configurator-price-standard">Standard: <span style="color:{{settings.color_p1}}">{{ section.settings.standard_price }}</span> per mask</div>
+                  <div class="u2u-configurator-price-custom">With logo: <span style="color:{{settings.color_p1}}">{{ section.settings.custom_price }}</span> per mask</div>
+                </div>
+                {% for option in product.options_with_values %}
+                {% if option.name == 'Custom Logo' %}
+                  <div class="selector-wrapper js product-form__item">
+                    <select class="u2u-option u2u-custom single-option-selector single-option-selector-{{ section.id }} product-form__input" id="SingleOptionSelector-{{ section.id }}-{{ forloop.index0 }}" data-index="option{{ forloop.index }}">
+                      {% for value in option.values %}
+                        <option value="{{ value | escape }}"{% if option.selected_value == value %} selected="selected"{% endif %}>{{ value }}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                {% endif %}
+                {% endfor %}
 
                 <div class="u2u-configurator-logo-preview grid__item product-single__media-group {{ product_media_width }}{% if section.settings.media_size == 'full' %} product-single__media-group--full{% endif %}" data-product-single-media-group>
                   {% unless section_onboarding %}
@@ -261,14 +278,33 @@
                       {% endif %}
                     </div>
                   {% endif %}
-                  <div class="uploadkit" data-uploadkit-product-json="{{ product | json | escape }}" data-uploadkit-collections-json="{{ product.collections | json | escape }}"></div>
-                  <script src="https://assets.getuploadkit.com/assets/uploadkit-app.js"></script>
+                  <div class="u2u-uploader">
+                    <div class="uploadkit" data-uploadkit-product-json="{{ product | json | escape }}" data-uploadkit-collections-json="{{ product.collections | json | escape }}"></div>
+                    <script src="https://assets.getuploadkit.com/assets/uploadkit-app.js"></script>
+                  </div>
                 </div>
               </div>
 
               <div class="u2u-configurator-step3">
                 <div class="u2u-configurator-step-heading">Choose how many you want</div>
-                <div class="calconic-calculator" style="padding: 5px 10px; border: 2px solid #efefef" data-calculatorid="5ea1cb50a4ca0d00290b1867">Calculator placeholder</div>
+
+                <div class="u2u-calculator">
+                  <div class="u2u-calculator-heading">Number of Packs</div>
+                  <input class="u2u-calculator-num1 u2u-option" type="number" value="40">
+                  <div class="u2u-calculator-heading">Masks per Packs</div>
+                  {% for option in product.options_with_values %}
+                  {% if option.name == 'Masks per Pack' %}
+                    <div class="selector-wrapper js product-form__item">
+                      <select class="u2u-option u2u-packsize single-option-selector single-option-selector-{{ section.id }} product-form__input" id="SingleOptionSelector-{{ section.id }}-{{ forloop.index0 }}" data-index="option{{ forloop.index }}">
+                        {% for value in option.values %}
+                          <option value="{{ value | escape }}"{% if option.selected_value == value %} selected="selected"{% endif %}>{{ value }}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                  {% endif %}
+                  {% endfor %}
+                  <div class="u2u-calculator-result"><p>You are going to order </p><div class="u2u-calculator-result-number"></div><p> masks.</p></div>
+                </div>
 
                 {% if section.settings.show_quantity_selector %}
                   <div class="product-form__controls-group">
@@ -345,6 +381,20 @@
   </div>
 </div>
 
+<div id="u2u-amt-error">
+  <div class="u2u-amt-error-box">
+    <p>Sorry, you need to reach the minimum order quantity of 200 masks.</p>
+    <div class="u2u-amt-error-btn">OK</div>
+  </div>
+</div>
+
+<div id="u2u-custom-error">
+  <div class="u2u-amt-error-box">
+    <p>Please upload your logo before you continue.</p>
+    <div class="u2u-custom-error-btn">OK</div>
+  </div>
+</div>
+
 {% unless product == empty %}
   <script type="application/json" id="ProductJson-{{ section.id }}">
     {{ product | json }}
@@ -392,12 +442,73 @@
 </script>
 
 <script type="text/javascript">
-  $( ".btn" ).click(function(event) {
-    var amt = $(".result").find("span").html();
-    if (amt < 200) {
-      alert( "Our production sites only accept orders of at lest 200 masks.");
-      event.preventDefault();
-    }
+  $(document).ready(function(){
+
+    var custom = "Yes"
+
+    var v1 = $(".u2u-calculator-num1").val();
+    var v2 = $(".u2u-packsize").val();
+    var r = v1 * v2;
+    $("#Quantity-featured-product-configmask").val(r);
+    $(".u2u-calculator-result-number").text(r);
+
+    $(".u2u-calculator-num1").on("input", function(){
+        v1 = $(".u2u-calculator-num1").val();
+        r = v1 * v2;
+        $("#Quantity-featured-product-configmask").val(r);
+        $(".u2u-calculator-result-number").text(r);
+    });
+
+    $(".u2u-packsize").on("change", function(){
+        v2 = $(".u2u-packsize").val();
+        r = v1 * v2;
+        $("#Quantity-featured-product-configmask").val(r);
+        $(".u2u-calculator-result-number").text(r);
+    });
+
+    //$(".calconic--controled_input").find("input").on("input", function(){
+    //  alert("CHANGE");
+    //  var ps = $("##2").val();
+    //  $(".u2u-packsize").val(ps);
+    //});
+
+    $("select.u2u-custom").change(function(){
+        custom = $(this).children("option:selected").val();
+        if (custom == 'No') {
+          $(".uploadkit-button").attr('disabled', true);
+          $(".uploadkit-button").css("border-color", "gray");
+          $(".uploadkit-button").css("color", "gray");
+        } else {
+          $(".uploadkit-button").attr('disabled', false);
+          $(".uploadkit-button").css("border-color", "white");
+          $(".uploadkit-button").css("color", "white");
+        }
+    });
+
+    $( ".btn" ).click(function(event) {
+      var amt = $("#Quantity-featured-product-configmask").val();
+      var uploaded = $(".uploadkit-button").text();
+      if (amt < 200) {
+        $("#u2u-amt-error").show();
+        //alert("Our production sites only accept orders of at lest 200 masks.");
+        event.preventDefault();
+      } else {
+        if (custom == "Yes" && uploaded == "UPLOAD YOUR LOGO") {
+          $("#u2u-custom-error").show();
+          //alert("Please upload your logo before you continue.");
+          event.preventDefault();
+        }
+      }
+    });
+
+    $( ".u2u-amt-error-btn" ).click(function(event) {
+      $("#u2u-amt-error").hide();
+    });
+
+    $( ".u2u-custom-error-btn" ).click(function(event) {
+      $("#u2u-custom-error").hide();
+    });
+
   });
 </script>
 
@@ -813,6 +924,22 @@
         "zh-TW": "啟用影片循環功能"
       },
       "default": false
+    },
+    {
+      "type": "text",
+      "id": "standard_price",
+      "label": {
+        "de": "Standard Preis",
+        "en": "Standard Price"
+      }
+    },
+    {
+      "type": "text",
+      "id": "custom_price",
+      "label": {
+        "de": "Personalisierter Preis",
+        "en": "Personalized Price"
+      }
     }
   ],
   "presets": [
