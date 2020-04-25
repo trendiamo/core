@@ -1,0 +1,53 @@
+<div class="page-width u2u-paragraph">
+  <div class="u2u-paragraph-heading">{{ section.settings.heading }}</div>
+  <div class="u2u-paragraph-subheading">{{ section.settings.subheading }}</div>
+  <p class="u2u-paragraph-text">{{ section.settings.text }}</p>
+</div>
+
+{% schema %}
+{
+  "name": {
+    "de": "Paragraph mit Titeln",
+    "en": "Paragraph with Headings"
+  },
+  "class": "index-section u2u-index-section-paragraph",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": {
+        "de": "Überschrift",
+        "en": "Heading"
+      }
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": {
+        "de": "Zweite Überschrift",
+        "en": "Second Heading"
+      }
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": {
+        "de": "Paragraph",
+        "en": "Paragraph"
+      }
+    }
+  ],
+  "presets": [
+    {
+      "name": {
+        "de": "Paragraph mit Titeln",
+        "en": "Paragraph with Headings"
+      },
+      "category": {
+        "de": "Text",
+        "en": "Text"
+      }
+    }
+  ]
+}
+{% endschema %}

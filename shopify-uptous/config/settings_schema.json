@@ -89,6 +89,15 @@
         "default": "#A3C0DC"
       },
       {
+        "type": "color",
+        "id": "color_p5",
+        "label": {
+          "de": "Farbe 5",
+          "en": "Color 5"
+        },
+        "default": "#090B39"
+      },
+      {
         "type": "header",
         "content": {
           "da": "Tekst",

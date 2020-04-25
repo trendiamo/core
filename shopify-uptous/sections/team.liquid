@@ -1,0 +1,172 @@
+<div class="page-width u2u-team-wrapper">
+  <div class="u2u-team-headline">{{ section.settings.heading }}</div>
+  <div class="u2u-team">
+    <div class="u2u-team-space">
+      <div class="u2u-team-member-1">
+        <img class="u2u-team-member-pic-1" src="{{ section.settings.member_pic_1 | img_url: '200x' }}"></img>
+        <div class="u2u-team-member-meta-1">
+          <div class="u2u-team-member-name">{{ section.settings.member_name_1 }}</div>
+          <div class="u2u-team-member-title">{{ section.settings.member_title_1 }}</div>
+        </div>
+      </div>
+      <div class="u2u-team-member-2">
+        <img class="u2u-team-member-pic-2" src="{{ section.settings.member_pic_2 | img_url: '400x' }}"></img>
+        <div class="u2u-team-member-meta-2">
+          <div class="u2u-team-member-name">{{ section.settings.member_name_2 }}</div>
+          <div class="u2u-team-member-title">{{ section.settings.member_title_2 }}</div>
+        </div>
+      </div>
+      <div class="u2u-team-member-3">
+        <img class="u2u-team-member-pic-3" src="{{ section.settings.member_pic_3 | img_url: '200x' }}"></img>
+        <div class="u2u-team-member-meta-3">
+          <div class="u2u-team-member-name">{{ section.settings.member_name_3 }}</div>
+          <div class="u2u-team-member-title">{{ section.settings.member_title_3 }}</div>
+        </div>
+      </div>
+      <div class="u2u-team-member-4">
+        <img class="u2u-team-member-pic-4" src="{{ section.settings.member_pic_4 | img_url: '200x' }}"></img>
+        <div class="u2u-team-member-meta-4">
+          <div class="u2u-team-member-name">{{ section.settings.member_name_4 }}</div>
+          <div class="u2u-team-member-title">{{ section.settings.member_title_4 }}</div>
+        </div>
+      </div>
+    </div>
+    <p class="u2u-team-text">{{ section.settings.text }}</div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": {
+    "de": "Team Vorstellung",
+    "en": "Team Introduction"
+  },
+  "class": "index-section u2u-index-section-team",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": {
+        "de": "Überschrift",
+        "en": "Heading"
+      }
+    },
+    {
+      "type": "text",
+      "id": "member_name_1",
+      "label": {
+        "de": "Name 1",
+        "en": "Name 1"
+      }
+    },
+    {
+      "type": "text",
+      "id": "member_title_1",
+      "label": {
+        "de": "Titel 1",
+        "en": "Title 1"
+      }
+    },
+    {
+      "type": "image_picker",
+      "id": "member_pic_1",
+      "label": {
+        "de": "Bild 1",
+        "en": "Picture 1"
+      }
+    },
+    {
+      "type": "text",
+      "id": "member_name_2",
+      "label": {
+        "de": "Name 2",
+        "en": "Name 2"
+      }
+    },
+    {
+      "type": "text",
+      "id": "member_title_2",
+      "label": {
+        "de": "Titel 2",
+        "en": "Title 2"
+      }
+    },
+    {
+      "type": "image_picker",
+      "id": "member_pic_2",
+      "label": {
+        "de": "Bild 2",
+        "en": "Picture 2"
+      }
+    },
+    {
+      "type": "text",
+      "id": "member_name_3",
+      "label": {
+        "de": "Name 3",
+        "en": "Name 3"
+      }
+    },
+    {
+      "type": "text",
+      "id": "member_title_3",
+      "label": {
+        "de": "Titel 3",
+        "en": "Title 3"
+      }
+    },
+    {
+      "type": "image_picker",
+      "id": "member_pic_3",
+      "label": {
+        "de": "Bild 3",
+        "en": "Picture 3"
+      }
+    },
+    {
+      "type": "text",
+      "id": "member_name_4",
+      "label": {
+        "de": "Name 4",
+        "en": "Name 4"
+      }
+    },
+    {
+      "type": "text",
+      "id": "member_title_4",
+      "label": {
+        "de": "Titel 4",
+        "en": "Title 4"
+      }
+    },
+    {
+      "type": "image_picker",
+      "id": "member_pic_4",
+      "label": {
+        "de": "Bild 4",
+        "en": "Picture 4"
+      }
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": {
+        "de": "Text",
+        "en": "Text"
+      }
+    }
+  ],
+  "presets": [
+    {
+      "name": {
+        "de": "Team Vorstellung",
+        "en": "Team Introduction"
+      },
+      "category": {
+        "de": "Text",
+        "en": "Text"
+      }
+    }
+  ]
+}
+{% endschema %}

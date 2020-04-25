@@ -32,6 +32,16 @@ h1 {
   margin-bottom: 0;
 }
 
+.index-section {
+  padding-bottom: 0 !important;
+  padding-top: 60px !important;
+}
+
+#shopify-section-hero,
+#shopify-section-hero-1 {
+  padding-top: 0 !important;
+}
+
 /*====GENERAL====*/
 
 .u2u-full-width {
@@ -44,15 +54,164 @@ h1 {
   padding: 0;
 }
 
+/*====HEADER====*/
+
+.u2u-logo-mobile {
+  display: table-cell !important;
+}
+
+.u2u-logo {
+  display: none !important;
+  float: right;
+  margin: 13px 0px;
+}
+
+.u2u-header-announcement {
+  display: none;
+}
+
+#u2u-hero-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+}
+
+@media only screen and (min-width: 1000px) {
+
+  .site-header {
+    padding: 0px 30px !important;
+  }
+
+  .site-nav {
+    font-family: 'Proxima Nova Extrabold', sans-serif !important;
+    text-align: left !important;
+    font-size: 20px;
+    text-transform: uppercase;
+  }
+
+  .site-nav a {
+    padding: 3px 12px !important;
+  }
+
+  .site-nav a span {
+    font-family: 'Proxima Nova Extrabold', sans-serif !important;
+  }
+
+  .u2u-header-icons {
+    float: right !important;
+    margin: 0 !important;
+    padding: 22px !important;
+    width: auto !important;
+  }
+
+  .u2u-logo-mobile {
+    display: none !important;
+  }
+
+  .u2u-logo {
+    display: block !important;
+  }
+
+  .u2u-header-announcement {
+    font-family: 'Proxima Nova Regular', sans-serif !important;
+    display: block;
+    background-color: black;
+    height: 30px;
+    width: 100%;
+    color: white;
+    padding: 4px 10px;
+    font-size: 14px;
+  }
+}
+
+/*====HERO====*/
+
+.u2u-hero {
+  display: none !important;
+}
+
+.u2u-hero-mobile {
+  display: block !important;
+}
+
+@media only screen and (min-width: 1000px) {
+
+  .u2u-hero {
+    display: table !important;
+  }
+
+  .u2u-hero-mobile {
+    display: none !important;
+  }
+}
+
+/*====FEATURES SECTION====*/
+
+.u2u-index-section-features {
+  position: relative;
+  padding: 0;
+  background-color: {{ settings.color_p1 }};
+  z-index: 2;
+}
+
+#shopify-section-features {
+  background-color: {{ settings.color_p1 }};
+  position: relative;
+  z-index: 2;
+}
+
+.u2u-features-wrapper {
+  background-color: {{ settings.color_p1 }};
+  padding-bottom: 60px;
+}
+
+.u2u-feature {
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+.u2u-feature-headline {
+  font-family: 'Proxima Nova Bold', sans-serif !important;
+  font-size: 26px;
+  text-transform: uppercase;
+  color: {{ settings.color_p3 }};
+}
+
+.u2u-feature-text {
+  color: {{ settings.color_p3 }};
+  font-size: 20px;
+  line-height: 26px;
+  margin-top: 10px;
+}
+
+@media only screen and (min-width: 1000px) {
+
+  .u2u-feature {
+    float: left;
+    width: 33.33%;
+    padding-right: 40px;
+    margin-bottom: 0;
+  }
+
+  .u2u-feature:last-child {
+    padding-right: 0;
+  }
+
+}
+
 /*====MASK CONIFGURATOR====*/
 
 .u2u-configurator {
   position: relative;
+  z-index: 100;
 }
 
 #shopify-section-featured-product-configmask,
 #shopify-section-1587666637727 {
   background-color: {{ settings.color_p4 }};
+  position: relative;
 }
 
 .u2u-handdrawn-line {
@@ -62,6 +221,7 @@ h1 {
   right: 0;
   margin: 0 auto;
   top: 18%;
+  z-index: -1;
 }
 
 .u2u-configurator-heading {
@@ -91,6 +251,7 @@ h1 {
   font-weight: bold;
   margin: 0 !important;
   margin-top: 20px !important;
+  width: 70%;
 }
 
 .u2u-configurator-step1-old {
@@ -179,13 +340,11 @@ h1 {
   display: none;
 }
 
-/*====NON MOBILE====*/
-
 @media only screen and (min-width: 1000px) {
 
   .u2u-handdrawn-line {
     width: 40%;
-    top: 32%;
+    top: 23%;
   }
 
   .u2u-configurator-step1 {
@@ -220,6 +379,249 @@ h1 {
     width: auto;
   }
 }
+
+/*====PARAGRAPH WITH HEADINGS SECTION====*/
+
+.u2u-index-section-paragraph {
+  background-color: {{ settings.color_p4 }};
+}
+
+.u2u-paragraph {
+  padding-bottom: 120px;
+}
+
+.u2u-paragraph-heading {
+  font-family: 'Proxima Nova Bold', sans-serif !important;
+  font-size: 38px;
+  text-transform: uppercase;
+  font-weight: 700;
+  width: 330px;
+  line-height: 46px;
+  color: white;
+}
+
+.u2u-paragraph-subheading {
+  font-family: 'Proxima Nova Bold', sans-serif !important;
+  color: {{ settings.color_p1 }};
+  font-size: 1.6em;
+  padding-top: 30px;
+}
+
+.u2u-paragraph-text {
+  font-family: 'Proxima Nova Regular', sans-serif !important;
+  color: {{ settings.color_p2 }};
+  font-size: 20px;
+  padding-top: 30px;
+}
+
+@media only screen and (min-width: 1000px) {
+
+  .u2u-paragraph-subheading {
+    padding-left: 20%;
+  }
+
+  .u2u-paragraph-text {
+    padding-left: 20%;
+    column-count: 2;
+    column-gap: 20px;
+  }
+}
+
+/*====TEAM SECTION====*/
+
+.u2u-index-section-team {
+  background-color: {{ settings.color_p2 }};
+}
+
+.u2u-team-wrapper {
+  padding-bottom: 60px;
+}
+
+.u2u-team-headline {
+  width: 100%;
+  text-align: center;
+  font-family: 'Proxima Nova Bold', sans-serif !important;
+  font-size: 38px;
+  text-transform: uppercase;
+  font-weight: 700;
+  line-height: 46px;
+  color: white;
+  margin-bottom: 60px;
+}
+
+.u2u-team-space {
+  color: white;
+  margin-top: 30px;
+  overflow: auto;
+}
+
+.u2u-team-member-name {
+  font-family: 'Proxima Nova Bold', sans-serif !important;
+  font-size: 26px;
+  text-transform: uppercase;
+}
+
+.u2u-team-member-title {
+  font-family: 'Proxima Nova Regular', sans-serif !important;
+  font-size: 20px;
+  text-transform: uppercase;
+}
+
+.u2u-team-member-1 {
+  float: left;
+  overflow: visible;
+  margin-left: 10px;
+  margin-top: 10px;
+}
+
+.u2u-team-member-pic-1 {
+  width: 100px;
+  transform: rotate(20deg);
+  margin-bottom: 30px;
+}
+
+.u2u-team-member-2 {
+  float: left;
+  margin-left: 20px;
+  margin-bottom: 60px;
+}
+
+.u2u-team-member-pic-2 {
+  width: 180px;
+  transform: rotate(1deg);
+  margin-bottom: 30px;
+}
+
+.u2u-team-member-3 {
+  float: left;
+  margin-left: 30px;
+}
+
+.u2u-team-member-pic-3 {
+  width: 100px;
+  transform: rotate(-15deg);
+  margin-bottom: 30px;
+}
+
+.u2u-team-member-4 {
+  float: left;
+  margin-left: 30px;
+}
+
+.u2u-team-member-pic-4 {
+  width: 150px;
+  transform: rotate(15deg);
+  margin-bottom: 30px;
+}
+
+.u2u-team-text {
+  font-family: 'Proxima Nova Regular', sans-serif !important;
+  color: white;
+  font-size: 20px;
+  padding-top: 60px;
+}
+
+@media only screen and (min-width: 1000px) {
+
+  .u2u-team-wrapper {
+    padding-bottom: 120px;
+  }
+
+  .u2u-team-member-1 {
+    float: left;
+  }
+
+  .u2u-team-member-pic-1 {
+    width: 160px;
+  }
+
+  .u2u-team-member-2 {
+    float: left;
+    margin-left: 60px;
+    margin-bottom: 0;
+  }
+
+  .u2u-team-member-pic-2 {
+    width: 300px;
+  }
+
+  .u2u-team-member-3 {
+    float: left;
+    margin-top: 30px;
+  }
+
+  .u2u-team-member-pic-3 {
+    width: 160px;
+  }
+
+  .u2u-team-member-4 {
+    float: left;
+    margin-left: 60px;
+  }
+
+  .u2u-team-member-pic-4 {
+    width: 160px;
+  }
+
+  .u2u-team-text {
+    column-count: 2;
+    column-gap: 20px;
+  }
+}
+
+/*====FOOTER (AND OVERRIDES)====*/
+
+.site-footer {
+  margin-top: 0 !important;
+  background-color: {{ settings.color_p5 }} !important;
+  color: white !important;
+}
+
+.site-footer p {
+  color: white !important;
+}
+
+.site-footer__linklist-item a {
+  color: white !important;
+}
+
+.site-footer__item-inner--newsletter .newsletter__input {
+  font-family: 'Proxima Nova Regular', sans-serif !important;
+  background-color: #c0dbf3 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+}
+
+.site-footer__item-inner--newsletter .newsletter__submit {
+  font-family: 'Proxima Nova Bold', sans-serif !important;
+  background-color: transparent !important;
+  border: 4px solid white !important;
+}
+
+.disclosure__toggle {
+  font-family: 'Proxima Nova Bold', sans-serif !important;
+  border: 2px solid white !important;
+  color: white !important;
+}
+
+.disclosure-list {
+  font-family: 'Proxima Nova Bold', sans-serif !important;
+  border: 2px solid white !important;
+  color: white !important;
+  background-color: {{ settings.color_p2 }} !important;
+}
+
+.disclosure-list__item,
+.disclosure-list__option {
+  font-family: 'Proxima Nova Bold', sans-serif !important;
+  color: white !important;
+}
+
+.site-footer small,
+.site-footer__copyright-content a {
+  color: white !important;
+}
+
 /*============================================================================
   UPTOUS Shopify Theme - CUSTOM CSS END
 ==============================================================================*/

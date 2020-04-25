@@ -1,0 +1,86 @@
+<div class="page-width u2u-features-wrapper">
+  <div class="u2u-feature">
+    <div class="u2u-feature-headline">{{ section.settings.heading_1 }}</div>
+    <div class="u2u-feature-text">{{ section.settings.text_1 }}</div>
+  </div>
+  <div class="u2u-feature">
+    <div class="u2u-feature-headline">{{ section.settings.heading_2 }}</div>
+    <div class="u2u-feature-text">{{ section.settings.text_2 }}</div>
+  </div>
+  <div class="u2u-feature">
+    <div class="u2u-feature-headline">{{ section.settings.heading_3 }}</div>
+    <div class="u2u-feature-text">{{ section.settings.text_3 }}</div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": {
+    "de": "Feature Banner",
+    "en": "Feature Banner"
+  },
+  "class": "index-section u2u-index-section-features",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading_1",
+      "label": {
+        "de": "Überschrift 1",
+        "en": "Heading 1"
+      }
+    },
+    {
+      "type": "textarea",
+      "id": "text_1",
+      "label": {
+        "de": "Text 1",
+        "en": "Text 1"
+      }
+    },
+    {
+      "type": "text",
+      "id": "heading_2",
+      "label": {
+        "de": "Überschrift 2",
+        "en": "Heading 2"
+      }
+    },
+    {
+      "type": "textarea",
+      "id": "text_2",
+      "label": {
+        "de": "Text 2",
+        "en": "Text 2"
+      }
+    },
+    {
+      "type": "text",
+      "id": "heading_3",
+      "label": {
+        "de": "Überschrift 3",
+        "en": "Heading 3"
+      }
+    },
+    {
+      "type": "textarea",
+      "id": "text_3",
+      "label": {
+        "de": "Text 3",
+        "en": "Text 3"
+      }
+    }
+  ],
+  "presets": [
+    {
+      "name": {
+        "de": "Feature Banner",
+        "en": "Feature Banner"
+      },
+      "category": {
+        "de": "Text",
+        "en": "Text"
+      }
+    }
+  ]
+}
+{% endschema %}
