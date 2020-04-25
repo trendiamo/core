@@ -1,135 +1,297 @@
 {
   "current": {
+    "color_p1": "#771336",
+    "color_p2": "#12386c",
+    "color_p3": "#ffadca",
+    "color_p4": "#a3c0dc",
+    "color_p5": "#090b39",
+    "color_text": "#3a3a3a",
+    "color_body_text": "#333232",
+    "color_sale_text": "#fa4545",
+    "color_button": "#3a3a3a",
+    "color_button_text": "#ffffff",
+    "color_small_button_text_border": "#3a3a3a",
+    "color_text_field_text": "#000000",
+    "color_text_field_border": "#cccccc",
+    "color_text_field": "rgba(0,0,0,0)",
+    "color_image_overlay_text": "#ffffff",
+    "color_image_overlay": "#685858",
+    "image_overlay_opacity": 40,
+    "color_borders": "#ebebeb",
+    "color_body_bg": "#ffffff",
+    "type_header_font": "helvetica_n7",
+    "type_header_base_size": 26,
+    "type_base_font": "helvetica_n4",
+    "type_base_size": 15,
+    "predictive_search_enabled": false,
+    "predictive_search_show_vendor": false,
+    "predictive_search_show_price": false,
+    "share_image": "",
+    "share_facebook": true,
+    "share_twitter": true,
+    "share_pinterest": true,
+    "social_twitter_link": "",
+    "social_facebook_link": "",
+    "social_pinterest_link": "",
+    "social_instagram_link": "",
+    "social_tumblr_link": "",
+    "social_snapchat_link": "",
+    "social_youtube_link": "",
+    "social_vimeo_link": "",
+    "favicon": "",
+    "enable_ajax": true,
+    "checkout_header_image": "",
+    "checkout_logo_image": "",
+    "checkout_logo_position": "left",
+    "checkout_logo_size": "medium",
+    "checkout_body_background_image": "",
+    "checkout_body_background_color": "#fff",
+    "checkout_input_background_color_mode": "white",
+    "checkout_sidebar_background_image": "",
+    "checkout_sidebar_background_color": "#fafafa",
+    "checkout_heading_font": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'",
+    "checkout_body_font": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'",
+    "checkout_accent_color": "#197bbd",
+    "checkout_button_color": "#197bbd",
+    "checkout_error_color": "#e32c2b",
     "sections": {
       "header": {
         "type": "header",
-        "settings": {}
+        "settings": {
+          "align_logo": "left",
+          "logo": "shopify:\/\/shop_images\/logo_black.png",
+          "logo_max_width": 120,
+          "main_linklist": "main-menu",
+          "message": false,
+          "home_page_only": true,
+          "message_text": "Announce something here",
+          "message_link": "",
+          "color_bg": "#3a3a3a",
+          "color_text": "#ffffff"
+        }
       },
       "hero-1": {
         "type": "hero",
         "settings": {
+          "image": "shopify:\/\/shop_images\/Bildschirmfoto_2020-04-23_um_14.34.06.png",
+          "alignment": "center",
+          "hero_layout": "full_width",
           "hero_size": "large",
-          "text_size": "large"
+          "text_size": "large",
+          "title": "Healthy Fashion for the crew of #spaceshipearth",
+          "text": "<p>We are building a produce on demand fashion platform<br>to put you in the center of the fashion industry and reduce its waste<\/p>",
+          "button_label": "SHOP OUR PROTECTION WEAR",
+          "button_link": "http:\/\/https\/\/google.com"
         }
-      },
-      "feature-row": {
-        "type": "feature-row",
-        "settings": {}
-      },
-      "feature-columns": {
-        "type": "feature-columns",
-        "blocks": {
-          "feature-columns-0": {
-            "type": "text_block",
-            "settings": {}
-          },
-          "feature-columns-1": {
-            "type": "text_block",
-            "settings": {}
-          },
-          "feature-columns-2": {
-            "type": "text_block",
-            "settings": {}
-          }
-        },
-        "block_order": [
-          "feature-columns-0",
-          "feature-columns-1",
-          "feature-columns-2"
-        ],
-        "settings": {
-          "title": ""
-        }
-      },
-      "collection": {
-        "type": "collection",
-        "settings": {
-          "grid": 4
-        }
-      },
-      "hero-2": {
-        "type": "hero",
-        "settings": {
-          "text_size": "large"
-        }
-      },
-      "quotes": {
-        "type": "quotes",
-        "blocks": {
-          "quotes-0": {
-            "type": "quote",
-            "settings": {}
-          },
-          "quotes-1": {
-            "type": "quote",
-            "settings": {}
-          },
-          "quotes-2": {
-            "type": "quote",
-            "settings": {}
-          }
-        },
-        "block_order": [
-          "quotes-0",
-          "quotes-1",
-          "quotes-2"
-        ],
-        "settings": {
-          "title": ""
-        }
-      },
-      "image-bar": {
-        "type": "image-bar",
-        "blocks": {
-          "image-bar-0": {
-            "type": "image",
-            "settings": {}
-          },
-          "image-bar-1": {
-            "type": "image",
-            "settings": {}
-          },
-          "image-bar-2": {
-            "type": "image",
-            "settings": {}
-          }
-        },
-        "block_order": [
-          "image-bar-0",
-          "image-bar-1",
-          "image-bar-2"
-        ],
-        "settings": {}
       },
       "footer": {
         "type": "footer",
         "blocks": {
           "footer-0": {
             "type": "link_list",
-            "settings": {}
+            "settings": {
+              "title": "Quick links",
+              "menu": "footer"
+            }
+          },
+          "1587816471995": {
+            "type": "link_list",
+            "settings": {
+              "title": "Talk to us",
+              "menu": "footer-menu-2"
+            }
           },
           "footer-1": {
             "type": "newsletter",
-            "settings": {}
+            "settings": {
+              "title": "Newsletter"
+            }
           }
         },
         "block_order": [
           "footer-0",
+          "1587816471995",
           "footer-1"
         ],
         "settings": {
-          "show_payment_icons": true
+          "show_payment_icons": true,
+          "color_footer_bg": "#f6f6f6",
+          "color_footer_text": "#333232",
+          "show_locale_selector": true,
+          "show_currency_selector": true
+        }
+      },
+      "product-template": {
+        "type": "product-template",
+        "settings": {
+          "show_quantity_selector": true,
+          "show_variant_labels": true,
+          "show_vendor": false,
+          "enable_payment_button": true,
+          "show_share_buttons": true,
+          "media_size": "medium",
+          "enable_image_zoom": true,
+          "enable_video_looping": false
+        }
+      },
+      "product-recommendations": {
+        "type": "product-recommendations",
+        "settings": {
+          "show_product_recommendations": true,
+          "heading": "You may also like",
+          "show_vendor": false
+        }
+      },
+      "collection-template": {
+        "type": "collection-template",
+        "settings": {
+          "layout": "grid",
+          "grid": 4,
+          "rows": 2,
+          "show_collection_image": true,
+          "show_vendor": false,
+          "sort_enable": true,
+          "tags_enable": true
+        }
+      },
+      "product-configurable-mask": {
+        "type": "product-configurable-mask",
+        "settings": {
+          "show_quantity_selector": true,
+          "show_variant_labels": true,
+          "show_vendor": false,
+          "enable_payment_button": true,
+          "show_share_buttons": true,
+          "media_size": "medium",
+          "enable_image_zoom": true,
+          "enable_video_looping": false
+        }
+      },
+      "hero": {
+        "type": "hero",
+        "settings": {
+          "image": "shopify:\/\/shop_images\/Bildschirmfoto_2020-04-23_um_14.34.06.png",
+          "alignment": "center",
+          "hero_layout": "full_width",
+          "hero_size": "large",
+          "text_size": "large",
+          "title": "Personalized Face Masks for your team and fans",
+          "text": "<p>Sustainable. Reusable.<br>Produced in Europe by Industry Experts.<\/p>",
+          "button_label": "CONFIGURE MASK NOW",
+          "button_link": "https:\/\/google.com"
+        }
+      },
+      "featured-product-configmask": {
+        "type": "featured-product-configmask",
+        "settings": {
+          "featured_product": "configurable-mask",
+          "heading": "Your masks in a \nfew easy steps",
+          "show_quantity_selector": true,
+          "show_variant_labels": true,
+          "show_vendor": false,
+          "enable_payment_button": true,
+          "show_share_buttons": true,
+          "media_size": "medium",
+          "enable_image_zoom": false,
+          "enable_video_looping": false
+        }
+      },
+      "features": {
+        "type": "features",
+        "settings": {
+          "heading_1": "Who we are",
+          "text_1": "We are working in the fashion industry for over 15 years and are currently building a produce-on-demand fashion platform.",
+          "heading_2": "Why we make masks",
+          "text_2": "Because our production network allows us to deliver a dire needed product fast at a high quality for a fair price.",
+          "heading_3": "Who we work with",
+          "text_3": "Sustainable, european, quality production companies whose productions would currently be stalled."
+        }
+      },
+      "1587759709275": {
+        "type": "features",
+        "settings": {
+          "heading_1": "Transparency",
+          "text_1": "We believe a business should have nothing to hide. Therefore, we openly share with you our process of building a business that seeks to benefit everyone, including our Planet.",
+          "heading_2": "No Bullsh*T",
+          "text_2": "We are convinced the times of pretending to be perfect and fake marketing stories are over. We strive to live authentically and invite you to do the same.",
+          "heading_3": "Together, with you",
+          "text_3": "We are determined to prove that collaborative and positive impact focussed business is the future. For that, we need your support. Let's take action together!"
+        }
+      },
+      "paragraph-with-headings": {
+        "type": "paragraph-with-headings",
+        "settings": {
+          "heading": "WE ARE ON A MISSION, WITH YOU.",
+          "subheading": "We envision a new world economy that is the integral driver  for positive contribution to the whole!",
+          "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque sit amet cursus tortor, eu ultricies leo. Nullam lobortis accumsan mi vitae feugiat. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Morbi ultricies iaculis diam non mollis. In efficitur nisi vitae rhoncus tincidunt. Aenean non ligula odio. Vivamus et ultricies ipsum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia. Praesent bibendum rutrum erat, ac vulputate mi eleifend in. Duis interdum semper volutpat. Cras sed porttitor justo. Mauris vitae interdum magna, et dignissim sem. Morbi suscipit pretium odio, non molestie sapien suscipit id. Vivamus scelerisque purus nec dui dignissim, sit amet mattis ipsum congue. Pellentesque massa augue, suscipit eu orci tincidunt, venenatis dictum risus. Duis in tempus est."
+        }
+      },
+      "1587819070637": {
+        "type": "paragraph-with-headings",
+        "settings": {
+          "heading": "We are on a mission, with you.",
+          "subheading": "We envision a new world economy that is an integral driver for positive contribution to sustaining life on Earth. And it is up to us to create it!",
+          "text": "Rather than pointing fingers, we believe in the power of working together.\nOur mission is to empower everyone to join the movement towards a healthier, more sustainable way of living and consuming - and change one of the largest industries for the better, together."
+        }
+      },
+      "1587820292818": {
+        "type": "team",
+        "settings": {
+          "heading": "Meet your crew",
+          "member_name_1": "James",
+          "member_title_1": "Videos",
+          "member_pic_1": "shopify:\/\/shop_images\/space_james.png",
+          "member_name_2": "Wolf & Daniel",
+          "member_title_2": "Founders",
+          "member_pic_2": "shopify:\/\/shop_images\/space_wolf_daniel.png",
+          "member_name_3": "Ana",
+          "member_title_3": "Marketing",
+          "member_pic_3": "shopify:\/\/shop_images\/space_ana_616aeca1-ba5e-4911-b732-3793775780f1.png",
+          "member_name_4": "Bruno",
+          "member_title_4": "Operations",
+          "member_pic_4": "shopify:\/\/shop_images\/space_bruno.png",
+          "text": "We are an international team from Germany, Brazil and the UK working together out of Lisbon, Portugal. All of us have come here within the last years searching for a healthier, happier way of living. And now as a team we are integrating this shared mindset into creating our company uptous."
+        }
+      },
+      "1587827857248": {
+        "type": "content-showcase",
+        "settings": {
+          "heading": "Cool stuff we made"
+        }
+      },
+      "1587828656919": {
+        "type": "maestrooo-instagram",
+        "settings": {
+          "title": "Instagram feed",
+          "subheading": "<p>Write content about your brand<\/p>",
+          "button_text": "",
+          "button_link": "",
+          "layout": "grid",
+          "image_size": "small",
+          "full_width": false,
+          "add_spacing": true,
+          "rows_count": 2,
+          "show_author": false,
+          "show_caption": true,
+          "show_date": true,
+          "click_action": "open_instagram",
+          "heading_color": "#000000",
+          "subheading_color": "#000000",
+          "button_background": "#000000",
+          "button_color": "#ffffff",
+          "overlay_color": "#000000",
+          "overlay_text_color": "#ffffff",
+          "overlay_opacity": 65
         }
       }
     },
     "content_for_index": [
       "hero-1",
-      "feature-row",
-      "feature-columns",
-      "collection",
-      "hero-2",
-      "quotes",
-      "image-bar"
+      "1587759709275",
+      "1587819070637",
+      "1587820292818",
+      "1587827857248",
+      "1587828656919"
     ]
   },
   "presets": {
