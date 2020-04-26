@@ -4,9 +4,11 @@
   {%- assign section_onboarding = true -%}
 {% endif %}
 
+<a name="masks"></a>
 <div class="page-width u2u-configurator" id="ProductSection-{{ section.id }}" data-section-id="{{ section.id }}" data-section-type="product" data-ajax-enabled="{{ settings.enable_ajax }}">
 
   <img class="u2u-handdrawn-line" src="https://cdn.shopify.com/s/files/1/0278/6934/7915/files/line_dark.svg?v=1587747306"/>
+  <img class="u2u-handdrawn-line-m" src="https://cdn.shopify.com/s/files/1/0278/6934/7915/files/line_dark_m.svg?v=1587902013"/>
   {% comment %}
     Get first variant, or deep linked one
   {% endcomment %}
@@ -215,8 +217,8 @@
               <div class="u2u-configurator-step2">
                 <div id="step2-heading" class="u2u-configurator-step-heading">Do you want your logo on the mask?</div>
                 <div class="u2u-configurator-prices">
-                  <div class="u2u-configurator-price-standard">Standard: <span style="color:{{settings.color_p1}}">{{ section.settings.standard_price }}</span> per mask</div>
-                  <div class="u2u-configurator-price-custom">With logo: <span style="color:{{settings.color_p1}}">{{ section.settings.custom_price }}</span> per mask</div>
+                  <div class="u2u-configurator-price-standard">Standard: <span style="color:{{settings.color_p1}}">€{{ section.settings.standard_price }}</span> per mask</div>
+                  <div class="u2u-configurator-price-custom">With logo: <span style="color:{{settings.color_p1}}">€{{ section.settings.custom_price }}</span> per mask</div>
                 </div>
                 {% for option in product.options_with_values %}
                 {% if option.name == 'Custom Logo' %}
@@ -321,6 +323,7 @@
 
               <div class="u2u-configurator-step4">
                 <div class="u2u-configurator-step-heading">Go to checkout</div>
+                <div class="u2u-configurator-total">Subtotal: <span class="u2u-configurator-total-number"></span></div>
                 <div class="product-form__error-message-wrapper product-form__error-message-wrapper--hidden{% if section.settings.enable_payment_button %} product-form__error-message-wrapper--has-payment-button{% endif %}" data-error-message-wrapper role="alert">
                   <span class="visually-hidden">{{ 'general.accessibility.error' | t }} </span>
                   {% include 'icon-error' %}
@@ -452,11 +455,14 @@
     $("#Quantity-featured-product-configmask").val(r);
     $(".u2u-calculator-result-number").text(r);
 
+    set_total();
+
     $(".u2u-calculator-num1").on("input", function(){
         v1 = $(".u2u-calculator-num1").val();
         r = v1 * v2;
         $("#Quantity-featured-product-configmask").val(r);
         $(".u2u-calculator-result-number").text(r);
+        set_total();
     });
 
     $(".u2u-packsize").on("change", function(){
@@ -464,13 +470,8 @@
         r = v1 * v2;
         $("#Quantity-featured-product-configmask").val(r);
         $(".u2u-calculator-result-number").text(r);
+        set_total();
     });
-
-    //$(".calconic--controled_input").find("input").on("input", function(){
-    //  alert("CHANGE");
-    //  var ps = $("##2").val();
-    //  $(".u2u-packsize").val(ps);
-    //});
 
     $("select.u2u-custom").change(function(){
         custom = $(this).children("option:selected").val();
@@ -483,7 +484,19 @@
           $(".uploadkit-button").css("border-color", "white");
           $(".uploadkit-button").css("color", "white");
         }
+        set_total();
     });
+
+    function set_total() {
+      var cp = 0;
+      if (custom == "Yes") {
+        cp = {{ section.settings.custom_price }};
+      } else {
+        cp = {{ section.settings.standard_price }};
+      }
+      var t = r * cp;
+      $(".u2u-configurator-total-number").text("€"+t.toFixed(2));
+    }
 
     $( ".btn" ).click(function(event) {
       var amt = $("#Quantity-featured-product-configmask").val();

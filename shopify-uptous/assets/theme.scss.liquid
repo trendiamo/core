@@ -284,14 +284,22 @@ h1 {
   position: relative;
 }
 
-.u2u-handdrawn-line {
+.u2u-handdrawn-line,
+.u2u-handdrawn-line-m {
   position: absolute;
-  width: 90%;
   left: 0;
   right: 0;
   margin: 0 auto;
   top: 18%;
   z-index: -1;
+}
+
+.u2u-handdrawn-line {
+  width: 90%;
+  display: none;
+}
+.u2u-handdrawn-line-m {
+  width: 76%;
 }
 
 .u2u-configurator-heading {
@@ -423,7 +431,7 @@ h1 {
 
 .uploadkit-thumbnails img.uploadkit-thumbnail {
   position: absolute;
-  top: 46%;
+  bottom: 46%;
   left: 48%;
   background: none;
   background-color: transparent !important;
@@ -467,11 +475,58 @@ h1 {
   padding: 0;
 }
 
+.u2u-configurator-total {
+  font-family: 'Proxima Nova Bold', sans-serif;
+  font-size: 20px;
+  color: white;
+}
+
+.u2u-configurator-total-number {
+  font-family: 'Proxima Nova Bold', sans-serif !important;
+  color: {{ settings.color_p1 }};
+}
+
+.product-form__cart-submit {
+  font-family: 'Proxima Nova Bold', sans-serif !important;
+  position: relative !important;
+  margin-top: 27.5px !important;
+  background-color: transparent !important;
+  border: 4px solid white !important;
+  border-radius: 0 !important;
+  letter-spacing: normal !important;
+  font-size: 18px !important;
+}
+
+.product-form__cart-submit:after {
+  position: absolute !important;
+  top: -10% !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 120% !important;
+  content: "" !important;
+  background-color: {{ settings.color_p1 }} !important;
+  z-index: -1 !important;
+  transform: rotate(4deg) !important;
+}
+
+.product-form__cart-submit:hover:after {
+  transform: rotate(-4deg) !important;
+}
+
 @media only screen and (min-width: 1000px) {
 
+  .product-form__cart-submit {
+    width: 50% !important;
+  }
+
   .u2u-handdrawn-line {
-    width: 40%;
+    display: block;
+    width: 50%;
     top: 23%;
+  }
+
+  .u2u-handdrawn-line-m {
+    display: none;
   }
 
   .u2u-mask-description {
@@ -778,6 +833,8 @@ h1 {
 
   .ooo-instagram-container {
     margin-bottom: 120px !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
   }
 
   .u2u-ig-fix {
@@ -8449,6 +8506,14 @@ $toolbar-height-small: 46px;
   border-radius: 0;
   letter-spacing: normal;
   font-size: 18px;
+}
+
+.u2u-hero__btn:hover {
+  background-color: transparent !important;
+}
+
+.u2u-hero__btn:hover:after {
+  transform: rotate(-4deg);
 }
 
 .u2u-hero__btn::after {
