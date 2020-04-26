@@ -8,6 +8,8 @@
       </a>
     </div>
 
+    <div class="u2u-shipping-disclaimer">{{ section.settings.disclaimer_text }}</div>
+
     <form action="{{ routes.cart_url }}" method="post" novalidate class="cart">
       <table>
         <thead class="cart__row cart__row--heading">
@@ -284,9 +286,6 @@
                 <span class="cart__error-message" data-cart-error-message></span>
               </div>
 
-              {%- if additional_checkout_buttons -%}
-                <div class="additional-checkout-buttons">{{ content_for_additional_checkout_buttons }}</div>
-              {%- endif -%}
             </div>
           </div>
         </div>
@@ -403,6 +402,14 @@
         "zh-TW": "啟用購物車備註"
       },
       "default": false
+    },
+    {
+      "type": "richtext",
+      "id": "disclaimer_text",
+      "label": {
+        "de": "Disclaimer Text",
+        "en": "Disclaimer Text"
+      }
     }
   ]
 }

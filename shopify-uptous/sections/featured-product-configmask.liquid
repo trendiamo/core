@@ -324,6 +324,7 @@
               <div class="u2u-configurator-step4">
                 <div class="u2u-configurator-step-heading">Go to checkout</div>
                 <div class="u2u-configurator-total">Subtotal: <span class="u2u-configurator-total-number"></span></div>
+                <div class="u2u-configurator-total-net">Net Price: <span class="u2u-configurator-total-number-net"></span></div>
                 <div class="product-form__error-message-wrapper product-form__error-message-wrapper--hidden{% if section.settings.enable_payment_button %} product-form__error-message-wrapper--has-payment-button{% endif %}" data-error-message-wrapper role="alert">
                   <span class="visually-hidden">{{ 'general.accessibility.error' | t }} </span>
                   {% include 'icon-error' %}
@@ -495,7 +496,9 @@
         cp = {{ section.settings.standard_price }};
       }
       var t = r * cp;
+      var tn = t/1.23;
       $(".u2u-configurator-total-number").text("€"+t.toFixed(2));
+      $(".u2u-configurator-total-number-net").text("€"+tn.toFixed(2));
     }
 
     $( ".btn" ).click(function(event) {
@@ -952,6 +955,22 @@
       "label": {
         "de": "Personalisierter Preis",
         "en": "Personalized Price"
+      }
+    },
+    {
+      "type": "text",
+      "id": "standard_price_net",
+      "label": {
+        "de": "Standard Preis Netto",
+        "en": "Standard Price Net"
+      }
+    },
+    {
+      "type": "text",
+      "id": "custom_price_net",
+      "label": {
+        "de": "Personalisierter Preis Netto",
+        "en": "Personalized Price Net"
       }
     }
   ],
