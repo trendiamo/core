@@ -50,6 +50,14 @@ h1 {
   display: none !important;
 }
 
+.shopify-challenge__container {
+  height: 50vh !important;
+}
+
+.form-message--success {
+  background-color: transparent !important;
+}
+
 /*====GENERAL====*/
 
 .u2u-full-width {
@@ -96,6 +104,10 @@ h1 {
 }
 
 @media only screen and (min-width: 1000px) {
+
+  .u2u-nav {
+    width: 80% !important;
+  }
 
   .site-header {
     padding: 0px 30px !important;
@@ -154,7 +166,19 @@ h1 {
   display: block !important;
 }
 
+.hero--large {
+  height: 550px !important
+}
+
+.u2u-mega-title {
+  font-size: 2.13333em !important;
+}
+
 @media only screen and (min-width: 1000px) {
+
+  .u2u-mega-title {
+    font-size: 4.33333em !important;
+  }
 
   .u2u-hero {
     display: table !important;
@@ -162,6 +186,10 @@ h1 {
 
   .u2u-hero-mobile {
     display: none !important;
+  }
+
+  .hero--large {
+    height: 650px !important
   }
 }
 
@@ -245,6 +273,7 @@ h1 {
   position: fixed;
   width: 90%;
   top: 50%;
+  transform: translateY(-50%);
   left: 0;
   right: 0;
   margin: 0 auto;
@@ -304,7 +333,7 @@ h1 {
   left: 0;
   right: 0;
   margin: 0 auto;
-  top: 18%;
+  top: 36%;
   z-index: -1;
 }
 
@@ -337,11 +366,49 @@ h1 {
   line-height: 46px;
 }
 
+.u2u-single-deal {
+  margin-top: 60px;
+  width: 100%;
+}
+
+.u2u-single-deal span {
+  color: {{ settings.color_p1 }} !important;
+  font-size: 20px;
+  font-weight: bold;
+  margin: 0 !important;
+  margin-top: 20px !important;
+  width: 100%;
+}
+
+.u2u-single-deal a {
+  color: white !important;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.u2u-single-deal-headline {
+  font-family: 'Proxima Nova Bold', sans-serif !important;
+  font-size: 38px;
+  text-transform: uppercase;
+  font-weight: 700;
+  width: 330px;
+  margin-bottom: 30px;
+  color: {{ settings.color_p1 }};
+  line-height: 46px;
+}
+
+@media only screen and (min-width: 1000px) {
+  .u2u-single-deal {
+    width: 70%;
+  }
+}
+
 #step2-heading {
   margin-bottom: 30px !important;
 }
 
-.u2u-mask-description {
+.u2u-mask-description,
+.u2u-mask-description p {
   color: {{ settings.color_p2 }} !important;
   font-size: 20px;
   font-weight: bold;
@@ -445,12 +512,20 @@ h1 {
 
 .uploadkit-thumbnails img.uploadkit-thumbnail {
   position: absolute;
-  bottom: 61%;
-  left: 26%;
+  bottom: 55%;
+  left: 16%;
   background: none;
   background-color: transparent !important;
-  transform: rotate(-45deg);
+  transform: rotate(-90deg);
   width: 16% !important;
+}
+
+@media only screen and (min-width: 1000px) {
+
+  .uploadkit-thumbnails img.uploadkit-thumbnail {
+    bottom: 48%;
+  }
+
 }
 
 #Quantity-featured-product-configmask {
@@ -542,7 +617,7 @@ h1 {
   .u2u-handdrawn-line {
     display: block;
     width: 50%;
-    top: 23%;
+    top: 33%;
   }
 
   .u2u-handdrawn-line-m {
@@ -587,6 +662,74 @@ h1 {
 
   .uploadkit-button {
     width: auto;
+  }
+}
+
+/*====FEATURED MASKS====*/
+
+.u2u-featured-product-mask-thumbs {
+  display: none;
+}
+
+.u2u-index-section-masks {
+  background-color: {{ settings.color_p4 }};
+  padding-top: 120px !important;
+}
+
+.u2u-featured-masks-title {
+  text-transform: uppercase !important;
+  color: white !important;
+}
+
+.u2u-price-item {
+  font-size: 26px !important;
+  color: {{ settings.color_p1 }} !important;
+}
+
+.u2u-product__policies {
+  color: white !important;
+}
+
+.u2u-product-controls-group {
+  font-family: 'Proxima Nova Bold', sans-serif !important;
+  color: {{ settings.color_p2 }} !important;
+}
+
+.u2u-form {
+  flex-basis: 100% !important;
+}
+
+.u2u-featured-masks-description,
+.u2u-featured-masks-description p span,
+.u2u-featured-masks-description span,
+.u2u-featured-masks-description p {
+  font-family: 'Proxima Nova Regular', sans-serif !important;
+  font-size: 20px !important;
+  color: {{ settings.color_p2 }} !important;
+  background-color: transparent !important;
+}
+
+.u2u-submit {
+  font-family: 'Proxima Nova Bold', sans-serif !important;
+  position: relative !important;
+  margin-top: 27.5px !important;
+  background-color: transparent !important;
+  border: 4px solid {{ settings.color_p2 }} !important;
+  border-radius: 0 !important;
+  letter-spacing: normal !important;
+  font-size: 18px !important;
+  color: {{ settings.color_p2 }} !important;
+}
+
+.u2u-option-label {
+  font-family: 'Proxima Nova Bold', sans-serif;
+  color: {{ settings.color_p2 }} !important;
+}
+
+@media only screen and (min-width: 1000px) {
+
+  .u2u-controls-group {
+    width: 50%;
   }
 }
 
@@ -697,8 +840,12 @@ h1 {
   margin-bottom: 60px;
 }
 
+.u2u-team-member-meta-2 {
+  width: 160px;
+}
+
 .u2u-team-member-pic-2 {
-  width: 180px;
+  width: 160px;
   transform: rotate(1deg);
   margin-bottom: 30px;
 }
@@ -749,6 +896,10 @@ h1 {
     float: left;
     margin-left: 60px;
     margin-bottom: 0;
+  }
+
+  .u2u-team-member-meta-2 {
+    width: auto;
   }
 
   .u2u-team-member-pic-2 {
@@ -934,10 +1085,23 @@ h1 {
 
 /*====CART PAGE====*/
 
-.u2u-shipping-disclaimer {
+.u2u-shipping-disclaimer,
+.u2u-shipping-disclaimer p {
   font-family: 'Proxima Nova Regular', sans-serif !important;
   font-size: 20px;
-  color: {{ settings.color_p2 }};
+}
+
+.u2u-vat {
+  font-family: 'Proxima Nova Regular', sans-serif !important;
+  font-size: 20px !important;
+  color: {{ settings.color_p1 }} !important;
+  margin-bottom: 30px !important;
+}
+
+.u2u-vat input {
+  font-family: 'Proxima Nova Regular', sans-serif !important;
+  font-size: 18px !important;
+  color: {{ settings.color_p2 }} !important;
 }
 
 #shopify-section-cart-template {
@@ -957,6 +1121,10 @@ h1 {
 
 .cart__submit:hover {
   background-color: {{ settings.color_p4 }} !important;
+}
+
+.cart__qty-input {
+  float: right;
 }
 
 /*============================================================================
@@ -3742,11 +3910,6 @@ textarea {
   position: relative;
   overflow: hidden;
 
-  @include media-query($medium-up) {
-    // Prevent mobile menu inline styles from overriding desktop styles
-    // sass-lint:disable no-important
-    @include transform(translate3d(0, 0, 0));
-  }
 }
 
 hr {
