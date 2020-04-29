@@ -58,7 +58,7 @@
     {% endif %}
   {% endif %}
 
-  <div class="u2u-header-announcement">Paypal, Credit Card, Amazon Pay</div>
+  {% comment %}<div class="u2u-header-announcement">Paypal, Credit Card, Amazon Pay</div> {% endcomment %}
 
   <header class="site-header{% if section.settings.align_logo == 'left' %} logo--left{% else %} logo--center{% endif %}" role="banner">
 
@@ -172,6 +172,7 @@
             {% endif %}
           {% endif %}
 
+          {% comment %}
           <a href="{{ routes.cart_url }}" class="site-header__icon site-header__cart">
             {% include 'icon-cart' %}
             <span class="icon__fallback-text">{{ 'layout.cart.title' | t }}</span>
@@ -180,6 +181,7 @@
               <span class="icon__fallback-text medium-up--hide">{{ 'layout.cart.items_count' | t: count: cart.item_count }}</span>
             </div>
           </a>
+          {% endcomment %}
 
           {% unless linklists[section.settings.main_linklist] == blank %}
             <button type="button" class="btn--link site-header__icon site-header__menu js-mobile-nav-toggle mobile-nav--open" aria-controls="MobileNav"  aria-expanded="false" aria-label="{{ 'layout.navigation.menu' | t }}">
