@@ -1,52 +1,66 @@
 <div class="newsletter-section{% if section.settings.show_background %} index-section--newsletter-background{% endif %}">
-  <div class="page-width">
-    <div class="section-header text-center">
-      {% if section.settings.section_title != blank %}
-        <h2 class="h2">{{ section.settings.section_title | escape }}</h2>
+  <div class="page-width u2u-newsletter">
+    <div class="u2u-newsletter-text">
+      <div class="section-header text-left u2u-newsletter-top">
+        {% if section.settings.section_title != blank %}
+          <h2 class="u2u-headline u2u-newsletter-headline">{{ section.settings.section_title | escape }}</h2>
+        {% endif %}
+        {% if section.settings.subheading != blank %}
+          <div class="rte u2u-sub-headline u2u-newsletter-subheadline">{{ section.settings.subheading }}</div>
+        {% endif %}
+      </div>
+      {%- assign formId = 'Contact_' | append: section.id -%}
+      {% form 'customer', id: formId, novalidate: 'novalidate', class: 'contact-form form-single-field u2u-newsletter-form' %}
+        {%- if form.posted_successfully? -%}
+          <p class="form-message form-message--success" tabindex="-1" data-form-status>
+            {{ 'general.newsletter_form.confirmation' | t }}
+          </p>
+        {%- endif -%}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        <div class="input-group {% if form.errors %} input-group--error{% endif %}">
+          <input type="email"
+            name="contact[email]"
+            id="{{ formId }}-email"
+            class="input-group__field{% if form.errors %} input--error{% endif %} u2u-newsletter-input"
+            value="{{ form.email }}"
+            placeholder="{{ 'general.newsletter_form.email_placeholder' | t }}"
+            aria-label="{{ 'general.newsletter_form.email_placeholder' | t }}"
+            aria-required="true"
+            autocorrect="off"
+            autocapitalize="off"
+            {% if form.errors %}
+              aria-invalid="true"
+              aria-describedby="{{ formId }}-email-error"
+              data-form-status
+            {% endif %}
+            >
+          <span class="input-group__btn u2u-newsletter-group__btn">
+            <button type="submit" class="btn u2u-btn-black" name="commit">
+              <span>{{ 'general.newsletter_form.submit' | t }}</span>
+            </button>
+          </span>
+        </div>
+        {%- if form.errors contains 'email' -%}
+          <span id="{{ formId }}-email-error" class="input-error-message">
+            <span class="visually-hidden">{{ 'general.accessibility.error' | t }} </span>
+            {% include 'icon-error' %}
+            <span>{{ form.errors.translated_fields['email'] | capitalize }} {{ form.errors.messages['email'] }}.</span>
+          </span>
+        {%- endif -%}
+      {% endform %}
+    </div>
+    <img class="u2u-newsletter-image" src="{{ section.settings.image | img_url: '300x300' }}"/>
+  </div>
+  <div class="page-width u2u-newsletter-footer">
+    <div class="u2u-newsletter-footer-hashtag">{{ section.settings.hashtag }}</div>
+    <div class="u2u-newsletter-footer-social">
+      {% if settings.social_instagram_link != blank %}
+        <a href="{{ settings.social_instagram_link }}"><img class="u2u-newsletter-footer-social-icon" src="{{ section.settings.icon_ig | img_url: '300x300' }}"/></a>
       {% endif %}
-      {% if section.settings.subheading != blank %}
-        <div class="rte">{{ section.settings.subheading }}</div>
+      {% if settings.social_youtube_link != blank %}
+        <a href="{{ settings.social_youtube_link }}"><img class="u2u-newsletter-footer-social-icon" src="{{ section.settings.icon_yt | img_url: '300x300' }}"/></a>
       {% endif %}
     </div>
-    {%- assign formId = 'Contact_' | append: section.id -%}
-    {% form 'customer', id: formId, novalidate: 'novalidate', class: 'contact-form form-single-field' %}
-      {%- if form.posted_successfully? -%}
-        <p class="form-message form-message--success" tabindex="-1" data-form-status>
-          {{ 'general.newsletter_form.confirmation' | t }}
-        </p>
-      {%- endif -%}
-      <input type="hidden" name="contact[tags]" value="newsletter">
-      <div class="input-group {% if form.errors %} input-group--error{% endif %}">
-        <input type="email"
-          name="contact[email]"
-          id="{{ formId }}-email"
-          class="input-group__field{% if form.errors %} input--error{% endif %}"
-          value="{{ form.email }}"
-          placeholder="{{ 'general.newsletter_form.email_placeholder' | t }}"
-          aria-label="{{ 'general.newsletter_form.email_placeholder' | t }}"
-          aria-required="true"
-          autocorrect="off"
-          autocapitalize="off"
-          {% if form.errors %}
-            aria-invalid="true"
-            aria-describedby="{{ formId }}-email-error"
-            data-form-status
-          {% endif %}
-          >
-        <span class="input-group__btn">
-          <button type="submit" class="btn" name="commit">
-            <span>{{ 'general.newsletter_form.submit' | t }}</span>
-          </button>
-        </span>
-      </div>
-      {%- if form.errors contains 'email' -%}
-        <span id="{{ formId }}-email-error" class="input-error-message">
-          <span class="visually-hidden">{{ 'general.accessibility.error' | t }} </span>
-          {% include 'icon-error' %}
-          <span>{{ form.errors.translated_fields['email'] | capitalize }} {{ form.errors.messages['email'] }}.</span>
-        </span>
-      {%- endif -%}
-    {% endform %}
   </div>
 </div>
 
@@ -210,6 +224,38 @@
         "th": "ระบบจะสร้างบัญชีผู้ใช้ใน Shopify ให้แก่ลูกค้ารายที่ลงทะเบียนแล้ว [ดูลูกค้า](/admin/customers?query=&accepts_marketing=1)",
         "zh-CN": "任何注册用户都将在 Shopify 中拥有一个为他们创建的账户。[查看客户](/admin/customers?query=&accepts_marketing=1)",
         "zh-TW": "顧客註冊後就可以擁有 Shopify 帳號。[查看顧客](/admin/customers?query=&accepts_marketing=1)"
+      }
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": {
+        "de": "Bild",
+        "en": "Image"
+      }
+    },
+    {
+      "type": "text",
+      "id": "hashtag",
+      "label": {
+        "de": "Hashtag",
+        "en": "Hashtag"
+      }
+    },
+    {
+      "type": "image_picker",
+      "id": "icon_ig",
+      "label": {
+        "de": "Icon für Instagram",
+        "en": "Icon for Instagram"
+      }
+    },
+    {
+      "type": "image_picker",
+      "id": "icon_yt",
+      "label": {
+        "de": "Icon für YouTube",
+        "en": "Icon for YouTube"
       }
     }
   ],

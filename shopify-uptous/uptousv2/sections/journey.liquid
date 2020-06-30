@@ -1,0 +1,186 @@
+<div class="page-width" data-section-id="{{ section.id }}" data-section-type="journey">
+
+  <div class="u2u-journey-start">
+    <div class="u2u-journey-start-line"></div>
+  </div>
+
+  {% if section.blocks.size > 0 %}
+    <div class="u2u-journey-wrapper">
+      {% for block in section.blocks %}
+      {% assign v = forloop.index | modulo: 2 %}
+      {% if v == 0 %}
+        <div class="u2u-journey-story">
+          <div class="u2u-journey-story-meta">
+            <div class="u2u-journey-story-meta-date-right">{{ block.settings.date }}</div>
+            <div class="u2u-journey-story-meta-title-right">{{ block.settings.title }}</div>
+            <div class="u2u-journey-story-meta-text">{{ block.settings.text }}</div>
+          </div>
+          <div class="u2u-journey-story-line-wrapper">
+            <div class="u2u-journey-story-line"></div>
+            <div class="u2u-journey-story-line-dot"></div>
+          </div>
+          <div class="u2u-journey-story-video-wrapper-right">
+            <div class="u2u-journey-story-video">
+              <div id="Video-{{ section.id }}"
+                  class="video"
+                  data-id="{{ block.settings.video_link.id }}"></div>
+              <iframe width="100%" height="100%" src="https://www.youtube.com/embed/{{ block.settings.video_link.id }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+          </div>
+        </div>
+      {% else %}
+        <div class="u2u-journey-story">
+          <div class="u2u-journey-story-video-wrapper">
+            <div class="u2u-journey-story-video">
+              <div id="Video-{{ section.id }}"
+                  class="video"
+                  data-id="{{ block.settings.video_link.id }}"></div>
+              <iframe width="100%" height="100%" src="https://www.youtube.com/embed/{{ block.settings.video_link.id }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+          </div>
+          <div class="u2u-journey-story-line-wrapper">
+            <div class="u2u-journey-story-line"></div>
+            <div class="u2u-journey-story-line-dot"></div>
+          </div>
+          <div class="u2u-journey-story-meta">
+            <div class="u2u-journey-story-meta-date">{{ block.settings.date }}</div>
+            <div class="u2u-journey-story-meta-title">{{ block.settings.title }}</div>
+            <div class="u2u-journey-story-meta-text">{{ block.settings.text }}</div>
+          </div>
+        </div>
+      {% endif %}
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  {% if section.blocks.size == 0 %}
+    {% include 'no-blocks' %}
+  {% endif %}
+
+  <div class="u2u-journey-end">
+    <div class="u2u-journey-end-line"></div>
+  </div>
+</div>
+
+
+
+{% schema %}
+{
+  "name": {
+    "de": "Journey Zeitleiste",
+    "en": "Journey Timeline"
+  },
+  "class": "index-section u2u-journey",
+  "max_blocks": 99,
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": {
+        "da": "Overskrift",
+        "de": "Titel",
+        "en": "Heading",
+        "es": "Título",
+        "fi": "Otsake",
+        "fr": "En-tête",
+        "hi": "शीर्षक",
+        "it": "Heading",
+        "ja": "見出し",
+        "ko": "제목",
+        "nb": "Overskrift",
+        "nl": "Kop",
+        "pt-BR": "Título",
+        "pt-PT": "Título",
+        "sv": "Rubrik",
+        "th": "ส่วนหัว",
+        "zh-CN": "标题",
+        "zh-TW": "標題"
+      },
+      "default": {
+        "da": "Udtalelser",
+        "de": "Testimonials",
+        "en": "Testimonials",
+        "es": "Testimonios",
+        "fi": "Suositukset",
+        "fr": "Témoignages",
+        "hi": "प्रमाणपत्र",
+        "it": "Testimonial",
+        "ja": "お客様の声",
+        "ko": "추천",
+        "nb": "Tilbakemeldinger fra kunder",
+        "nl": "Getuigenissen",
+        "pt-BR": "Depoimentos",
+        "pt-PT": "Depoimentos",
+        "sv": "Kundberättelser",
+        "th": "เสียงชื่นชมจากลูกค้า",
+        "zh-CN": "感言",
+        "zh-TW": "推薦文"
+      }
+    }
+  ],
+  "blocks": [
+    {
+      "type": "story",
+      "name": {
+        "de": "Story",
+        "en": "Story"
+      },
+      "settings": [
+        {
+          "type": "text",
+          "id": "date",
+          "label": {
+            "de": "Datum",
+            "en": "Date"
+          }
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": {
+            "de": "Titel",
+            "en": "Title"
+          }
+        },
+        {
+          "type": "video_url",
+          "id": "video_link",
+          "label": {
+            "de": "Video Link",
+            "en": "Video Link"
+          },
+          "accept": [
+            "youtube"
+          ],
+          "default": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": {
+            "de": "Text",
+            "en": "Text"
+          }
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": {
+        "de": "Journey Zeitleiste",
+        "en": "Journey Timeline"
+      },
+      "category": {
+        "de": "UPTOUS",
+        "en": "UPTOUS"
+      },
+      "blocks": [
+        {
+          "type": "story"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

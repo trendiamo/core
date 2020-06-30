@@ -19,13 +19,33 @@
     }
   {% endstyle %}
 {%- endif -%}
-<div class="page-width" data-section-id="{{ section.id }}" data-section-type="video-section">
+
+<div data-section-id="{{ section.id }}" class="page-width u2u-bwv" data-section-type="video-section">
   {%- if section.settings.headline != blank -%}
   <div class="u2u-headline">{{ section.settings.headline }}</div>
   {%- endif -%}
-  {%- if section.settings.sub-headline != blank -%}
-  <div class="u2u-sub-headline">{{ section.settings.sub-headline }}</div>
+  {%- if section.settings.subheadline != blank -%}
+  <div class="u2u-sub-headline">{{ section.settings.subheadline }}</div>
   {%- endif -%}
+  <div class="u2u-bwv-blocks">
+    <div class="u2u-bwv-block">
+      <img class="u2u-bwv-block-image" src="{{ section.settings.image1 | img_url: '300x300' }}" />
+      <div class="u2u-bwv-block-text">{{ section.settings.text1 }}</div>
+    </div>
+    <div class="u2u-bwv-block">
+      <img class="u2u-bwv-block-image" src="{{ section.settings.image2 | img_url: '300x300' }}" />
+      <div class="u2u-bwv-block-text">{{ section.settings.text2 }}</div>
+    </div>
+    <div class="u2u-bwv-block">
+      <img class="u2u-bwv-block-image" src="{{ section.settings.image3 | img_url: '300x300' }}" />
+      <div class="u2u-bwv-block-text">{{ section.settings.text3 }}</div>
+    </div>
+    <div class="u2u-bwv-block">
+      <img class="u2u-bwv-block-image" src="{{ section.settings.image4 | img_url: '300x300' }}" />
+      <div class="u2u-bwv-block-text">{{ section.settings.text4 }}</div>
+    </div>
+  </div>
+
   {%- if section.settings.video_link != blank -%}
     <div class="video-section-wrapper
                 video-section-wrapper--{{ section.settings.height }}
@@ -33,7 +53,8 @@
                 {% if section.settings.style == 'background' %} video-background-wrapper
                   {% unless section.settings.show_overlay %} video-background-wrapper--no-overlay{% endunless %}
                 {% endif %}
-                video-section-wrapper--{{ section.id }}"
+                video-section-wrapper--{{ section.id }}
+                u2u-bwv-video"
                 data-desktop-height="{{ desktop_height }}"
                 data-mobile-height="{{ mobile_height }}">
       {%- if section.settings.show_overlay -%}<div class="video__overlay"></div>{%- endif -%}
@@ -130,32 +151,115 @@
       {{ 'homepage.onboarding.no_content' | t }}
     </div>
   {%- endif -%}
+
+  {%- if section.settings.button_label != blank and section.settings.button_link != blank -%}
+    {%- capture ariaLabel -%}
+      {{- section.settings.button_label -}}
+      {%- if section.settings.button_link.type == 'frontpage_link' -%}
+        : {{ 'homepage.general.title' | t -}}
+      {%- elsif section.settings.button_link.type == 'catalog_link' -%}
+        : {{ 'collections.catalog.title' | t -}}
+      {%- elsif section.settings.button_link.object.title -%}
+        : {{ section.settings.button_link.object.title -}}
+      {%- endif -%}
+    {%- endcapture -%}
+
+    <a href="{{ section.settings.button_link }}"
+      class="btn hero__btn u2u-btn-black"
+      aria-label="{{ ariaLabel }}">
+      {{- section.settings.button_label | escape -}}
+    </a>
+  {%- endif -%}
 </div>
 
 {% schema %}
 {
   "name": {
-    "da": "Video",
-    "de": "Video",
-    "en": "Video",
-    "es": "Video",
-    "fi": "Video",
-    "fr": "Vidéo",
-    "hi": "वीडियो",
-    "it": "Video",
-    "ja": "動画",
-    "ko": "동영상",
-    "nb": "Video",
-    "nl": "Video",
-    "pt-BR": "Vídeo",
-    "pt-PT": "Vídeo",
-    "sv": "Video",
-    "th": "วิดีโอ",
-    "zh-CN": "视频",
-    "zh-TW": "影片"
+    "de": "Blöcke mit Video",
+    "en": "Blocks with Video"
   },
-  "class": "index-section video-section",
+  "class": "index-section index-section--flush",
   "settings": [
+    {
+      "type": "text",
+      "id": "headline",
+      "label": {
+        "de": "Überschrift",
+        "en": "Headline"
+      }
+    },
+    {
+      "type": "text",
+      "id": "subheadline",
+      "label": {
+        "de": "Unterschrift",
+        "en": "Sub Headline"
+      }
+    },
+    {
+      "type": "image_picker",
+      "id": "image1",
+      "label": {
+        "de": "Foto 1",
+        "en": "Image 1"
+      }
+    },
+    {
+      "type": "richtext",
+      "id": "text1",
+      "label": {
+        "de": "Text 1",
+        "en": "Text 1"
+      }
+    },
+    {
+      "type": "image_picker",
+      "id": "image2",
+      "label": {
+        "de": "Foto 2",
+        "en": "Image 2"
+      }
+    },
+    {
+      "type": "richtext",
+      "id": "text2",
+      "label": {
+        "de": "Text 2",
+        "en": "Text 2"
+      }
+    },
+    {
+      "type": "image_picker",
+      "id": "image3",
+      "label": {
+        "de": "Foto 3",
+        "en": "Image 3"
+      }
+    },
+    {
+      "type": "richtext",
+      "id": "text3",
+      "label": {
+        "de": "Text 3",
+        "en": "Text 3"
+      }
+    },
+    {
+      "type": "image_picker",
+      "id": "image4",
+      "label": {
+        "de": "Foto 4",
+        "en": "Image 4"
+      }
+    },
+    {
+      "type": "richtext",
+      "id": "text4",
+      "label": {
+        "de": "Text 4",
+        "en": "Text 4"
+      }
+    },
     {
       "type": "image_picker",
       "id": "image",
@@ -755,42 +859,58 @@
     },
     {
       "type": "text",
-      "id": "headline",
+      "id": "button_label",
       "label": {
-        "de": "Überschrift",
-        "en": "Heading"
+        "da": "Knaptekst",
+        "de": "Button-Etikett",
+        "en": "Button label",
+        "es": "Etiqueta de botón",
+        "fi": "Tekstipainike",
+        "fr": "Texte du bouton",
+        "hi": "बटन लेबल",
+        "it": "Etichetta pulsante",
+        "ja": "ボタンのラベル",
+        "ko": "버튼 레이블",
+        "nb": "Knappetikett",
+        "nl": "Knoplabel",
+        "pt-BR": "Etiqueta de botão",
+        "pt-PT": "Etiqueta do botão",
+        "sv": "Knappetikett",
+        "th": "ป้ายกำกับปุ่ม",
+        "zh-CN": "按钮标签",
+        "zh-TW": "按鈕標籤"
       }
     },
     {
-      "type": "text",
-      "id": "sub-headline",
+      "type": "url",
+      "id": "button_link",
       "label": {
-        "de": "Unterschrift",
-        "en": "Sub Heading"
+        "da": "Knaplink",
+        "de": "Button-Etikett",
+        "en": "Button link",
+        "es": "Enlace de botón",
+        "fi": "Painikelinkki",
+        "fr": "Lien du bouton",
+        "hi": "बटन लिंक",
+        "it": "Link pulsante",
+        "ja": "ボタンのリンク",
+        "ko": "버튼 링크",
+        "nb": "Kobling for knapp",
+        "nl": "Knoplink",
+        "pt-BR": "Link de botão",
+        "pt-PT": "Ligação do botão",
+        "sv": "Knapplänk",
+        "th": "ลิงก์ปุ่ม",
+        "zh-CN": "按钮链接",
+        "zh-TW": "按鈕連結"
       }
     }
   ],
   "presets": [
     {
       "name": {
-        "da": "Video",
-        "de": "Video",
-        "en": "Video",
-        "es": "Video",
-        "fi": "Video",
-        "fr": "Vidéo",
-        "hi": "वीडियो",
-        "it": "Video",
-        "ja": "動画",
-        "ko": "동영상",
-        "nb": "Video",
-        "nl": "Video",
-        "pt-BR": "Vídeo",
-        "pt-PT": "Vídeo",
-        "sv": "Video",
-        "th": "วิดีโอ",
-        "zh-CN": "视频",
-        "zh-TW": "影片"
+        "de": "Blöcke mit Video",
+        "en": "Blocks with Video"
       },
       "category": {
         "da": "Video",

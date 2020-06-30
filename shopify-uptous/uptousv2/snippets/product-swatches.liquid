@@ -1,0 +1,22 @@
+{% comment %}
+     Renders color swatches for items in the product grid view (featured collection)
+     Usage: include in the 'product-card-grid.liquid' snippet below the price snippet
+     Note: Don't forget to add new colors here whenever it's used for a product for the first time
+{% endcomment %}
+
+{% if product.options contains 'Color' %}
+<div class="u2u-grid-swatches">
+  {% for color_option in product.options_by_name['Color'].values %}
+
+    {% assign colorcode = '#000000' %}
+    {% if color_option == 'Black' %}
+      {% assign colorcode = '#000000' %}
+    {% endif %}
+    {% if color_option == 'White' %}
+      {% assign colorcode = '#ffffff' %}
+    {% endif %}
+
+    <div class="u2u-grid-swatch" style="background-color: {{colorcode}};"></div>
+  {% endfor %}
+</div>
+{% endif %}

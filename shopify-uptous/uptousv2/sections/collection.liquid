@@ -1,7 +1,8 @@
 <div class="page-width">
   {% if section.settings.title != blank %}
     <div class="section-header text-center">
-      <h2>{{ section.settings.title | escape }}</h2>
+      <h1 class="u2u-headline">{{ section.settings.title | escape }}</h1>
+      <h2 class="u2u-sub-headline">{{ section.settings.subtitle | escape }}</h2>
     </div>
   {% endif %}
 
@@ -52,7 +53,7 @@
   {% if section.settings.show_view_all %}
     <hr class="hr--invisible" aria-hidden="true" />
     <div class="text-center">
-      <a href="{{ collection.url }}" class="btn" aria-label="{{ 'collections.general.view_all_label' | t: collection_name: collection.title }}">
+      <a href="{{ collection.url }}" class="btn u2u-btn-black" aria-label="{{ 'collections.general.view_all_label' | t: collection_name: collection.title }}">
         {{ 'collections.general.view_all' | t }}
       </a>
     </div>
@@ -128,6 +129,14 @@
         "th": "คอลเลกชันแนะนำ",
         "zh-CN": "特色产品系列",
         "zh-TW": "精選商品系列"
+      }
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": {
+        "de": "Untertitel",
+        "en": "Sub Heading"
       }
     },
     {
