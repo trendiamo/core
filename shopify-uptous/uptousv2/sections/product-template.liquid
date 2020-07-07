@@ -1,3 +1,7 @@
+<div class="u2u-pdp-hero" style="background-image: url({{ section.settings.hero_image | img_url: '1000x' }})">
+  <div class="u2u-pdp-hero-title">{{ section.settings.title }}</div>
+</div>
+
 <div class="product-template__container page-width"
   id="ProductSection-{{ section.id }}"
   data-section-id="{{ section.id }}"
@@ -291,6 +295,22 @@
     "zh-TW": "產品頁面"
   },
   "settings": [
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": {
+        "de": "Titelbild",
+        "en": "Hero Image"
+      }
+    },
+    {
+      "type": "richtext",
+      "id": "title",
+      "label": {
+        "de": "Titel",
+        "en": "Title"
+      }
+    },
     {
       "type": "checkbox",
       "id": "show_quantity_selector",

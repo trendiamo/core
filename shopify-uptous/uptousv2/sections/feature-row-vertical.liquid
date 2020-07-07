@@ -29,12 +29,14 @@
   {% endcapture %}
 
   <div class="feature-row u2u-feature-row">
-    <div class="u2u-frv-image">{{ image_layout }}</div>
-
     <div class="feature-row__item feature-row__text feature-row__text--{{ section.settings.layout }} u2u-feature-row-text">
       {% if section.settings.title != blank %}
-        <h2 class="h3">{{ section.settings.title | escape }}</h2>
+        <h2 class="h3 u2u-frv-title">{{ section.settings.title | escape }}</h2>
       {% endif %}
+      {% if section.settings.subtitle != blank %}
+        <div class="u2u-frv-subtitle">{{ section.settings.subtitle | escape }}</div>
+      {% endif %}
+      <div class="u2u-frv-image">{{ image_layout }}</div>
       {% if section.settings.text != blank %}
         <div class="rte rte-setting featured-row__subtext u2u-read-text">{{ section.settings.text }}</div>
       {% endif %}
@@ -192,6 +194,14 @@
       "default": {
         "de": "Foto mit Text (Vertikal)",
         "en": "Image text (Vertical)"
+      }
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": {
+        "de": "Untertitel",
+        "en": "Sub Heading"
       }
     },
     {

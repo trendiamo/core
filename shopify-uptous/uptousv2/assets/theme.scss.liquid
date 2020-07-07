@@ -8375,7 +8375,6 @@ $transition-controls-video: color 0.2s $ease-transition, background-color 0.2s $
   display: block;
   height: $video-button-wrapper-size;
   position: absolute;
-  top: calc(100% - 50px / 2);
   left: calc(50% - 50px / 2);
 
   @include media-query($medium-up) {
@@ -8737,21 +8736,27 @@ h1 {
 
 /*====FRAMED HERO====*/
 
+.u2u-framed {
+  padding-bottom: 15px;
+}
+
 .u2u-framed-title p {
   font-family: 'Proxima Nova Bold', sans-serif !important;
   color: white;
+  font-size: 0.83333em;
 }
 
 .u2u-framed-subtitle p {
-  font-size: 26px;
+  font-size: 16px;
 }
 
 .u2u-framed-link {
+  display: none;
   margin-bottom: 0px;
 }
 
 .u2u-hero-btn {
-  margin-top: 50px !important;
+  margin-top: 0px !important;
 }
 
 .u2u-framed-link,
@@ -8768,6 +8773,7 @@ h1 {
   .u2u-framed {
     padding-left: 50px;
     padding-right: 50px;
+    padding-bottom: 35px;
   }
 
   .u2u-framed-title {
@@ -8777,14 +8783,26 @@ h1 {
   .u2u-framed-title p {
     font-size: 60px;
   }
+
+  .u2u-framed-subtitle p {
+    font-size: 26px;
+  }
+
+  .u2u-framed-link {
+    display: block;
+  }
+
+  .u2u-hero-btn {
+    margin-top: 50px !important;
+  }
 }
 
 /*====GENERAL SECTION STYLES====*/
 
 .u2u-headline {
   font-family: 'Proxima Nova Bold', sans-serif !important;
-  font-size: 3em;
-  text-align: center;
+  font-size: 28px;
+  text-align: left;
   text-transform: uppercase;
   letter-spacing: normal;
   font-weight: normal;
@@ -8792,8 +8810,8 @@ h1 {
 
 .u2u-sub-headline {
   font-family: 'Proxima Nova Regular', sans-serif !important;
-  font-size: 26px;
-  text-align: center;
+  font-size: 20px;
+  text-align: left;
   margin-bottom: 30px;
   text-transform: none;
   letter-spacing: normal;
@@ -8838,6 +8856,19 @@ h1 {
   margin-top: 100px;
 }
 
+@media only screen and (min-width: 1000px) {
+
+  .u2u-headline {
+    font-size: 3em;
+    text-align: center;
+  }
+
+  .u2u-sub-headline {
+    font-size: 26px;
+    text-align: center;
+  }
+}
+
 /*====FEATURE ROW VERTICAL====*/
 
 .u2u-feature-row {
@@ -8848,6 +8879,22 @@ h1 {
 .u2u-feature-row-text {
   text-align: left;
   padding: 0;
+}
+
+.u2u-frv-title {
+  font-family: 'Proxima Nova Bold', sans-serif !important;
+  text-align: center;
+  font-size: 30px;
+  margin-bottom: 10px;
+}
+
+.u2u-frv-subtitle {
+  text-align: center;
+  font-size: 26px;
+}
+
+.u2u-frv-image {
+  margin-top: 10px;
 }
 
 /*====HERO WITH BLOCKS====*/
@@ -8905,7 +8952,6 @@ h1 {
 /*====BLOCKS WITH VIDEO====*/
 
 .u2u-bwv {
-  padding-top: 100px;
   text-align: center;
 }
 
@@ -8944,6 +8990,10 @@ h1 {
 }
 
 /*====NEWSLETTER====*/
+
+.u2u-newsletter-section {
+  padding-bottom: 0;
+}
 
 .u2u-newsletter {
   display: flex;
@@ -8992,7 +9042,7 @@ h1 {
 .u2u-newsletter-footer {
   text-align: center;
   margin-top: 100px;
-  margin-bottom: 100px;
+  margin-bottom: 50px;
 }
 
 .u2u-newsletter-footer-hashtag {
@@ -9154,10 +9204,159 @@ h1 {
   border: 2px dotted black;
 }
 
+/*====COUNTDOWN TIMER====*/
+
+.u2u-countdown-wrapper {
+  background: #E7ECF5;
+  width: 100%;
+}
+
+.u2u-countdown {
+  text-align: center;
+  padding: 100px;
+}
+
+.u2u-countdown-title {
+  font-family: 'Proxima Nova Bold', sans-serif !important;
+  font-size: 20px;
+  text-transform: uppercase;
+}
+
+.u2u-countdown-order {
+  font-family: 'Proxima Nova Bold', sans-serif !important;
+  font-size: 30px;
+  text-transform: uppercase;
+}
+
+.u2u-countdown-timer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+  margin: 0 auto;
+  margin-top: 30px;
+}
+
+.u2u-countdown-timer-pos {
+  flex: 1;
+}
+
+.u2u-countdown-timer-digit {
+  font-size: 60px;
+}
+
+.u2u-countdown-timer-label {
+  font-family: 'Proxima Nova Bold', sans-serif !important;
+  text-transform: uppercase;
+  font-size: 20px;
+}
+
+/*====CONTENT SHOWCASE====*/
+
+.u2u-content-showcase {
+  padding-bottom: 0;
+}
+
+.u2u-content-showcase-wrapper {
+  background: #E7ECF5;
+  width: 100%;
+  padding-top: 100px;
+}
+
+.u2u-content-showcase-title {
+  text-align: left;
+}
+
+.u2u-content-showcase-title p {
+  font-size: 3em;
+  font-family: 'Proxima Nova Bold', sans-serif !important;
+  text-transform: uppercase;
+  margin: 0;
+  line-height: 60px;
+}
+
+.u2u-content-showcase-video-title {
+  font-family: 'Proxima Nova Bold', sans-serif !important;
+  margin-top: 60px;
+  font-size: 26px;
+}
+
+.u2u-content-showcase-videos {
+
+}
+
+.u2u-content-showcase-video {
+  float: left;
+  width: 352px;
+  height: 198px;
+  margin-right: 10px;
+  margin-top: 20px;
+}
+
+/*====INSTAGRAM FEED====*/
+
+.u2u-ig-feed {
+  background: #E7ECF5;
+}
+
+.ooo-instagram {
+  padding-left: 55px !important;
+  padding-right: 55px !important;
+}
+
+.ooo-instagram-container {
+  padding: 0 !important;
+}
+
+.ooo-instagram-header__title {
+  font-family: 'Proxima Nova Bold', sans-serif !important;
+  text-align: left;
+  text-transform: none;
+  letter-spacing: normal;
+  font-size: 26px;
+  margin-bottom: 10px;
+}
+
+@media only screen and (min-width: 1000px) {
+  .ooo-instagram {
+    margin: 0 auto !important;
+  }
+}
+
+/*====PRODUCT DETAIL PAGE (PDP)====*/
+
+.u2u-pdp-hero {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  background-position: center;
+  background-size: cover;
+}
+
+.u2u-pdp-hero:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #000000;
+  opacity: 0.4;
+  z-index: 1;
+}
+
+.u2u-pdp-hero-title {
+
+}
+
 /*====GENERAL OVERRIDES====*/
 
+.video-is-loaded .video-control__play {
+  align-items: center;
+}
+
 .video-control__play .icon {
-  margin-top: 9px;
+
 }
 
 .site-nav__label {

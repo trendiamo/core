@@ -1,116 +1,97 @@
 {
   "current": {
+    "color_text": "#3a3a3a",
+    "color_body_text": "#333232",
+    "color_sale_text": "#ea0606",
+    "color_button": "#3a3a3a",
+    "color_button_text": "#ffffff",
+    "color_small_button_text_border": "#3a3a3a",
+    "color_text_field_text": "#000000",
+    "color_text_field_border": "#cccccc",
+    "color_text_field": "#ffffff",
+    "color_image_overlay_text": "#ffffff",
+    "color_image_overlay": "#685858",
+    "image_overlay_opacity": 40,
+    "color_borders": "#ebebeb",
+    "color_body_bg": "#ffffff",
+    "type_header_font": "helvetica_n7",
+    "type_header_base_size": 26,
+    "type_base_font": "helvetica_n4",
+    "type_base_size": 15,
+    "predictive_search_enabled": true,
+    "predictive_search_show_vendor": false,
+    "predictive_search_show_price": false,
+    "share_image": "",
+    "share_facebook": true,
+    "share_twitter": true,
+    "share_pinterest": true,
+    "social_twitter_link": "",
+    "social_facebook_link": "",
+    "social_pinterest_link": "",
+    "social_instagram_link": "https:\/\/instagram.com\/_uptous",
+    "social_tumblr_link": "",
+    "social_snapchat_link": "",
+    "social_youtube_link": "https:\/\/www.youtube.com\/channel\/UCnEQGnoZb_jEjMtgNsvLMVQ",
+    "social_vimeo_link": "",
+    "favicon": "",
+    "enable_ajax": true,
+    "checkout_header_image": "",
+    "checkout_logo_image": "",
+    "checkout_logo_position": "left",
+    "checkout_logo_size": "medium",
+    "checkout_body_background_image": "",
+    "checkout_body_background_color": "#fff",
+    "checkout_input_background_color_mode": "white",
+    "checkout_sidebar_background_image": "",
+    "checkout_sidebar_background_color": "#fafafa",
+    "checkout_heading_font": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'",
+    "checkout_body_font": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'",
+    "checkout_accent_color": "#197bbd",
+    "checkout_button_color": "#197bbd",
+    "checkout_error_color": "#e32c2b",
     "sections": {
       "header": {
         "type": "header",
-        "settings": {}
-      },
-      "hero-1": {
-        "type": "hero",
         "settings": {
-          "hero_size": "large",
-          "text_size": "large"
-        }
-      },
-      "feature-row": {
-        "type": "feature-row",
-        "settings": {}
-      },
-      "feature-columns": {
-        "type": "feature-columns",
-        "blocks": {
-          "feature-columns-0": {
-            "type": "text_block",
-            "settings": {}
-          },
-          "feature-columns-1": {
-            "type": "text_block",
-            "settings": {}
-          },
-          "feature-columns-2": {
-            "type": "text_block",
-            "settings": {}
-          }
-        },
-        "block_order": [
-          "feature-columns-0",
-          "feature-columns-1",
-          "feature-columns-2"
-        ],
-        "settings": {
-          "title": ""
+          "align_logo": "left",
+          "logo": "shopify:\/\/shop_images\/logo_black.png",
+          "logo_max_width": 140,
+          "main_linklist": "main-menu",
+          "message": false,
+          "home_page_only": true,
+          "message_text": "Announce something here",
+          "message_link": "",
+          "color_bg": "#3a3a3a",
+          "color_text": "#ffffff"
         }
       },
       "collection": {
         "type": "collection",
         "settings": {
-          "grid": 4
+          "title": "The basics",
+          "subtitle": "Simple yet revolutionary. Produced with love in Portugal.",
+          "collection": "basics",
+          "grid": 3,
+          "rows": 3,
+          "show_vendor": false,
+          "show_view_all": true
         }
-      },
-      "hero-2": {
-        "type": "hero",
-        "settings": {
-          "text_size": "large"
-        }
-      },
-      "quotes": {
-        "type": "quotes",
-        "blocks": {
-          "quotes-0": {
-            "type": "quote",
-            "settings": {}
-          },
-          "quotes-1": {
-            "type": "quote",
-            "settings": {}
-          },
-          "quotes-2": {
-            "type": "quote",
-            "settings": {}
-          }
-        },
-        "block_order": [
-          "quotes-0",
-          "quotes-1",
-          "quotes-2"
-        ],
-        "settings": {
-          "title": ""
-        }
-      },
-      "image-bar": {
-        "type": "image-bar",
-        "blocks": {
-          "image-bar-0": {
-            "type": "image",
-            "settings": {}
-          },
-          "image-bar-1": {
-            "type": "image",
-            "settings": {}
-          },
-          "image-bar-2": {
-            "type": "image",
-            "settings": {}
-          }
-        },
-        "block_order": [
-          "image-bar-0",
-          "image-bar-1",
-          "image-bar-2"
-        ],
-        "settings": {}
       },
       "footer": {
         "type": "footer",
         "blocks": {
           "footer-0": {
             "type": "link_list",
-            "settings": {}
+            "settings": {
+              "title": "Quick links",
+              "menu": "footer"
+            }
           },
           "footer-1": {
             "type": "newsletter",
-            "settings": {}
+            "settings": {
+              "title": "Newsletter"
+            }
           }
         },
         "block_order": [
@@ -118,18 +99,273 @@
           "footer-1"
         ],
         "settings": {
-          "show_payment_icons": true
+          "show_payment_icons": true,
+          "color_footer_bg": "#f6f6f6",
+          "color_footer_text": "#333232",
+          "show_locale_selector": true,
+          "show_currency_selector": true
+        }
+      },
+      "1592403638763": {
+        "type": "hero-frame",
+        "settings": {
+          "image": "shopify:\/\/shop_images\/AdobeStock_209202958.jpeg",
+          "alignment": "center",
+          "hero_layout": "full_width",
+          "hero_size": "x-large",
+          "text_size": "medium",
+          "title": "<p>TRULY SUSTAINABLE FASHION<br>FOR TRULY UNBEATABLE PRICES<\/p>",
+          "text": "<p>A collective ordering platform that connects you directly with manufacturers.<br>Decide what gets produced and buy sustainable products at affordable prices.<\/p>",
+          "link_label": "LEARN HOW",
+          "link_link": "shopify:\/\/pages\/cookie-policy",
+          "button_label": "SHOP NOW",
+          "button_link": "shopify:\/\/pages\/cookie-policy"
+        }
+      },
+      "1592481439617": {
+        "type": "video",
+        "settings": {
+          "image": "",
+          "image_position": "center center",
+          "video_link": "https:\/\/www.youtube.com\/watch?v=_9VUPq3SxOc",
+          "show_overlay": true,
+          "style": "image_with_play",
+          "height": "medium",
+          "video_title": "",
+          "text_size": "medium",
+          "headline": "WELCOME TO COLLECTIVE ORDERING",
+          "sub-headline": "Find out why the days of overpriced sustainable fashion are over"
+        }
+      },
+      "1592486513674": {
+        "type": "feature-row-vertical",
+        "settings": {
+          "image": "shopify:\/\/shop_images\/doodle.png",
+          "layout": "left",
+          "title": "COLLECTIVE ORDERING VS. RETAIL",
+          "subtitle": "A win for everyone, including our planet.",
+          "text": "<p>Producing fashion only after it&rsquo;s been bought and selling it in the most direct way creates efficiencies that allow sustainable fashion to be affordable for everyone while saving resources. A win for everyone, including our planet.&nbsp;<\/p>",
+          "button_label": "LEARN MORE",
+          "button_link": "shopify:\/\/pages\/cookie-policy"
+        }
+      },
+      "1593003134978": {
+        "type": "hero-blocks",
+        "settings": {
+          "image": "shopify:\/\/shop_images\/AdobeStock_183373937.jpeg",
+          "alignment": "center",
+          "hero_layout": "full_width",
+          "hero_size": "x-large",
+          "text_size": "medium",
+          "title": "THE DIFFERENCE",
+          "text": "",
+          "block_image1": "shopify:\/\/shop_images\/Gruppe_119_2x_48cd3690-b940-4560-9628-b289216d53f2.png",
+          "block_text1": "<p>Get low prices for<br>sustainable products<\/p>",
+          "block_image2": "shopify:\/\/shop_images\/Gruppe_118_2x_0db6eec1-af44-444d-a028-407b95745a11.png",
+          "block_text2": "<p>Enable sustainable<br>fashion for everyone<\/p>",
+          "block_image3": "shopify:\/\/shop_images\/Gruppe_117_2x_390ac175-cb58-401f-85c4-700addf4b9b8.png",
+          "block_text3": "<p>Empower efficiency<br>and save resources<\/p>",
+          "button_label": "Become a part",
+          "button_link": "shopify:\/\/pages\/cookie-policy"
+        }
+      },
+      "1593082711245": {
+        "type": "blocks-video",
+        "settings": {
+          "headline": "How it works",
+          "subheadline": "Reverse-engineering fashion",
+          "image1": "shopify:\/\/shop_images\/Gruppe_maskieren_1_2x_7481760f-af0f-4474-9b38-9d4e573a6ff1.png",
+          "text1": "<p><strong>#1<\/strong> Select a product and<br>join a community order.<\/p>",
+          "image2": "shopify:\/\/shop_images\/Gruppe_maskieren_2_2x_da4a1c60-f164-44d4-acf8-510b3a3547e4.png",
+          "text2": "<p><strong>#2<\/strong> Wait for your products<br>to be produced.<\/p>",
+          "image3": "shopify:\/\/shop_images\/Gruppe_maskieren_3_2x_0332418a-15e6-4076-844b-c39e16fdecd4.png",
+          "text3": "<p><strong>#3<\/strong> Enjoy sustainable fashion for the lowest price.<\/p>",
+          "image4": "shopify:\/\/shop_images\/Gruppe_118_2x_0db6eec1-af44-444d-a028-407b95745a11.png",
+          "text4": "<p><strong>#4<\/strong> Cut the waste created<br>by over-production<\/p>",
+          "image": "",
+          "image_position": "center center",
+          "video_link": "https:\/\/www.youtube.com\/watch?v=_9VUPq3SxOc",
+          "show_overlay": true,
+          "style": "image_with_play",
+          "height": "small",
+          "video_title": "",
+          "text_size": "medium",
+          "button_label": "Learn more",
+          "button_link": "shopify:\/\/pages\/cookie-policy"
+        }
+      },
+      "1593427042443": {
+        "type": "newsletter",
+        "settings": {
+          "section_title": "Join the Journey",
+          "subheading": "<p>Be part of our community and be the first to hear about news, products and ideas.<\/p>",
+          "show_background": false,
+          "image": "shopify:\/\/shop_images\/ig1.jpg",
+          "hashtag": "#onthisroadtogether",
+          "icon_ig": "shopify:\/\/shop_images\/instagram_2x_f5623046-be45-4352-9485-79f8d59d2e2e.png",
+          "icon_yt": "shopify:\/\/shop_images\/youtube_2x_61cd8821-3295-4cc7-9b1b-3301ea80b905.png"
+        }
+      },
+      "1593512502772": {
+        "type": "hero-noframe",
+        "settings": {
+          "image": "shopify:\/\/shop_images\/IMG_6471.JPG",
+          "alignment": "center",
+          "hero_layout": "full_width",
+          "hero_size": "x-large",
+          "text_size": "medium",
+          "title": "<p>JOIN US ON OUR JOURNEY<br>TOWARD BETTER FASHION<\/p>",
+          "text": "<p>We are sick and tired of how business is done in the old fashion <br>world and believe we are not alone. On our six week road trip across <br>Europe we want to team up with everyone else who is up for changing <br>how we produce and consume and listen to what they want.<\/p>",
+          "link_label": "",
+          "link_link": "",
+          "button_label": "Join the Journey",
+          "button_link": "shopify:\/\/pages\/cookie-policy"
+        }
+      },
+      "1593514012301": {
+        "type": "journey",
+        "blocks": {
+          "1593514012301-0": {
+            "type": "story",
+            "settings": {
+              "date": "Day 1",
+              "title": "Lisbon, Portugal",
+              "video_link": "https:\/\/www.youtube.com\/watch?v=_9VUPq3SxOc",
+              "text": "<p>We meet with<strong> Antonio<\/strong> and lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed finibus, ipsum sed bibendum volutpat, dui arcu vehicula dolor, ut efficitur felis elit vel augue. Curabitur ultrices placerat felis. Praesent fermentum, lacus non tristique sollicitudin, ante nunc aliquet mi, et iaculis purus arcu in erat. Nullam lacinia hendrerit erat eu porta. Quisque ut luctus nibh.<\/p>"
+            }
+          },
+          "1593518844961": {
+            "type": "story",
+            "settings": {
+              "date": "Day 2",
+              "title": "AM ARSCH DER HEIDE",
+              "video_link": "https:\/\/www.youtube.com\/watch?v=_9VUPq3SxOc",
+              "text": "<p>We meet with<strong>&nbsp;Mariana<\/strong>&nbsp;and lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed finibus, ipsum sed bibendum volutpat, dui arcu vehicula dolor, ut efficitur felis elit vel augue. Curabitur ultrices placerat felis. Praesent fermentum, lacus non tristique sollicitudin, ante nunc aliquet mi, et iaculis purus arcu in erat. Nullam lacinia hendrerit erat eu porta. Quisque ut luctus nibh.<\/p>"
+            }
+          },
+          "1593519097094": {
+            "type": "story",
+            "settings": {
+              "date": "Day 3",
+              "title": "Was geht ab",
+              "video_link": "https:\/\/www.youtube.com\/watch?v=_9VUPq3SxOc",
+              "text": "<p>We meet with<strong>&nbsp;Tomas<\/strong>&nbsp;and lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed finibus, ipsum sed bibendum volutpat, dui arcu vehicula dolor, ut efficitur felis elit vel augue. Curabitur ultrices placerat felis. Praesent fermentum, lacus non tristique sollicitudin, ante nunc aliquet mi, et iaculis purus arcu in erat. Nullam lacinia hendrerit erat eu porta. Quisque ut luctus nibh.<\/p>"
+            }
+          }
+        },
+        "block_order": [
+          "1593514012301-0",
+          "1593518844961",
+          "1593519097094"
+        ],
+        "settings": {
+          "title": "Timeline"
+        }
+      },
+      "product-template": {
+        "type": "product-template",
+        "settings": {
+          "hero_image": "shopify:\/\/shop_images\/AdobeStock_309576547.jpeg",
+          "title": "<p>Help to FUND the first produce on demand collection<\/p>",
+          "show_quantity_selector": false,
+          "show_variant_labels": true,
+          "show_vendor": false,
+          "enable_payment_button": true,
+          "show_share_buttons": true,
+          "media_size": "medium",
+          "enable_image_zoom": false,
+          "enable_video_looping": false
+        }
+      },
+      "product-recommendations": {
+        "type": "product-recommendations",
+        "settings": {
+          "show_product_recommendations": true,
+          "heading": "You may also like",
+          "show_vendor": false
+        }
+      },
+      "1594033764120": {
+        "type": "countdown",
+        "settings": {
+          "title": "Time left for",
+          "order": "COLLECTIVE ORDER #0001",
+          "date": "Jan 5, 2021 15:37:25",
+          "button_label": "SHOP NOW",
+          "button_link": "shopify:\/\/pages\/cookie-policy"
+        }
+      },
+      "1594040300542": {
+        "type": "content-showcase",
+        "blocks": {
+          "1594040300542-0": {
+            "type": "video",
+            "settings": {
+              "video_link": "https:\/\/www.youtube.com\/watch?v=_9VUPq3SxOc"
+            }
+          },
+          "1594041275396": {
+            "type": "video",
+            "settings": {
+              "video_link": "https:\/\/www.youtube.com\/watch?v=_9VUPq3SxOc"
+            }
+          },
+          "1594041337123": {
+            "type": "video",
+            "settings": {
+              "video_link": "https:\/\/www.youtube.com\/watch?v=_9VUPq3SxOc"
+            }
+          }
+        },
+        "block_order": [
+          "1594040300542-0",
+          "1594041275396",
+          "1594041337123"
+        ],
+        "settings": {
+          "title": "<p>Dive into<\/p>\n<p>the topic<\/p>",
+          "title_videos": "Watch Our Videos"
+        }
+      },
+      "1594041649120": {
+        "type": "maestrooo-instagram",
+        "settings": {
+          "title": "Follow us on Instagram",
+          "subheading": "",
+          "button_text": "",
+          "button_link": "",
+          "layout": "collage",
+          "image_size": "small",
+          "full_width": false,
+          "add_spacing": true,
+          "rows_count": 2,
+          "show_author": false,
+          "show_caption": true,
+          "show_date": true,
+          "click_action": "open_instagram",
+          "heading_color": "#000000",
+          "subheading_color": "#000000",
+          "button_background": "#000000",
+          "button_color": "#ffffff",
+          "overlay_color": "#000000",
+          "overlay_text_color": "#ffffff",
+          "overlay_opacity": 65
         }
       }
     },
     "content_for_index": [
-      "hero-1",
-      "feature-row",
-      "feature-columns",
+      "1592403638763",
+      "1592481439617",
+      "1592486513674",
+      "1594033764120",
       "collection",
-      "hero-2",
-      "quotes",
-      "image-bar"
+      "1593003134978",
+      "1593082711245",
+      "1593512502772",
+      "1593514012301",
+      "1593427042443",
+      "1594040300542",
+      "1594041649120"
     ]
   },
   "presets": {

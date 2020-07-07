@@ -1,0 +1,161 @@
+<div class="u2u-countdown-wrapper">
+  <div class="page-width u2u-countdown">
+    <div class="u2u-countdown-title">{{ section.settings.title }}</div>
+    <div class="u2u-countdown-order">{{ section.settings.order }}</div>
+    <div id="u2u-timer" class="u2u-countdown-timer">
+      <div class="u2u-countdown-timer-pos">
+        <div id="u2u-timer-day" class="u2u-countdown-timer-digit"></div>
+        <div class="u2u-countdown-timer-label">days</div>
+      </div>
+      <div class="u2u-countdown-timer-pos">
+        <div id="u2u-timer-hours" class="u2u-countdown-timer-digit"></div>
+        <div class="u2u-countdown-timer-label">hours</div>
+      </div>
+      <div class="u2u-countdown-timer-pos">
+        <div id="u2u-timer-minutes" class="u2u-countdown-timer-digit"></div>
+        <div class="u2u-countdown-timer-label">minutes</div>
+      </div>
+      <div class="u2u-countdown-timer-pos">
+        <div id="u2u-timer-seconds" class="u2u-countdown-timer-digit"></div>
+        <div class="u2u-countdown-timer-label">seconds</div>
+      </div>
+    </div>
+    <a href="{{ section.settings.button_link }}"
+      class="btn u2u-btn-black u2u-spacer-100"
+      aria-label="{{ ariaLabel }}">
+      {{- section.settings.button_label | escape -}}
+    </a>
+  </div>
+</div>
+
+<script>
+// Set the date we're counting down to
+var countDownDate = new Date("{{ section.settings.date }}").getTime();
+
+// Update the count down every 1 second
+var x = setInterval(function() {
+
+  // Get today's date and time
+  var now = new Date().getTime();
+
+  // Find the distance between now and the count down date
+  var distance = countDownDate - now;
+
+  // Time calculations for days, hours, minutes and seconds
+  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+  // Display the result in the element with id="demo"
+  // document.getElementById("u2u-timer").innerHTML = days + "d " + hours + "h "
+  // + minutes + "m " + seconds + "s ";
+
+  document.getElementById("u2u-timer-day").innerHTML = days;
+  document.getElementById("u2u-timer-hours").innerHTML = hours;
+  document.getElementById("u2u-timer-minutes").innerHTML = minutes;
+  document.getElementById("u2u-timer-seconds").innerHTML = seconds;
+
+  // If the count down is finished, write some text
+  if (distance < 0) {
+    clearInterval(x);
+    document.getElementById("u2u-timer").innerHTML = "EXPIRED";
+  }
+}, 1000);
+</script>
+
+{% schema %}
+{
+  "name": {
+    "de": "Countdown",
+    "en": "Countdown"
+  },
+  "class": "index-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": {
+        "de": "Titel",
+        "en": "Title"
+      }
+    },
+    {
+      "type": "text",
+      "id": "order",
+      "label": {
+        "de": "Bestellung",
+        "en": "Order"
+      }
+    },
+    {
+      "type": "text",
+      "id": "date",
+      "label": {
+        "de": "Datum",
+        "en": "Date"
+      }
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": {
+        "da": "Knaptekst",
+        "de": "Button-Etikett",
+        "en": "Button label",
+        "es": "Etiqueta de botón",
+        "fi": "Tekstipainike",
+        "fr": "Texte du bouton",
+        "hi": "बटन लेबल",
+        "it": "Etichetta pulsante",
+        "ja": "ボタンのラベル",
+        "ko": "버튼 레이블",
+        "nb": "Knappetikett",
+        "nl": "Knoplabel",
+        "pt-BR": "Etiqueta de botão",
+        "pt-PT": "Etiqueta do botão",
+        "sv": "Knappetikett",
+        "th": "ป้ายกำกับปุ่ม",
+        "zh-CN": "按钮标签",
+        "zh-TW": "按鈕標籤"
+      }
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": {
+        "da": "Knaplink",
+        "de": "Button-Link",
+        "en": "Button link",
+        "es": "Enlace de botón",
+        "fi": "Painikelinkki",
+        "fr": "Lien du bouton",
+        "hi": "बटन लिंक",
+        "it": "Link pulsante",
+        "ja": "ボタンのリンク",
+        "ko": "버튼 링크",
+        "nb": "Kobling for knapp",
+        "nl": "Knoplink",
+        "pt-BR": "Link de botão",
+        "pt-PT": "Ligação do botão",
+        "sv": "Knapplänk",
+        "th": "ลิงก์ปุ่ม",
+        "zh-CN": "按钮链接",
+        "zh-TW": "按鈕連結"
+      }
+    }
+  ],
+  "presets": [
+    {
+      "name": {
+        "de": "Countdown",
+        "en": "Countdown"
+      },
+      "category": {
+        "de": "UPTOUS",
+        "en": "UPTOUS"
+      }
+    }
+  ]
+}
+{% endschema %}

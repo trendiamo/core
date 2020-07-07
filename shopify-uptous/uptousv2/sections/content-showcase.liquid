@@ -1,0 +1,107 @@
+<div class="u2u-content-showcase-wrapper">
+  <div class="page-width" data-section-id="{{ section.id }}" data-section-type="content-showcase">
+
+    <div class="u2u-content-showcase-title">{{ section.settings.title }}</div>
+    <div class="u2u-content-showcase-video-title">{{ section.settings.title_videos }}</div>
+
+    {% if section.blocks.size > 0 %}
+      <div class="u2u-content-showcase-videos">
+        {% for block in section.blocks %}
+          <iframe class="u2u-content-showcase-video" src="https://www.youtube.com/embed/{{ block.settings.video_link.id }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    {% if section.blocks.size == 0 %}
+      {% include 'no-blocks' %}
+    {% endif %}
+
+  </div>
+</div>
+
+
+
+{% schema %}
+{
+  "name": {
+    "de": "Content Showcase",
+    "en": "Content Showcase"
+  },
+  "class": "index-section u2u-content-showcase",
+  "max_blocks": 99,
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "title",
+      "label": {
+        "da": "Overskrift",
+        "de": "Titel",
+        "en": "Heading",
+        "es": "Título",
+        "fi": "Otsake",
+        "fr": "En-tête",
+        "hi": "शीर्षक",
+        "it": "Heading",
+        "ja": "見出し",
+        "ko": "제목",
+        "nb": "Overskrift",
+        "nl": "Kop",
+        "pt-BR": "Título",
+        "pt-PT": "Título",
+        "sv": "Rubrik",
+        "th": "ส่วนหัว",
+        "zh-CN": "标题",
+        "zh-TW": "標題"
+      }
+    },
+    {
+      "type": "text",
+      "id": "title_videos",
+      "label": {
+        "de": "Video Liste Titel",
+        "en": "Video List Title"
+      }
+    }
+  ],
+  "blocks": [
+    {
+      "type": "video",
+      "name": {
+        "de": "Video",
+        "en": "Video"
+      },
+      "settings": [
+        {
+          "type": "video_url",
+          "id": "video_link",
+          "label": {
+            "de": "Video Link",
+            "en": "Video Link"
+          },
+          "accept": [
+            "youtube"
+          ],
+          "default": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": {
+        "de": "Content Showcase",
+        "en": "Content Showcase"
+      },
+      "category": {
+        "de": "UPTOUS",
+        "en": "UPTOUS"
+      },
+      "blocks": [
+        {
+          "type": "video"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
