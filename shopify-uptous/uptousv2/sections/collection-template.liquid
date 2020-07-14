@@ -47,7 +47,7 @@
         </div>
       {% endif %}
       {% if collection.description != blank %}
-        <div class="rte collection-description page-width">
+        <div class="rte collection-description page-width u2u-collection-descr">
           {{ collection.description }}
         </div>
       {% endif %}
@@ -69,6 +69,23 @@
         </div>
       </div>
     {% endif %}
+
+    <div class="u2u-collections-features-wrapper page-width">
+      <div class="u2u-collection-features">
+        <div class="u2u-collection-feature">
+          <img class="u2u-collection-feature-img" src="{{ section.settings.feature_img1 | img_url: '300x300' }}"/>
+          <div class="u2u-collection-feature-text">{{ section.settings.feature_text1 }}</div>
+        </div>
+        <div class="u2u-collection-feature">
+          <img class="u2u-collection-feature-img" src="{{ section.settings.feature_img2 | img_url: '300x300' }}"/>
+          <div class="u2u-collection-feature-text">{{ section.settings.feature_text2 }}</div>
+        </div>
+        <div class="u2u-collection-feature">
+          <img class="u2u-collection-feature-img" src="{{ section.settings.feature_img3 | img_url: '300x300' }}"/>
+          <div class="u2u-collection-feature-text">{{ section.settings.feature_text3 }}</div>
+        </div>
+      </div>
+    </div>
 
     {% if is_filter_by_available or section.settings.sort_enable %}
       <div class="filters-toolbar-wrapper{% if is_filter_by_available %} filters-toolbar--has-filter{% endif %}">
@@ -484,6 +501,48 @@
         "zh-TW": "啟用標籤篩選功能"
       },
       "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "feature_img1",
+      "label": {
+        "en": "Feature Image #1"
+      }
+    },
+    {
+      "type": "text",
+      "id": "feature_text1",
+      "label": {
+        "en": "Feature Text #1"
+      }
+    },
+    {
+      "type": "image_picker",
+      "id": "feature_img2",
+      "label": {
+        "en": "Feature Image #2"
+      }
+    },
+    {
+      "type": "text",
+      "id": "feature_text2",
+      "label": {
+        "en": "Feature Text #2"
+      }
+    },
+    {
+      "type": "image_picker",
+      "id": "feature_img3",
+      "label": {
+        "en": "Feature Image #3"
+      }
+    },
+    {
+      "type": "text",
+      "id": "feature_text3",
+      "label": {
+        "en": "Feature Text #3"
+      }
     }
   ]
 }

@@ -7,6 +7,32 @@
   {% if section.blocks.size > 0 %}
     <div class="u2u-journey-wrapper">
       {% for block in section.blocks %}
+        <div class="u2u-journey-story">
+          <div class="u2u-journey-story-video-wrapper">
+            <div class="u2u-journey-story-video">
+              <div id="Video-{{ section.id }}"
+                  class="video"
+                  data-id="{{ block.settings.video_link.id }}"></div>
+              <iframe width="100%" height="100%" src="https://www.youtube.com/embed/{{ block.settings.video_link.id }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+          </div>
+          <div class="u2u-journey-story-line-wrapper">
+            <div class="u2u-journey-story-line"></div>
+            <div class="u2u-journey-story-line-dot"></div>
+          </div>
+          <div class="u2u-journey-story-meta">
+            <div class="u2u-journey-story-meta-date">{{ block.settings.date }}</div>
+            <div class="u2u-journey-story-meta-title">{{ block.settings.title }}</div>
+            <div class="u2u-journey-story-meta-text">{{ block.settings.text }}</div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  {% if section.blocks.size > 0 %}
+    <div class="u2u-journey-wrapper-desktop">
+      {% for block in section.blocks %}
       {% assign v = forloop.index | modulo: 2 %}
       {% if v == 0 %}
         <div class="u2u-journey-story">

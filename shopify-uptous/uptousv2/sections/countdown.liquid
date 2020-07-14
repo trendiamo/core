@@ -1,4 +1,4 @@
-<div class="u2u-countdown-wrapper">
+<div class="u2u-countdown-wrapper" style="background: url({{ section.settings.image | img_url: '1000x' }});">
   <div class="page-width u2u-countdown">
     <div class="u2u-countdown-title">{{ section.settings.title }}</div>
     <div class="u2u-countdown-order">{{ section.settings.order }}</div>
@@ -13,15 +13,15 @@
       </div>
       <div class="u2u-countdown-timer-pos">
         <div id="u2u-timer-minutes" class="u2u-countdown-timer-digit"></div>
-        <div class="u2u-countdown-timer-label">minutes</div>
+        <div class="u2u-countdown-timer-label">mins</div>
       </div>
       <div class="u2u-countdown-timer-pos">
         <div id="u2u-timer-seconds" class="u2u-countdown-timer-digit"></div>
-        <div class="u2u-countdown-timer-label">seconds</div>
+        <div class="u2u-countdown-timer-label">secs</div>
       </div>
     </div>
     <a href="{{ section.settings.button_link }}"
-      class="btn u2u-btn-black u2u-spacer-100"
+      class="btn u2u-btn-white u2u-spacer-100"
       aria-label="{{ ariaLabel }}">
       {{- section.settings.button_label | escape -}}
     </a>
@@ -142,6 +142,14 @@ var x = setInterval(function() {
         "th": "ลิงก์ปุ่ม",
         "zh-CN": "按钮链接",
         "zh-TW": "按鈕連結"
+      }
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": {
+        "de": "Hintergrund Bild",
+        "en": "Background Image"
       }
     }
   ],
