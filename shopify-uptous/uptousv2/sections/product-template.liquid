@@ -1,8 +1,8 @@
-<div class="u2u-pdp-hero" style="background-image: url({{ section.settings.hero_image | img_url: '1000x' }})">
-  <div class="u2u-pdp-hero-title">{{ section.settings.title }}</div>
+<div class="u2u-pdp-hero" style="background-image: url('{{ product.metafields.custom_fields["hero_image_url"] }})'">
+  <div class="u2u-pdp-hero-title page-width">{{ section.settings.title }}</div>
 </div>
 
-<div class="product-template__container page-width"
+<div class="product-template__container page-width u2u-product-meta"
   id="ProductSection-{{ section.id }}"
   data-section-id="{{ section.id }}"
   data-section-type="product"
@@ -126,8 +126,9 @@
     <div class="grid__item {{ product_description_width }}">
       <div class="product-single__meta">
 
-        <h1 class="product-single__title">{{ product.title }}</h1>
+        <h1 class="product-single__title u2u-product-title">{{ product.title }}</h1>
 
+        <div class="u2u-price-policy">
           <div class="product__price">
             {% include 'product-price', variant: current_variant, show_vendor: section.settings.show_vendor %}
           </div>
@@ -142,6 +143,11 @@
               {%- endif -%}
             </div>
           {%- endif -%}
+        </div>
+
+        <div class="product-single__description rte">
+          {{ product.description }}
+        </div>
 
           {% capture "form_classes" -%}
             product-form product-form-{{ section.id }}
@@ -152,13 +158,13 @@
 
           {% form 'product', product, class:form_classes, novalidate: 'novalidate', data-product-form: '' %}
             {% unless product.has_only_default_variant %}
-              <div class="product-form__controls-group">
+              <div class="product-form__controls-group u2u-product-options">
                 {% for option in product.options_with_values %}
-                  <div class="selector-wrapper js product-form__item">
+                  <div class="selector-wrapper js product-form__item u2u-product-option">
                     <label {% if option.name == 'default' %}class="label--hidden" {% endif %}for="SingleOptionSelector-{{ forloop.index0 }}">
                       {{ option.name }}
                     </label>
-                    <select class="single-option-selector single-option-selector-{{ section.id }} product-form__input"
+                    <select class="single-option-selector single-option-selector-{{ section.id }} product-form__input u2u-product-option-select"
                       id="SingleOptionSelector-{{ forloop.index0 }}"
                       data-index="option{{ forloop.index }}"
                     >
@@ -183,7 +189,7 @@
 
             {% if section.settings.show_quantity_selector %}
               <div class="product-form__controls-group">
-                <div class="product-form__item">
+                <div class="product-form__item u2u-product-option-qty">
                   <label for="Quantity-{{ section.id }}">{{ 'products.product.quantity' | t }}</label>
                   <input type="number" id="Quantity-{{ section.id }}"
                     name="quantity" value="1" min="1" pattern="[0-9]*"
@@ -203,7 +209,7 @@
             </div>
 
             <div class="product-form__controls-group product-form__controls-group--submit">
-              <div class="product-form__item product-form__item--submit
+              <div class="u2u-product-cta product-form__item product-form__item--submit
                 {%- if section.settings.enable_payment_button %} product-form__item--payment-button {%- endif -%}
                 {%- if product.has_only_default_variant %} product-form__item--no-variants {%- endif -%}"
               >
@@ -250,14 +256,80 @@
           aria-hidden="true"
         >{{ 'products.product.loader_label' | t }}</p>
 
-        <div class="product-single__description rte">
-          {{ product.description }}
+        <div class="u2u-product-features">
+          <div class="u2u-product-features-title">features</div>
+
+          <div id="u2uf1b" class="u2u-product-feature">
+            <div class="u2u-product-feature-header">
+              <img class="u2u-product-feature-icon" src="{{ section.settings.product_feature1_img | img_url: '60x60' }}"/>
+              <div class="u2u-product-feature-title">{{ section.settings.product_feature1_title }}</div>
+              <div class="u2u-product-feature-btn">
+                <img id="u2uf1ioff" class="u2u-product-feature-btn-image" src="https://cdn.shopify.com/s/files/1/0278/6934/7915/files/arrow_3x_c17fce62-3f63-4832-a61c-826ba82a79ec.png?v=1594738779"/>
+                <img id="u2uf1ion" class="u2u-product-feature-btn-image" src="https://cdn.shopify.com/s/files/1/0278/6934/7915/files/arrow_3x180.png?v=1594739301"/>
+              </div>
+            </div>
+            <div id="u2uf1" class="u2u-product-feature-text">{{ section.settings.product_feature1_text }}</div>
+          </div>
+
+          <div id="u2uf2b" class="u2u-product-feature">
+            <div class="u2u-product-feature-header">
+              <img class="u2u-product-feature-icon" src="{{ section.settings.product_feature2_img | img_url: '60x60' }}"/>
+              <div class="u2u-product-feature-title">{{ section.settings.product_feature2_title }}</div>
+              <div class="u2u-product-feature-btn">
+                <img id="u2uf2ioff" class="u2u-product-feature-btn-image" src="https://cdn.shopify.com/s/files/1/0278/6934/7915/files/arrow_3x_c17fce62-3f63-4832-a61c-826ba82a79ec.png?v=1594738779"/>
+                <img id="u2uf2ion" class="u2u-product-feature-btn-image" src="https://cdn.shopify.com/s/files/1/0278/6934/7915/files/arrow_3x180.png?v=1594739301"/>
+              </div>
+            </div>
+            <div id="u2uf2" class="u2u-product-feature-text">{{ section.settings.product_feature2_text }}</div>
+          </div>
+
+          <div id="u2uf3b" class="u2u-product-feature">
+            <div class="u2u-product-feature-header">
+              <img class="u2u-product-feature-icon" src="{{ section.settings.product_feature3_img | img_url: '60x60' }}"/>
+              <div class="u2u-product-feature-title">{{ section.settings.product_feature3_title }}</div>
+              <div class="u2u-product-feature-btn">
+                <img id="u2uf3ioff" class="u2u-product-feature-btn-image" src="https://cdn.shopify.com/s/files/1/0278/6934/7915/files/arrow_3x_c17fce62-3f63-4832-a61c-826ba82a79ec.png?v=1594738779"/>
+                <img id="u2uf3ion" class="u2u-product-feature-btn-image" src="https://cdn.shopify.com/s/files/1/0278/6934/7915/files/arrow_3x180.png?v=1594739301"/>
+              </div>
+            </div>
+            <div id="u2uf3" class="u2u-product-feature-text">{{ section.settings.product_feature3_text }}</div>
+          </div>
         </div>
 
         {% if section.settings.show_share_buttons %}
           {% include 'social-sharing', share_title: product.title, share_permalink: product.url, share_image: product.featured_media %}
         {% endif %}
     </div>
+  </div>
+</div>
+
+<div class="u2u-product-benefits page-width">
+  <div class="u2u-product-benefits-title">{{ section.settings.product_benefits_title }}</div>
+  <div class="u2u-product-benefit">
+    <img class="u2u-product-benefit-image" src="{{ section.settings.product_benefit1_img | img_url: '400x400' }}"/>
+    <div class="u2u-product-benefit-text">{{ section.settings.product_benefit1_text }}</div>
+  </div>
+  <div class="u2u-product-benefit">
+    <img class="u2u-product-benefit-image" src="{{ section.settings.product_benefit2_img | img_url: '400x400' }}"/>
+    <div class="u2u-product-benefit-text">{{ section.settings.product_benefit2_text }}</div>
+  </div>
+  <div class="u2u-product-benefit">
+    <img class="u2u-product-benefit-image" src="{{ section.settings.product_benefit3_img | img_url: '400x400' }}"/>
+    <div class="u2u-product-benefit-text">{{ section.settings.product_benefit3_text }}</div>
+  </div>
+</div>
+
+<div class="u2u-product-reviews page-width">
+  <div class="u2u-product-reviews-title">{{ section.settings.product_reviews_title }}</div>
+  <div class="u2u-product-reviews-text">{{ section.settings.product_reviews_text }}</div>
+  <div class="u2u-product-reviews-blocks">
+    {% for block in section.blocks %}
+      <div class="u2u-product-review">
+        <img class="u2u-product-review-image" src="{{ block.settings.image | img_url: '1000x1000' }}"/>
+        <div class="u2u-product-review-meta">{{ block.settings.meta }}</div>
+        <div class="u2u-product-review-text">{{ block.settings.text }}</div>
+      </div>
+    {% endfor %}
   </div>
 </div>
 
@@ -270,6 +342,55 @@
   </script>
 {% endunless %}
 
+<script>
+
+var u2uf1b = false;
+var u2uf2b = false;
+var u2uf3b = false;
+
+  $("#u2uf1b").click(function(){
+    if(u2uf1b != true) {
+      u2uf1b = true;
+      $("#u2uf1").animate({ height: '200px' }, "slow");
+      $("#u2uf1ion").show();
+      $("#u2uf1ioff").hide();
+    } else if(u2uf1b != false) {
+      u2uf1b = false;
+      $("#u2uf1").animate({ height: '0px' }, "slow");
+      $("#u2uf1ion").hide();
+      $("#u2uf1ioff").show();
+    }
+  });
+
+  $("#u2uf2b").click(function(){
+    if(u2uf2b != true) {
+      u2uf2b = true;
+      $("#u2uf2").animate({ height: '200px' }, "slow");
+      $("#u2uf2ion").show();
+      $("#u2uf2ioff").hide();
+    } else if(u2uf2b != false) {
+      u2uf2b = false;
+      $("#u2uf2").animate({ height: '0px' }, "slow");
+      $("#u2uf2ion").hide();
+      $("#u2uf2ioff").show();
+    }
+  });
+
+  $("#u2uf3b").click(function(){
+    if(u2uf3b != true) {
+      u2uf3b = true;
+      $("#u2uf3").animate({ height: '200px' }, "slow");
+      $("#u2uf3ion").show();
+      $("#u2uf3ioff").hide();
+    } else if(u2uf3b != false) {
+      u2uf3b = false;
+      $("#u2uf3").animate({ height: '0px' }, "slow");
+      $("#u2uf3ion").hide();
+      $("#u2uf3ioff").show();
+    }
+  });
+
+</script>
 
 
 {% schema %}
@@ -294,6 +415,7 @@
     "zh-CN": "产品页面",
     "zh-TW": "產品頁面"
   },
+  "max_blocks": 99,
   "settings": [
     {
       "type": "image_picker",
@@ -667,6 +789,194 @@
         "zh-TW": "啟用影片循環功能"
       },
       "default": false
+    },
+    {
+      "type": "header",
+      "content": {
+        "en": "Product Features"
+      },
+      "info": {
+        "en": "Feature information for all products"
+      }
+    },
+    {
+      "type": "image_picker",
+      "id": "product_feature1_img",
+      "label": {
+        "en": "Product Feature #1 Image"
+      }
+    },
+    {
+      "type": "text",
+      "id": "product_feature1_title",
+      "label": {
+        "en": "Product Feature #1"
+      }
+    },
+    {
+      "type": "richtext",
+      "id": "product_feature1_text",
+      "label": {
+        "en": "Product Feature #1 Text"
+      }
+    },
+    {
+      "type": "image_picker",
+      "id": "product_feature2_img",
+      "label": {
+        "en": "Product Feature #2 Image"
+      }
+    },
+    {
+      "type": "text",
+      "id": "product_feature2_title",
+      "label": {
+        "en": "Product Feature #2"
+      }
+    },
+    {
+      "type": "richtext",
+      "id": "product_feature2_text",
+      "label": {
+        "en": "Product Feature #2 Text"
+      }
+    },
+    {
+      "type": "image_picker",
+      "id": "product_feature3_img",
+      "label": {
+        "en": "Product Feature #3 Image"
+      }
+    },
+    {
+      "type": "text",
+      "id": "product_feature3_title",
+      "label": {
+        "en": "Product Feature #3"
+      }
+    },
+    {
+      "type": "richtext",
+      "id": "product_feature3_text",
+      "label": {
+        "en": "Product Feature #3 Text"
+      }
+    },
+    {
+      "type": "header",
+      "content": {
+        "en": "Product Benefits"
+      },
+      "info": {
+        "en": "Feature benefits (shows the same on all PDPs)"
+      }
+    },
+    {
+      "type": "text",
+      "id": "product_benefits_title",
+      "label": {
+        "en": "Product Benefits Title"
+      }
+    },
+    {
+      "type": "image_picker",
+      "id": "product_benefit1_img",
+      "label": {
+        "en": "Product Benefit #1 Image"
+      }
+    },
+    {
+      "type": "text",
+      "id": "product_benefit1_text",
+      "label": {
+        "en": "Product Benefit #1 Text"
+      }
+    },
+    {
+      "type": "image_picker",
+      "id": "product_benefit2_img",
+      "label": {
+        "en": "Product Benefit #2 Image"
+      }
+    },
+    {
+      "type": "text",
+      "id": "product_benefit2_text",
+      "label": {
+        "en": "Product Benefit #2 Text"
+      }
+    },
+    {
+      "type": "image_picker",
+      "id": "product_benefit3_img",
+      "label": {
+        "en": "Product Benefit #3 Image"
+      }
+    },
+    {
+      "type": "text",
+      "id": "product_benefit3_text",
+      "label": {
+        "en": "Product Benefit #3 Text"
+      }
+    },
+    {
+      "type": "header",
+      "content": {
+        "en": "Product Reviews"
+      },
+      "info": {
+        "en": "Featured Product Reviews (shows the same on all PDPs)"
+      }
+    },
+    {
+      "type": "text",
+      "id": "product_reviews_title",
+      "label": {
+        "en": "Product Reviews Title"
+      }
+    },
+    {
+      "type": "richtext",
+      "id": "product_reviews_text",
+      "label": {
+        "en": "Product Reviews Text"
+      }
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": {
+        "de": "Review",
+        "en": "Review"
+      },
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": {
+            "de": "Review Bild",
+            "en": "Review Image"
+          }
+        },
+        {
+          "type": "richtext",
+          "id": "meta",
+          "label": {
+            "de": "Review Meta",
+            "en": "Review Meta"
+          }
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": {
+            "de": "Review Text",
+            "en": "Review Text"
+          }
+        }
+      ]
     }
   ]
 }

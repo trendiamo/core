@@ -3,13 +3,16 @@
 {% endcomment %}
 
 {% section 'product-template' %}
+{% section 'video' %}
+{% section 'product-faq' %}
 {% section 'product-recommendations' %}
+{% section 'newsletter' %}
 
 {% if collection %}
   <div class="text-center return-link-wrapper page-width">
     <a href="{{ collection.url }}" class="btn btn--secondary btn--has-icon-before return-link">
       {% include 'icon-arrow-left' %}
-      {{ 'products.product.back_to_collection' | t: title: collection.title }}
+      {{ 'products.product.back_to_collection' | t: title: 'Collection' }}
     </a>
   </div>
 {% endif %}

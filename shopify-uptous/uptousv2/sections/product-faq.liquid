@@ -1,0 +1,82 @@
+<div class="u2u-product-faq page-width">
+  <div class="u2u-product-faq-title">{{ section.settings.title }}</div>
+  {% for block in section.blocks %}
+    <div id="i{{ block.id }}" class="u2u-product-faq-item">
+      <div class="u2u-product-faq-item-q">
+        {{ block.settings.question }}
+        <img id="i{{ block.id }}-btn" class="u2u-product-faq-item-q-btn" src="https://cdn.shopify.com/s/files/1/0278/6934/7915/files/arrow_3x_c17fce62-3f63-4832-a61c-826ba82a79ec.png?v=1594738779"/>
+        <img id="i{{ block.id }}-btn-active" class="u2u-product-faq-item-q-btn-active" src="https://cdn.shopify.com/s/files/1/0278/6934/7915/files/arrow_3x180.png?v=1594739301"/>
+      </div>
+      <div id="i{{ block.id }}-a" class="u2u-product-faq-item-a">{{ block.settings.answer }}</div>
+    </div>
+  {% endfor %}
+</div>
+
+<script>
+
+{% for block in section.blocks %}
+  var i{{ block.id }} = false;
+
+  $("#i{{ block.id }}").click(function(){
+    if(i{{ block.id }} != true) {
+      i{{ block.id }} = true;
+      $("#i{{ block.id }}-a").animate({ height: '200px' }, "slow");
+      $("#i{{ block.id }}-btn-active").show();
+      $("#i{{ block.id }}-btn").hide();
+    } else if(i{{ block.id }}  != false) {
+      i{{ block.id }}  = false;
+      $("#i{{ block.id }}-a").animate({ height: '0px' }, "slow");
+      $("#i{{ block.id }}-btn-active").hide();
+      $("#i{{ block.id }}-btn").show();
+    }
+  });
+{% endfor %}
+
+</script>
+
+{% schema %}
+{
+  "name": {
+    "de": "Produkt FAQ",
+    "en": "Product FAQ"
+  },
+  "max_blocks": 99,
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": {
+        "de": "Titel",
+        "en": "Title"
+      }
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": {
+        "de": "Frage",
+        "en": "Question"
+      },
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": {
+            "de": "Frage",
+            "en": "Question"
+          }
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": {
+            "de": "Antwort",
+            "en": "Answer"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

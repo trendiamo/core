@@ -8,11 +8,11 @@
   {%- assign maximum_width = maximum_height | times: image.aspect_ratio -%}
 
   #{{ img_id }} {
-    max-width: {{ maximum_width }}px;
-    max-height: {{ maximum_height }}px;
+    max-width: 100%;
+    max-height: 100%;
   }
 
   #{{ wrapper_id }} {
-    max-width: {{ maximum_width }}px;
+    max-width: 100%;
   }
 </style>

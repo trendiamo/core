@@ -1,0 +1,36 @@
+<div class="u2u-influencerlp-hero-wrapper">
+  <div class="hero hero--large hero-{{ page.id }} hero__overlay box ratio-container lazyload js"
+       id="Hero-{{ page.id }}"
+       data-layout="full_width"
+       data-sizes="auto"
+       data-parent-fit="cover"
+       style="background-position: center; background-image: url('{{ page.metafields.custom_fields["hero_image_url"] }}')";>
+    <div class="hero__inner">
+      <div class="page-width text-left">
+          <h2 class="h1 mega-title u2u-framed-title"><p>Join {{ page.title }} on a #journeytochange</p></h2>
+          <div class="rte-setting mega-subtitle u2u-framed-subtitle"><p>UPTOUS — The collective ordering platform<br>that connects you directly with fashion producers.</p></div>
+          <div class="u2u-framed-link"><a href="">learn how</a></div>
+          <a href="" class="btn hero__btn u2u-btn-white u2u-hero-btn">Shop now</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="u2u-influencerlp-bio-wrapper page-width">
+  <div class="u2u-influencerlp-bio">
+    <img class="u2u-influencerlp-bio-picture" src="{{ page.metafields.custom_fields["profile_image_url"] }}"/>
+    <div class="u2u-influencerlp-bio-text">{{ page.content }}</div>
+  </div>
+</div>
+
+{% section 'video' %}
+{% section 'feature-row-vertical' %}
+{% section 'countdown' %}
+{% section 'collection' %}
+{% section 'hero-blocks' %}
+{% section 'blocks-video' %}
+{% section 'newsletter' %}
+{% section 'content-showcase' %}
+{% section 'maestrooo-instagram' %}
+
