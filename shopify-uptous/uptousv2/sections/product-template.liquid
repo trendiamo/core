@@ -19,6 +19,11 @@
   {%- assign compare_at_price = current_variant.compare_at_price -%}
   {%- assign price = current_variant.price -%}
 
+  {%- assign tax = current_variant.price | divided_by: 1.23 -%}
+  {%- assign netto_price = current_variant.price | divided_by: 1.23 -%}
+  {%- assign production_price = netto_price | divided_by: 1.4 -%}
+  {%- assign fee = netto_price | minus: production_price -%}
+
   {% case section.settings.media_size %}
     {% when 'small' %}
       {%- assign product_media_width = 'medium-up--one-third' -%}
@@ -130,19 +135,14 @@
 
         <div class="u2u-price-policy">
           <div class="product__price">
-            {% include 'product-price', variant: current_variant, show_vendor: section.settings.show_vendor %}
-          </div>
-
-          {%- if shop.taxes_included or shop.shipping_policy.body != blank -%}
-            <div class="product__policies rte" data-product-policies>
-              {%- if shop.taxes_included -%}
-                {{ 'products.product.include_taxes' | t }}
-              {%- endif -%}
-              {%- if shop.shipping_policy.body != blank -%}
-                {{ 'products.product.shipping_policy_html' | t: link: shop.shipping_policy.url }}
-              {%- endif -%}
+            <div class="u2u-price-policy-item">Production Price: {{ production_price | money }}</div>
+            <div class="u2u-price-policy-item">+ {{ fee | money }} UPTOUS Fee</div>
+            <div class="u2u-price-policy-item">+ 23% VAT</div>
+            <div class="u2u-price-policy-final">
+              <div class="u2u-price-policy-final-price">{% include 'product-price', variant: current_variant, show_vendor: section.settings.show_vendor %}</div>
+              <div class="u2u-price-policy-final-tax">{{ 'products.product.include_taxes' | t }}</div>
             </div>
-          {%- endif -%}
+          </div>
         </div>
 
         <div class="product-single__description rte">

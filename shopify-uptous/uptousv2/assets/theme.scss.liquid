@@ -9626,6 +9626,24 @@ h1 {
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
+  flex-direction: column;
+  margin-top: 20px;
+}
+
+.u2u-price-policy-item {
+  font-family: 'Proxima Nova Bold', sans-serif !important;
+  text-transform: uppercase;
+  font-size: 16px;
+}
+
+.u2u-price-policy-final {
+  display: flex;
+  margin-top: 10px;
+}
+
+.u2u-price-policy-final-tax {
+  font-size: 14px;
+  line-height: 40px;
 }
 
 .product__policies {
@@ -10059,6 +10077,47 @@ h1 {
   .u2u-influencerlp-bio-text {
     padding-top: 0px;
     padding-left: 30px;
+  }
+}
+
+/*====COLLECTION SWITCHER SECTION====*/
+
+.u2u-cs-hidden {
+  display: none;
+}
+
+.u2u-collection-switcher-btns {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  padding-bottom: 30px;
+}
+
+.u2u-collection-switcher-btn {
+  font-family: 'Proxima Nova Bold', sans-serif !important;
+  font-size: 16px;
+  text-transform: uppercase;
+  margin-right: 30px;
+  border-bottom: 2px solid transparent;
+}
+
+.u2u-collection-switcher-btn:hover {
+  cursor: pointer;
+}
+
+.u2u-collection-switcher-btn-active {
+  border-bottom: 2px solid black;
+}
+
+@media only screen and (min-width: 1000px) {
+
+  .u2u-collection-switcher-btn {
+    font-size: 20px;
+    border-bottom: 3px solid transparent;
+  }
+
+  .u2u-collection-switcher-btn-active {
+    border-bottom: 3px solid black;
   }
 }
 
