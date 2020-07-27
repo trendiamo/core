@@ -1,5 +1,14 @@
 <div class="u2u-pdp-hero" style="background-image: url('{{ product.metafields.custom_fields["hero_image_url"] }})'">
   <div class="u2u-pdp-hero-title page-width">{{ section.settings.title }}</div>
+  <div class="u2u-pdp-hero-bar-wrapper page-width">
+    <div class="u2u-pdp-hero-bar-frame">
+      <div id="orderbar" class="u2u-pdp-hero-bar">
+        <div id="orderbartext-inner" class="u2u-pdp-hero-bar-text-inner"></div>
+      </div>
+      <div id="orderbartext" class="u2u-pdp-hero-bar-text"></div>
+    </div>
+    <div id="orderupdate" class="u2u-pdp-hero-bar-update"></div>
+  </div>
 </div>
 
 <div class="product-template__container page-width u2u-product-meta"
@@ -238,6 +247,8 @@
           {% endform %}
         </div>
 
+        <div class="u2u-shipping-information"><p>The current collective order will close on {{ settings.u2u_co_date }}. From that day the production and shipment of your product will take about 3 weeks.</p></div>
+
         {%- comment -%}
           Live region for announcing updated price and availability to screen readers
         {%- endcomment -%}
@@ -390,6 +401,42 @@ var u2uf3b = false;
     }
   });
 
+  var lastUpdate = new Date("{{ section.settings.order_updated }}").getTime();
+  var now = new Date().getTime();
+  var distance = now - lastUpdate;
+  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+
+  var orderGoal = {{ section.settings.order_goal }};
+  var currentOrders = {{ section.settings.order_current }};
+
+  var orderpercent = (currentOrders / orderGoal) * 100;
+  $("#orderbar").css("flex", "0 0 "+orderpercent+"%");
+
+  if(days < 1) {
+    if(hours < 1){
+      $("#orderupdate").text("Last updated "+minutes+" minutes ago.");
+    }
+    if(hours == 1){
+      $("#orderupdate").text("Last updated 1 hour ago.");
+    }
+    if(hours >= 2){
+      $("#orderupdate").text("Last updated "+hours+" hours ago.");
+    }
+  } else {
+    $("#orderupdate").text("Last updated over a day ago.");
+  }
+
+
+  if(orderpercent <= 50) {
+    $("#orderbartext").text(currentOrders+" / "+orderGoal+" people have collectively ordered.");
+  } else {
+    $("#orderbartext-inner").text(currentOrders+" / "+orderGoal+" people have collectively ordered.");
+    $("#orderbartext").hide();
+    $("#orderbartext-inner").show();
+  }
+
 </script>
 
 
@@ -418,6 +465,13 @@ var u2uf3b = false;
   "max_blocks": 99,
   "settings": [
     {
+      "type": "header",
+      "content": {
+        "de": "Medien",
+        "en": "Hero"
+      }
+    },
+    {
       "type": "image_picker",
       "id": "hero_image",
       "label": {
@@ -431,6 +485,37 @@ var u2uf3b = false;
       "label": {
         "de": "Titel",
         "en": "Title"
+      }
+    },
+    {
+      "type": "number",
+      "id": "order_goal",
+      "label": {
+        "de": "Order Ziel",
+        "en": "Order Goal"
+      }
+    },
+    {
+      "type": "number",
+      "id": "order_current",
+      "label": {
+        "de": "Aktuelle Order Anzahl",
+        "en": "Current Order Amount"
+      }
+    },
+    {
+      "type": "text",
+      "id": "order_updated",
+      "label": {
+        "de": "Letztes Update",
+        "en": "Last Update"
+      }
+    },
+    {
+      "type": "header",
+      "content": {
+        "de": "Einstellungen",
+        "en": "Settings"
       }
     },
     {

@@ -1,0 +1,70 @@
+<div class="page-width" data-section-id="{{ section.id }}" data-section-type="values">
+  <div class="u2u-headline">{{ section.settings.title }}</div>
+  <div class="u2u-sub-headline">{{ section.settings.subtitle }}</div>
+  <div class="u2u-values-wrapper">
+    {% for block in section.blocks %}
+    <div class="u2u-values-value">
+      <div class="u2u-values-value-title">{{ block.settings.title }}</div>
+      <div class="u2u-values-value-text">{{ block.settings.text }}</div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+
+
+{% schema %}
+{
+  "name": {
+    "de": "Firmen Werte",
+    "en": "Company Values"
+  },
+  "class": "u2u-values",
+  "max_blocks": 99,
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": {
+        "de": "Titel",
+        "en": "Title"
+      }
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": {
+        "de": "Untertitel",
+        "en": "Sub Title"
+      }
+    }
+  ],
+  "blocks": [
+    {
+      "type": "value",
+      "name": {
+        "de": "Wert",
+        "en": "Value"
+      },
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": {
+            "de": "Titel",
+            "en": "Title"
+          }
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": {
+            "de": "Text",
+            "en": "Text"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

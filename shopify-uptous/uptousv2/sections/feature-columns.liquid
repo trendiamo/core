@@ -1,8 +1,6 @@
 <div class="page-width">
   {% if section.settings.title != blank %}
-    <div class="section-header text-center">
-      <h2>{{ section.settings.title | escape }}</h2>
-    </div>
+    <div class="u2u-headline">{{ section.settings.title | escape }}</div>
   {% endif %}
 
   <div class="grid {% unless section.blocks.size == 5 %}grid--uniform{% endunless %} grid--flush-bottom">

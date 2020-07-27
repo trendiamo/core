@@ -1,9 +1,9 @@
 [
   {
     "name": "theme_info",
-    "theme_name": "Debut",
-    "theme_author": "Shopify",
-    "theme_version": "16.7.0",
+    "theme_name": "UPTOUS Theme (Debut)",
+    "theme_author": "Daniel Welzel",
+    "theme_version": "2.0.0",
     "theme_documentation_url": "https:\/\/help.shopify.com\/manual\/using-themes\/themes-by-shopify\/debut",
     "theme_support_url": "https:\/\/support.shopify.com\/"
   },
@@ -1401,6 +1401,71 @@
           "th": "แสดงการแจ้งเตือนเมื่อมีการเพิ่มสินค้าลงในตะกร้า",
           "zh-CN": "将产品添加到购物车时显示通知",
           "zh-TW": "新增商品至購物車時顯示通知"
+        },
+        "default": true
+      }
+    ]
+  },
+  {
+    "name": {
+      "de": "UPTOUS Einstellungen",
+      "en": "UPTOUS Settings"
+    },
+    "settings": [
+      {
+        "type": "header",
+        "content": {
+          "de": "Collective Order Einstellungen",
+          "en": "Collective Order Settings"
+        }
+      },
+      {
+        "type": "text",
+        "id": "u2u_co_date",
+        "label": {
+          "de": "Countdown Datum",
+          "en": "Countdown Date"
+        }
+      },
+      {
+        "type": "header",
+        "content": {
+          "de": "Warenkorb Einstellungen",
+          "en": "Cart Settings"
+        }
+      },
+      {
+        "type": "checkbox",
+        "id": "u2u_mcv_enabled",
+        "label": {
+          "de": "Mindestbestellwerte aktivieren",
+          "en": "Enable Minimum Cart Value"
+        },
+        "default": true
+      },
+      {
+        "type": "number",
+        "id": "u2u_mcv",
+        "label": {
+          "de": "Mindestbestellwert",
+          "en": "Minimum Cart Value"
+        },
+        "default": 35
+      },
+      {
+        "type": "richtext",
+        "id": "u2u_mcv_warning",
+        "label": {
+          "de": "Mindestbestellwert Warnung",
+          "en": "Minimum Cart Value Warning"
+        }
+      },
+      {
+        "type": "checkbox",
+        "id": "u2u_pricestructure_enabled",
+        "label": {
+          "de": "Preis-Rechnung Anzeigen",
+          "en": "Show Pricing Structure"
         },
         "default": true
       }

@@ -1,0 +1,134 @@
+<div class="page-width" data-section-id="{{ section.id }}" data-section-type="why-what-how">
+  <div class="wwh-mobile">
+    <div class="wwh-item">
+      <div class="wwh-meta">
+        <img class="wwh-meta-image" src="{{ section.settings.image1 | img_url: '400x' }}" />
+        <div class="wwh-meta-title">{{ section.settings.title1 }}</div>
+        <div class="wwh-meta-text">{{ section.settings.text1 }}</div>
+      </div>
+    </div>
+    <div class="wwh-item">
+      <div class="wwh-meta">
+        <img class="wwh-meta-image" src="{{ section.settings.image2 | img_url: '400x' }}" />
+        <div class="wwh-meta-title">{{ section.settings.title2 }}</div>
+        <div class="wwh-meta-text">{{ section.settings.text2 }}</div>
+      </div>
+    </div>
+    <div class="wwh-item">
+      <div class="wwh-meta">
+        <img class="wwh-meta-image" src="{{ section.settings.image3 | img_url: '400x' }}" />
+        <div class="wwh-meta-title">{{ section.settings.title3 }}</div>
+        <div class="wwh-meta-text">{{ section.settings.text3 }}</div>
+      </div>
+    </div>
+  </div>
+  <div class="wwh-desktop">
+    <div class="wwh-item">
+      <div class="wwh-meta-left">
+        <div class="wwh-meta-title">{{ section.settings.title1 }}</div>
+        <div class="wwh-meta-text">{{ section.settings.text1 }}</div>
+      </div>
+      <img class="wwh-meta-image" src="{{ section.settings.image1 | img_url: '400x' }}" />
+    </div>
+    <div class="wwh-item">
+      <img class="wwh-meta-image" src="{{ section.settings.image2 | img_url: '400x' }}" />
+      <div class="wwh-meta-right">
+        <div class="wwh-meta-title">{{ section.settings.title2 }}</div>
+        <div class="wwh-meta-text">{{ section.settings.text2 }}</div>
+      </div>
+    </div>
+    <div class="wwh-item">
+      <div class="wwh-meta-left">
+        <div class="wwh-meta-title">{{ section.settings.title3 }}</div>
+        <div class="wwh-meta-text">{{ section.settings.text3 }}</div>
+      </div>
+      <img class="wwh-meta-image" src="{{ section.settings.image3 | img_url: '400x' }}" />
+    </div>
+  </div>
+</div>
+
+
+
+{% schema %}
+{
+  "name": {
+    "de": "Why What How",
+    "en": "Why What How"
+  },
+  "class": "u2u-wwh",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title1",
+      "label": {
+        "de": "Titel #1",
+        "en": "Title #1"
+      }
+    },
+    {
+      "type": "image_picker",
+      "id": "image1",
+      "label": {
+        "de": "Bild #1",
+        "en": "Image #1"
+      }
+    },
+    {
+      "type": "richtext",
+      "id": "text1",
+      "label": {
+        "de": "Text #1",
+        "en": "Text #1"
+      }
+    },
+    {
+      "type": "text",
+      "id": "title2",
+      "label": {
+        "de": "Titel #2",
+        "en": "Title #2"
+      }
+    },
+    {
+      "type": "image_picker",
+      "id": "image2",
+      "label": {
+        "de": "Bild #2",
+        "en": "Image #2"
+      }
+    },
+    {
+      "type": "richtext",
+      "id": "text2",
+      "label": {
+        "de": "Text #2",
+        "en": "Text #2"
+      }
+    },
+    {
+      "type": "text",
+      "id": "title3",
+      "label": {
+        "de": "Titel #3",
+        "en": "Title #3"
+      }
+    },
+    {
+      "type": "image_picker",
+      "id": "image3",
+      "label": {
+        "de": "Bild #3",
+        "en": "Image #3"
+      }
+    },
+    {
+      "type": "richtext",
+      "id": "text3",
+      "label": {
+        "de": "Text #3",
+        "en": "Text #3"
+      }
+    }
+  ]
+}
+{% endschema %}

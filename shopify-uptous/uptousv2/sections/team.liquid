@@ -1,0 +1,73 @@
+<div class="page-width" data-section-id="{{ section.id }}" data-section-type="team">
+<div class="u2u-team-wrapper">
+  {% for block in section.blocks %}
+  <div class="u2u-team-member">
+    <img class="u2u-team-member-image" src="{{ block.settings.image | img_url: '300x' }}"/>
+    <div class="u2u-team-member-meta">
+      <div class="u2u-team-member-meta-name">{{ block.settings.name }}</div>
+      <div class="u2u-team-member-meta-title">{{ block.settings.title }}</div>
+      <div class="u2u-team-member-meta-text">{{ block.settings.text }}</div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+</div>
+
+
+
+{% schema %}
+{
+  "name": {
+    "de": "Team Vorstellung",
+    "en": "Team Spotlight"
+  },
+  "class": "u2u-team",
+  "max_blocks": 99,
+  "settings": [
+
+  ],
+  "blocks": [
+    {
+      "type": "member",
+      "name": {
+        "de": "Mitglied",
+        "en": "Member"
+      },
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": {
+            "de": "Bild",
+            "en": "Picture"
+          }
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": {
+            "de": "Name",
+            "en": "Name"
+          }
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": {
+            "de": "Titel",
+            "en": "Title"
+          }
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": {
+            "de": "Bio",
+            "en": "Bio"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

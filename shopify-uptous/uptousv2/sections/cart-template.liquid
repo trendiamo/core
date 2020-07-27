@@ -249,7 +249,23 @@
               </div>
             </div>
 
-            <div class="cart-subtotal">
+            {%- unless section.settings.cart_ajax_enable -%}
+            <input type="submit" name="update"
+              class="cart__submit btn btn--secondary"
+              value="{{ 'cart.general.update' | t }}">
+            {%- endunless -%}
+
+            <div class="cart-subtotal u2u-cart-subtotal">
+              {% if settings.u2u_pricestructure_enabled %}
+              {%- assign netto_price = cart.total_price | divided_by: 1.23 -%}
+              {%- assign production_price = netto_price | divided_by: 1.4 -%}
+              {%- assign fee = netto_price | minus: production_price -%}
+              <div class="u2u-price-structure">
+                <div class="u2u-price-policy-item-cart">Production Prices: {{ production_price | money }}</div>
+                <div class="u2u-price-policy-item-cart">+ {{ fee | money }} UPTOUS Fee</div>
+                <div class="u2u-price-policy-item-cart">+ 23% VAT</div>
+              </div>
+              {% endif %}
               <span class="cart-subtotal__title">{{ 'cart.general.subtotal' | t }}</span>
               <span class="cart-subtotal__price" data-cart-subtotal>{{ cart.total_price | money_with_currency }}</span>
             </div>
@@ -266,16 +282,30 @@
               {%- endif -%}
             {%- endcapture -%}
             <div class="cart__shipping rte">{{ taxes_shipping_checkout }}</div>
+
+            <div class="u2u-shipping-information-cart-wrapper">
+              <div class="u2u-shipping-information-cart"><p>The current collective order will close on {{ settings.u2u_co_date }}. From that day the production and shipment of your product will take about 3 weeks.</p></div>
+            </div>
+
             <div class="cart__buttons-container">
               <div class="cart__submit-controls">
-                {%- unless section.settings.cart_ajax_enable -%}
-                <input type="submit" name="update"
-                  class="cart__submit btn btn--secondary"
-                  value="{{ 'cart.general.update' | t }}">
-                {%- endunless -%}
+                {% if settings.u2u_mcv_enabled == true %}
+                  {% assign cart_value = cart.total_price | divided_by: 100 %}
+                  {% if cart_value >= settings.u2u_mcv %}
+                  <input type="submit" name="checkout"
+                    class="cart__submit btn btn--small-wide u2u-btn-checkout"
+                    value="{{ 'cart.general.checkout' | t }}">
+                  {% else %}
+                  <div class="u2u-cart-mcv-warning">{{ settings.u2u_mcv_warning }}</div>
+                  <input type="submit" name="checkout"
+                    class="cart__submit btn btn--small-wide u2u-btn-checkout-disabled"
+                    value="{{ 'cart.general.checkout' | t }}" disabled>
+                  {% endif %}
+                {% else %}
                 <input type="submit" name="checkout"
-                  class="cart__submit btn btn--small-wide"
+                  class="cart__submit btn btn--small-wide u2u-btn-checkout"
                   value="{{ 'cart.general.checkout' | t }}">
+                {% endif %}
               </div>
 
               <div class="cart__error-message-wrapper hide" role="alert" data-cart-error-message-wrapper>
@@ -284,9 +314,6 @@
                 <span class="cart__error-message" data-cart-error-message></span>
               </div>
 
-              {%- if additional_checkout_buttons -%}
-                <div class="additional-checkout-buttons">{{ content_for_additional_checkout_buttons }}</div>
-              {%- endif -%}
             </div>
           </div>
         </div>
