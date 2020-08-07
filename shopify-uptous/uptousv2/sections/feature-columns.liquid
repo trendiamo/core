@@ -3,7 +3,7 @@
     <div class="u2u-headline">{{ section.settings.title | escape }}</div>
   {% endif %}
 
-  <div class="grid {% unless section.blocks.size == 5 %}grid--uniform{% endunless %} grid--flush-bottom">
+  <div class="grid {% unless section.blocks.size == 5 %}grid--uniform{% endunless %} grid--flush-bottom u2u-feature-columns-grid">
     {%- assign grid_item_width = 'medium-up--one-third' -%}
     {%- assign max_height = 345 -%}
     {% case section.blocks.size %}

@@ -83,9 +83,8 @@
   </ul>
 
   {% if section.settings.show_view_all %}
-    <hr class="hr--invisible" aria-hidden="true" />
     <div class="text-center">
-      <a href="{{ collection3.url }}" class="btn u2u-btn-black" aria-label="{{ 'collections.general.view_all_label' | t: collection_name: collection3.title }}">
+      <a id="u2u-csl" href="{{ collection3.url }}" class="btn u2u-btn-black" aria-label="{{ 'collections.general.view_all_label' | t: collection_name: collection3.title }}">
         {{ 'collections.general.view_all' | t }}
       </a>
     </div>
@@ -102,6 +101,7 @@ $("#u2u-cs1-btn{{ collection.id }}").click(function(){
   $("#u2u-cs1-btn{{ collection.id }}").addClass("u2u-collection-switcher-btn-active");
   $("#u2u-cs2{{ collection2.id }}").hide();
   $("#u2u-cs2-btn{{ collection2.id }}").removeClass("u2u-collection-switcher-btn-active");
+  $("#u2u-csl").attr("href", "{{ collection.url }}");
 });
 
 $("#u2u-cs2-btn{{ collection2.id }}").click(function(){
@@ -109,6 +109,7 @@ $("#u2u-cs2-btn{{ collection2.id }}").click(function(){
   $("#u2u-cs1-btn{{ collection.id }}").removeClass("u2u-collection-switcher-btn-active");
   $("#u2u-cs2{{ collection2.id }}").show();
   $("#u2u-cs2-btn{{ collection2.id }}").addClass("u2u-collection-switcher-btn-active");
+  $("#u2u-csl").attr("href", "{{ collection2.url }}");
 });
 
 </script>

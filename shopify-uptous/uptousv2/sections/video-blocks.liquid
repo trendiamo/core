@@ -1,0 +1,95 @@
+<div class="page-width" data-section-id="{{ section.id }}" data-section-type="video-blocks">
+  <div class="u2u-headline">{{ section.settings.title }}</div>
+  <div class="u2u-sub-headline">{{ section.settings.subtitle }}</div>
+  <div class="u2u-video-blocks-wrapper">
+    {% for block in section.blocks %}
+    <div class="u2u-video-block">
+      {% if block.settings.isplaceholder == false %}
+      <iframe class="u2u-video-block-video" src="https://www.youtube.com/embed/{{ block.settings.video_link.id }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      {% else %}
+      <div class="u2u-video-block-video-placeholder"><p>...</p></div>
+      {% endif %}
+      <div class="u2u-video-block-meta">
+        <div class="u2u-video-block-meta-title">{{ block.settings.title }}</div>
+        <div class="u2u-video-block-meta-text">{{ block.settings.text }}</div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": {
+    "de": "Videoblöcke",
+    "en": "Video Blocks"
+  },
+  "class": "u2u-video-blocks",
+  "max_blocks": 99,
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": {
+        "de": "Titel",
+        "en": "Title"
+      }
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": {
+        "de": "Untertitel",
+        "en": "Sub Headline"
+      }
+    }
+  ],
+  "blocks": [
+    {
+      "type": "videoblock",
+      "name": {
+        "de": "Videoblock",
+        "en": "Video Block"
+      },
+      "settings": [
+        {
+          "type": "video_url",
+          "id": "video_link",
+          "label": {
+            "de": "Video Link",
+            "en": "Video Link"
+          },
+          "accept": [
+            "youtube"
+          ],
+          "default": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": {
+            "de": "Titel",
+            "en": "Title"
+          }
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": {
+            "de": "Text",
+            "en": "Text"
+          }
+        },
+        {
+          "type": "checkbox",
+          "id": "isplaceholder",
+          "label": {
+            "de": "Ist Platzhalter",
+            "en": "Is Placeholder"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
