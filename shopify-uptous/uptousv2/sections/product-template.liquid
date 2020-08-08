@@ -144,9 +144,9 @@
 
         <div class="u2u-price-policy">
           <div class="product__price">
-            <div class="u2u-price-policy-item">Production Price: {{ production_price | money }}</div>
-            <div class="u2u-price-policy-item">+ {{ fee | money }} UPTOUS Fee</div>
-            <div class="u2u-price-policy-item">+ 23% VAT</div>
+            <div class="u2u-price-policy-item"><p>Production Price:&nbsp;</p> {{ production_price | money }}</div>
+            <div class="u2u-price-policy-item"><p>+ {{ fee | money }}</p><p class="u2u-ppi-last">&nbsp;UPTOUS Fee</p></div>
+            <div class="u2u-price-policy-item"><p class="u2u-ppi-last">+ 23% VAT</p></div>
             <div class="u2u-price-policy-final">
               <div class="u2u-price-policy-final-price">{% include 'product-price', variant: current_variant, show_vendor: section.settings.show_vendor %}</div>
               <div class="u2u-price-policy-final-tax">{{ 'products.product.include_taxes' | t }}</div>
@@ -247,7 +247,7 @@
           {% endform %}
         </div>
 
-        <div class="u2u-shipping-information"><p>The current collective order will close on {{ settings.u2u_co_date }}. From that day the production and shipment of your product will take about 3 weeks.</p></div>
+        <div class="u2u-shipping-information"><p>The current collective order will close on&nbsp;</p><p>{{ settings.u2u_co_date }}.</p><p>From that day the production and shipment of your product will take about 3 weeks.</p></div>
 
         {%- comment -%}
           Live region for announcing updated price and availability to screen readers

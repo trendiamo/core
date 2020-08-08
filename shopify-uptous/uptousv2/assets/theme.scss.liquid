@@ -8751,6 +8751,18 @@ h1 {
   text-transform: uppercase;
 }
 
+.u2u-iflp-hero p {
+  display: inline;
+}
+
+.u2u-iflp-hero-name {
+  font-family: 'Proxima Nova Bold', sans-serif !important;
+  color: white;
+  font-size: 30px;
+  font-weight: normal;
+  text-transform: uppercase;
+}
+
 .u2u-framed-subtitle p {
   font-size: 20px;
 }
@@ -8838,6 +8850,10 @@ h1 {
   font-weight: normal;
 }
 
+.u2u-btn-white:hover {
+  background-color: rgba(255, 255, 255, 0.25) !important;
+}
+
 .u2u-btn-black {
   font-family: 'Proxima Nova Bold', sans-serif !important;
   padding-left: 40px;
@@ -8850,6 +8866,11 @@ h1 {
   margin-top: 0px;
   color: black;
   font-weight: normal;
+}
+
+.u2u-btn-black:hover {
+  background-color: rgba(0, 0, 0, 0.25) !important;
+  color: black !important;
 }
 
 .u2u-btn-black span {
@@ -9762,6 +9783,18 @@ h1 {
   font-size: 16px;
 }
 
+.u2u-price-policy-item p {
+  float: left;
+  font-family: 'Proxima Nova Bold', sans-serif !important;
+  text-transform: uppercase;
+  font-size: 16px;
+  margin: 0;
+}
+
+.u2u-ppi-last {
+  float: none !important;
+}
+
 .u2u-price-policy-final {
   display: flex;
   margin-top: 10px;
@@ -10135,14 +10168,21 @@ h1 {
   padding: 20px;
   background: #E7ECF5;
   margin-bottom: 14px;
+  height: 128px;
 }
 
 .u2u-shipping-information p {
+  float: left;
   font-size: 15px;
   color: #5B6579;
+  margin-bottom: 0;
 }
 
 @media only screen and (min-width: 1000px) {
+
+  .u2u-shipping-information {
+    height: 110px;
+  }
 
   .u2u-product-faq-title {
     font-size: 30px;
@@ -10330,6 +10370,15 @@ h1 {
   font-size: 16px;
 }
 
+.u2u-price-policy-item-cart p {
+  display: inline;
+  font-family: 'Proxima Nova Bold', sans-serif !important;
+  text-transform: uppercase;
+  font-size: 16px;
+  margin: 0;
+}
+
+
 .u2u-cart-mcv-warning {
   padding: 20px;
   background-color: #ffd8d5;
@@ -10374,17 +10423,19 @@ h1 {
 }
 
 .u2u-shipping-information-cart {
-  flex: 1;
   padding: 20px;
   background: #E7ECF5;
   margin-bottom: 20px;
   max-width: 400px;
+  text-align: left;
 }
 
 .u2u-shipping-information-cart p {
+  display: inline;
   font-size: 14px;
   color: #5B6579;
   text-align: left;
+  margin-bottom: 0;
 }
 
 /*====ABOUT US PAGE====*/
@@ -10732,7 +10783,7 @@ p {
 
 .hero__overlay::before {
   background-color: #000000;
-  opacity: 0.3;
+  opacity: 0.4;
 }
 
 .site-footer {
