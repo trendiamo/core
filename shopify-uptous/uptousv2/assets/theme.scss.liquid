@@ -9948,7 +9948,8 @@ h1 {
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-  margin-top: 100px;
+  margin-top: 0px;
+  margin-bottom: 55px;
   flex-flow: column;
 }
 
@@ -9981,7 +9982,8 @@ h1 {
 }
 
 .u2u-product-reviews {
-  margin-top: 100px;
+  margin-top: 55px;
+  margin-bottom: 55px;
 }
 
 .u2u-product-reviews-title {
@@ -10021,7 +10023,7 @@ h1 {
 @media only screen and (min-width: 1000px) {
 
   .u2u-product-reviews {
-    margin-bottom: 45px;
+    margin-bottom: 100px;
   }
 
   .u2u-product-reviews-title {
@@ -10079,6 +10081,7 @@ h1 {
     width: 60%;
     flex-flow: row;
     flex-wrap: wrap;
+    margin-bottom: 55px;
   }
 
   .u2u-product-benefit {
@@ -10735,6 +10738,63 @@ h1 {
 
   .u2u-video-block-meta-title {
     font-size: 26px;
+  }
+}
+
+/*====FEEDBACK SECTION====*/
+
+.u2u-feedback {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.u2u-feedback-half {
+  flex: 1;
+}
+
+.u2u-feedback-image {
+  align-self: center;
+  margin-top: 30px;
+}
+
+.u2u-feedback-title {
+  text-align: left;
+  margin-bottom: 30px;
+}
+
+.u2u-feedback-input {
+  border: none;
+  background: #E7ECF5;
+  border-bottom: 2px solid black;
+  margin-bottom: 0;
+  border-radius: 0;
+  height: 48px;
+}
+
+.u2u-feedback-input-msg {
+  border: none;
+  background: #E7ECF5;
+  border-bottom: 2px solid black;
+  margin-bottom: 0;
+  border-radius: 0;
+}
+
+@media only screen and (min-width: 1000px) {
+
+  .u2u-feedback {
+    flex-direction: row;
+  }
+
+  .u2u-feedback-half {
+    flex: 0 0 50%;
+  }
+
+  .u2u-feedback-image {
+    margin-top: 0;
+    align-self: center;
+    width: 50%;
+    padding: 40px 0px 40px 40px;
   }
 }
 

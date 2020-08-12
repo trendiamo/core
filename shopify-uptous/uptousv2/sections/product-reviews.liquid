@@ -1,0 +1,88 @@
+<div class="u2u-product-reviews page-width">
+  <div class="u2u-product-reviews-title">{{ section.settings.product_reviews_title }}</div>
+  <div class="u2u-product-reviews-text">{{ section.settings.product_reviews_text }}</div>
+  <div class="u2u-product-reviews-blocks">
+    {% for block in section.blocks %}
+      <div class="u2u-product-review">
+        <img class="u2u-product-review-image" src="{{ block.settings.image | img_url: '1000x1000' }}"/>
+        <div class="u2u-product-review-meta">{{ block.settings.meta }}</div>
+        <div class="u2u-product-review-text">{{ block.settings.text }}</div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+
+{% schema %}
+{
+  "name": {
+    "de": "Produkt Reviews",
+    "en": "Product Reviews"
+  },
+  "class": "index-section review-section",
+  "max_blocks": 99,
+  "settings": [
+    {
+      "type": "text",
+      "id": "product_reviews_title",
+      "label": {
+        "en": "Product Reviews Title"
+      }
+    },
+    {
+      "type": "richtext",
+      "id": "product_reviews_text",
+      "label": {
+        "en": "Product Reviews Text"
+      }
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": {
+        "de": "Review",
+        "en": "Review"
+      },
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": {
+            "de": "Review Bild",
+            "en": "Review Image"
+          }
+        },
+        {
+          "type": "richtext",
+          "id": "meta",
+          "label": {
+            "de": "Review Meta",
+            "en": "Review Meta"
+          }
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": {
+            "de": "Review Text",
+            "en": "Review Text"
+          }
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": {
+        "de": "Produkt Reviews",
+        "en": "Product Reviews"
+      },
+      "category": {
+        "de": "Produkt",
+        "en": "Product"
+      }
+    }
+  ]
+}
+{% endschema %}

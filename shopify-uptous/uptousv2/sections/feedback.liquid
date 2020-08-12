@@ -1,0 +1,97 @@
+<div class="page-width">
+  <div class="u2u-feedback">
+    <div class="contact-form form-vertical u2u-feedback-half">
+      <div class="u2u-feedback-title u2u-headline">{{ section.settings.title }}</div>
+        {%- assign formId = 'ContactForm' -%}
+        {% form 'contact', id: formId %}
+          {% include 'form-status', form: form, form_id: formId %}
+
+
+          <div class="grid grid--half-gutters">
+            <div class="grid__item medium-up--one-half">
+              <input class="u2u-feedback-input" type="text" id="{{ formId }}-name" name="contact[{{ 'contact.form.name' | t }}]" value="{% if form[name] %}{{ form[name] }}{% elsif customer %}{{ customer.name }}{% endif %}" placeholder="{{ 'contact.form.name' | t }}">
+            </div>
+            <div class="grid__item medium-up--one-half">
+              <input
+                type="email"
+                class="u2u-feedback-input"
+                id="{{ formId }}-email"
+                name="contact[email]"
+                autocorrect="off"
+                autocapitalize="off"
+                value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+                aria-required="true"
+                {%- if form.errors contains 'email' -%}
+                  class="input--error"
+                  aria-invalid="true"
+                  aria-describedby="{{ formId }}-email-error"
+                {%- endif -%}
+                placeholder="{{ 'contact.form.email' | t }}"
+                >
+              {%- if form.errors contains 'email' -%}
+                <span id="{{ formId}}-email-error" class="input-error-message">
+                  <span class="visually-hidden">{{ 'general.accessibility.error' | t }} </span>
+                  {% include 'icon-error' %}
+                  <span>{{ form.errors.translated_fields['email'] | capitalize }} {{ form.errors.messages['email'] }}.</span>
+                </span>
+              {%- endif -%}
+            </div>
+          </div>
+
+          <textarea class="u2u-feedback-input-msg" rows="4" id="{{ formId }}-message" name="contact[{{ 'contact.form.message' | t }}]" placeholder="{{ section.settings.msg }}">{% if form.body %}{{ form.body }}{% endif %}</textarea>
+
+          <input type="submit" class="btn" value="{{ 'contact.form.submit' | t }}">
+
+        {% endform %}
+    </div>
+    <img class="u2u-feedback-image u2u-feedback-half" src="{{ section.settings.image | img_url: '800x' }}"/>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": {
+    "de": "Feedback Formular",
+    "en": "Feedback Form"
+  },
+  "class": "index-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": {
+        "de": "Titel",
+        "en": "Title"
+      }
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": {
+        "de": "Bild",
+        "en": "Image"
+      }
+    },
+    {
+      "type": "text",
+      "id": "msg",
+      "label": {
+        "de": "Platzhalter Nachricht",
+        "en": "Placeholder Message"
+      }
+    }
+  ],
+  "presets": [
+    {
+      "name": {
+        "de": "Feedback Formular",
+        "en": "Feedback Form"
+      },
+      "category": {
+        "de": "UPTOUS",
+        "en": "UPTOUS"
+      }
+    }
+  ]
+}
+{% endschema %}

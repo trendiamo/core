@@ -1,0 +1,75 @@
+<div class="u2u-product-benefits page-width">
+  <div class="u2u-product-benefits-title">{{ section.settings.product_benefits_title }}</div>
+  <div class="u2u-product-benefit">
+    <img class="u2u-product-benefit-image" src="{{ section.settings.product_benefit1_img | img_url: '400x400' }}"/>
+    <div class="u2u-product-benefit-text">{{ section.settings.product_benefit1_text }}</div>
+  </div>
+  <div class="u2u-product-benefit">
+    <img class="u2u-product-benefit-image" src="{{ section.settings.product_benefit2_img | img_url: '400x400' }}"/>
+    <div class="u2u-product-benefit-text">{{ section.settings.product_benefit2_text }}</div>
+  </div>
+  <div class="u2u-product-benefit">
+    <img class="u2u-product-benefit-image" src="{{ section.settings.product_benefit3_img | img_url: '400x400' }}"/>
+    <div class="u2u-product-benefit-text">{{ section.settings.product_benefit3_text }}</div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": {
+    "de": "Produkt Vorteile",
+    "en": "Product Benenfits"
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "product_benefits_title",
+      "label": {
+        "en": "Product Benefits Title"
+      }
+    },
+    {
+      "type": "image_picker",
+      "id": "product_benefit1_img",
+      "label": {
+        "en": "Product Benefit #1 Image"
+      }
+    },
+    {
+      "type": "text",
+      "id": "product_benefit1_text",
+      "label": {
+        "en": "Product Benefit #1 Text"
+      }
+    },
+    {
+      "type": "image_picker",
+      "id": "product_benefit2_img",
+      "label": {
+        "en": "Product Benefit #2 Image"
+      }
+    },
+    {
+      "type": "text",
+      "id": "product_benefit2_text",
+      "label": {
+        "en": "Product Benefit #2 Text"
+      }
+    },
+    {
+      "type": "image_picker",
+      "id": "product_benefit3_img",
+      "label": {
+        "en": "Product Benefit #3 Image"
+      }
+    },
+    {
+      "type": "text",
+      "id": "product_benefit3_text",
+      "label": {
+        "en": "Product Benefit #3 Text"
+      }
+    }
+  ]
+}
+{% endschema %}
