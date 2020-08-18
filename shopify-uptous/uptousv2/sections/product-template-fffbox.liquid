@@ -28,11 +28,6 @@
   {%- assign compare_at_price = current_variant.compare_at_price -%}
   {%- assign price = current_variant.price -%}
 
-  {%- assign tax = current_variant.price | divided_by: 1.23 -%}
-  {%- assign netto_price = current_variant.price | divided_by: 1.23 -%}
-  {%- assign production_price = netto_price | divided_by: 1.4 -%}
-  {%- assign fee = netto_price | minus: production_price -%}
-
   {% case section.settings.media_size %}
     {% when 'small' %}
       {%- assign product_media_width = 'medium-up--one-third' -%}
@@ -142,16 +137,9 @@
 
         <h1 class="product-single__title u2u-product-title">{{ product.title }}</h1>
 
-        <div class="u2u-price-policy">
-          <div class="product__price">
-            <div class="u2u-price-policy-item"><p>Production Price:&nbsp;</p> {{ production_price | money }}</div>
-            <div class="u2u-price-policy-item"><p>+ {{ fee | money }}</p><p class="u2u-ppi-last">&nbsp;UPTOUS Fee</p></div>
-            <div class="u2u-price-policy-item"><p class="u2u-ppi-last">+ 23% VAT</p></div>
-            <div class="u2u-price-policy-final">
-              <div class="u2u-price-policy-final-price">{% include 'product-price', variant: current_variant, show_vendor: section.settings.show_vendor %}</div>
-              <div class="u2u-price-policy-final-tax">{{ 'products.product.include_taxes' | t }}</div>
-            </div>
-          </div>
+        <div class="u2u-price-policy-final">
+          <div class="u2u-price-policy-final-price">{% include 'product-price', variant: current_variant, show_vendor: section.settings.show_vendor %}</div>
+          <div class="u2u-price-policy-final-tax">{{ 'products.product.include_taxes' | t }}</div>
         </div>
 
         <div class="product-single__description rte">
@@ -233,26 +221,13 @@
                 {%- if section.settings.enable_payment_button %} product-form__item--payment-button {%- endif -%}
                 {%- if product.has_only_default_variant %} product-form__item--no-variants {%- endif -%}"
               >
-                <button type="submit" name="add"
-                  {% unless current_variant.available %} aria-disabled="true"{% endunless %}
-                  aria-label="{% unless current_variant.available %}{{ 'products.product.sold_out' | t }}{% else %}{{ 'products.product.add_to_cart' | t }}{% endunless %}"
-                  class="btn product-form__cart-submit{% if section.settings.enable_payment_button %} btn--secondary-accent{% endif %}"
-                  {% if settings.enable_ajax %}aria-haspopup="dialog"{% endif %}
-                  data-add-to-cart>
-                  <span data-add-to-cart-text>
-                    {% unless current_variant.available %}
-                      {{ 'products.product.sold_out' | t }}
-                    {% else %}
-                      {{ 'products.product.add_to_cart' | t }}
-                    {% endunless %}
-                  </span>
-                  <span class="hide" data-loader>
-                    {% include 'icon-spinner' %}
-                  </span>
-                </button>
-                {% if section.settings.enable_payment_button %}
-                  {{ form | payment_button }}
-                {% endif %}
+
+              {% if section.settings.enable_payment_button %}
+                {{ form | payment_button }}
+              {% endif %}
+
+              <div class="u2u-fffbox-or">or</div>
+              <a href="{{ product.metafields.custom_fields["bundle_builder_url"] }}" class="btn product-form__cart-submit btn--secondary-accent u2u-fffbox-btn-create">Create your own Box</a>
               </div>
             </div>
           {% endform %}

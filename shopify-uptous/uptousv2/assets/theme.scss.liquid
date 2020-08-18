@@ -2736,7 +2736,7 @@ textarea {
   @include media-query($medium-up) {
     // Prevent mobile menu inline styles from overriding desktop styles
     // sass-lint:disable no-important
-    @include transform(translate3d(0, 0, 0));
+    //@include transform(translate3d(0, 0, 0));
   }
 }
 
@@ -10069,7 +10069,7 @@ h1 {
 
   .u2u-product-options {
     flex-direction: column;
-    width: 30%;
+    width: 50%;
   }
 
   .u2u-product-feature {
@@ -10205,6 +10205,110 @@ h1 {
   .u2u-product-faq-item-a {
     padding: 0px 20px;
   }
+}
+
+.u2u-option-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.u2u-btn-sizechart {
+  padding: 10px 20px 10px 20px;
+  border: 1px solid black;
+  text-align: center;
+  margin-top: 6px;
+  margin-left: 6px;
+  border-radius: 4px;
+}
+
+.u2u-btn-sizechart:hover {
+  cursor: pointer;
+}
+
+.u2u-sizechart-wrapper {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 99999;
+}
+
+.u2u-sizechart {
+  position: relative;
+}
+
+.u2u-sizechart-img {
+  height: auto;
+  background: white;
+  color: black;
+  padding: 20px;
+}
+
+.u2u-sizechart-close {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  top: 10px;
+  right: 10px;
+}
+
+.u2u-sizechart-close:hover {
+  cursor: pointer;
+}
+
+@media only screen and (min-width: 1000px) {
+
+  .u2u-sizechart-img {
+    height: 300px;
+    padding: 40px;
+  }
+
+  .u2u-sizechart-close {
+    width: 20px;
+    height: 20px;
+    right: 20px;
+    top: 20px;
+  }
+}
+
+/*====PRODUCT DETAIL PAGE (PDP) - FFFBOX====*/
+
+.u2u-fffbox-or {
+  text-align: center;
+  width: 100%;
+  text-transform: uppercase;
+  font-family: 'Proxima Nova Bold', sans-serif !important;
+}
+
+.u2u-fffbox-btn-create {
+  margin-top: 18px;
+}
+
+#infiniteoptions-container {
+  margin-bottom: 30px;
+}
+
+#infiniteoptions-container label {
+  font-family: 'Proxima Nova Bold', sans-serif !important;
+  text-transform: uppercase;
+}
+
+.spb-select {
+  width: 50%;
+  margin-bottom: 20px;
+}
+
+.spb-select select {
+  border-radius: 0;
+  border: 2px solid black;
+  font-family: 'Proxima Nova Bold', sans-serif !important;
+  min-height: 44px;
+  width: 100%;
 }
 
 /*====INFLUENCER LANDINGPAGE====*/
@@ -10913,4 +11017,392 @@ p {
     font-size: 60px;
   }
 }
+
+/*====APP OVERRIDES - BUNDLE BUILDER====*/
+
+#bundle-builder-app--bundle--root {
+  @include clearfix();
+  max-width: $width-site;
+  margin: 0 auto;
+
+  padding-left: $gutter-site;
+  padding-right: $gutter-site;
+
+  @include media-query($small) {
+    padding-left: $gutter-site-mobile;
+    padding-right: $gutter-site-mobile;
+  }
+}
+
+.bundle-builder-app--bundle--name  {
+  font-family: 'Proxima Nova Bold', sans-serif !important;
+  font-size: 30px;
+  text-transform: uppercase;
+  font-weight: normal;
+  text-shadow: 0 0 0;
+  text-align: left !important;
+}
+
+.bundle-builder-app--bundle--product-name {
+  font-size: 18px;
+  text-align: left;
+}
+
+.bundle-builder-app--bundle--product-price {
+  display: none;
+}
+
+.bundle-builder-app--bundle--product-add-button, .bundle-builder-app--bundle--contents-remove-button, .bundle-builder-app--bundle--contents-remove-button button {
+  margin-top: 0 !important;
+}
+
+.bundle-builder-app--bundle--product-select-label {
+  text-align: left !important;
+}
+
+.bundle-builder-app--bundle--product-select {
+  padding: 10px !important;
+}
+
+.bundle-builder-app--bundle--product-options {
+  margin-bottom: 10px !important;
+}
+
+.bundle-builder-app--bundle--view-contents--button {
+  background: white !important;
+  color: black !important;
+  border: 2px solid black !important;
+  margin-top: 20px !important;
+}
+
+.bundle-builder-app--product--quantity, .bundle-builder-app--bundle--contents--quantity {
+  max-width: 100% !important;
+  border-radius: 0px !important;
+}
+
+.bundle-builder-app--bundle--filter {
+  margin-bottom: 20px !important;
+}
+
+@media only screen and (min-width: 1000px) {
+
+  .bundle-builder-app--bundle--section--product-list {
+    margin-left: -8px !important;
+  }
+}
+
+/*====APP OVERRIDES - BUNDLE BUILDER (CUSTOM TEMPLATE)====*/
+
+.u2u-bundler-container {
+  display: flex;
+  width: 100%;
+  align-items: flex-start;
+  flex-direction: column-reverse;
+}
+
+.u2u-bundler-product-box {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: stretch;
+}
+
+.u2u-bundler-product {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 49%;
+  margin-bottom: 60px;
+}
+
+.u2u-bundler-product-title {
+  font-size: 1.3333em;
+  font-family: 'Proxima Nova Bold', sans-serif !important;
+  letter-spacing: normal;
+  margin: 0 0 5px;
+}
+
+.u2u2-bundler-product-price {
+  font-size: 1.3333em;
+}
+
+.bundle-builder--add-to-bundle-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.bundle-builder--change-quantity-form {
+  width: 100%;
+}
+
+.u2u-bundler-product-quantitiy {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  border: 1px solid #cccccc;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 0px;
+}
+
+.u2u-bundler-product-quantitiy-title {
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+.u2u-bundler-product-quantity-input {
+  display: flex;
+  justify-content: space-around;
+}
+
+.u2u-bundler-product-quantity-input-btn {
+  background: transparent;
+  border: none;
+}
+
+.u2u-bundler-btn-add {
+  background: white;
+  border-radius: 0px;
+  padding: 10px;
+  color: black;
+  text-transform: uppercase;
+  font-weight: bold;
+  border: 2px solid black;
+  font-family: 'Proxima Nova Regular', sans-serif !important;
+  letter-spacing: 0.08em;
+  margin-top: 10px;
+}
+
+.u2u-bundler-bundle-content-title {
+  font-family: 'Proxima Nova Bold', sans-serif !important;
+  font-size: 24px;
+  text-transform: uppercase;
+  margin-bottom: 30px;
+}
+
+.u2u-bundler-bundle-content {
+  padding: 20px;
+  border: 2px solid black;
+  margin-bottom: 30px;
+  width: 100%;
+}
+
+.u2u-bundler-bundle-content-errors {
+  margin-bottom: 30px;
+}
+
+.u2u-bundler-bundle-content-products {
+  margin-bottom: 30px;
+}
+
+.u2u-bundler-bundle-content-product {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.u2u-bundler-bundle-content-product-remove {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid black;
+  font-family: 'Proxima Nova Regular', sans-serif !important;
+}
+
+.u2u-bundler-bundle-content-submit {
+  background: black;
+  border-radius: 0px;
+  padding: 10px;
+  color: white;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-family: 'Proxima Nova Regular', sans-serif !important;
+  letter-spacing: 0.08em;
+  width: 100%;
+}
+
+.u2u-bundler-bundle-content-submit:disabled {
+  opacity: 0.5;
+}
+
+.u2u-bundler-popup-pdp {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.u2u-bundler-popup-pdp-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 1200px;
+  max-height: 90%;
+  background: white;
+  color: black;
+  padding: 20px;
+  overflow: scroll;
+}
+
+.u2u-bundler-popup-pdp-content-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 20px;
+}
+
+.u2u-bundler-popup-pdp-content-close:hover {
+  cursor: pointer;
+}
+
+.u2u-bundler-popup-pdp-content-images {
+
+}
+
+.u2u-bppdpci-featured-img {
+  margin-top: 20px;
+}
+
+.u2u-bppdpci-thumbnails {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  margin-left: -2px;
+}
+
+.u2u-bppdpci-thumbnail {
+  flex: 0 0 24%;
+  max-width: 24%;
+  margin-left: 3px;
+  margin-bottom: 5px;
+}
+
+.u2u-bppdpci-thumbnail:hover {
+  cursor: pointer;
+}
+
+.u2u-bppdpci-thumbnail-active {
+  border: 2px solid black;
+}
+
+.u2u-bundler-popup-pdp-content-meta {
+
+}
+
+.u2u-bppdpcm-title {
+  font-family: 'Proxima Nova Bold', sans-serif !important;
+  text-transform: uppercase;
+  text-shadow: 0 0 0 !important;
+  font-weight: normal;
+  font-size: 2.3333em;
+  line-height: normal;
+  margin-top: 30px;
+}
+
+.u2u-bppdpcm-price {
+  font-family: 'Proxima Nova Regular', sans-serif !important;
+  font-weight: 700;
+  font-size: 24px;
+}
+
+.u2u-bppdpcm-descr {
+
+}
+
+.u2u-bppdpcm-feature {
+  margin-top: 30px;
+}
+
+.u2u-bppdpcm-feature-title {
+  font-size: 16px;
+}
+
+.u2u-bppdpcm-feature-text p {
+  color: #646464;
+}
+
+@media only screen and (min-width: 1000px) {
+
+  .u2u-bundler-container {
+    flex-direction: row;
+  }
+
+  .u2u-bundler-product-box {
+    flex: 0 0 70%;
+  }
+
+  .u2u-bundler-product {
+    flex: 0 0 23.5%;
+  }
+
+  .u2u-bundler-bundle-content-wrapper {
+    margin: 0px 20px;
+  }
+
+  .u2u-bundler-bundle-content {
+    flex: 0 0 25%;
+  }
+
+  .u2u-bundler-popup-pdp-content {
+    flex-direction: row;
+    padding: 40px;
+  }
+
+  .u2u-bundler-popup-pdp-content-close {
+    top: 20px;
+    right: 20px;
+    width: 20px;
+  }
+
+  .u2u-bundler-popup-pdp-content-images {
+    flex: 0 0 50%;
+  }
+
+  .u2u-bppdpci-featured-img {
+    margin-top: 0px;
+  }
+
+  .u2u-bppdpci-thumbnails {
+    margin-left: -5px;
+  }
+
+  .u2u-bppdpci-thumbnail {
+    margin-left: 5px;
+    margin-bottom: 5px;
+  }
+
+  .u2u-bundler-popup-pdp-content-meta {
+    flex: 0 0 50%;
+  }
+
+  .u2u-bppdpci-featured-img {
+
+  }
+
+  .u2u-bundler-popup-pdp-content-meta {
+    padding-left: 40px;
+  }
+
+  .u2u-bppdpcm-title {
+    margin-top: 0;
+  }
+
+  .u2u-bppdpcm-feature-title {
+    font-size: 18px;
+  }
+
+}
+
+
+
+
+
+
 

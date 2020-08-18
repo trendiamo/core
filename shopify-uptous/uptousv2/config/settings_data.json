@@ -1,9 +1,9 @@
 {
   "current": {
-    "color_text": "#3a3a3a",
-    "color_body_text": "#333232",
+    "color_text": "#000000",
+    "color_body_text": "#000000",
     "color_sale_text": "#ea0606",
-    "color_button": "#3a3a3a",
+    "color_button": "#000000",
     "color_button_text": "#ffffff",
     "color_small_button_text_border": "#3a3a3a",
     "color_text_field_text": "#000000",
@@ -33,8 +33,13 @@
     "social_snapchat_link": "",
     "social_youtube_link": "https:\/\/www.youtube.com\/channel\/UCnEQGnoZb_jEjMtgNsvLMVQ",
     "social_vimeo_link": "",
-    "favicon": "",
+    "favicon": "shopify:\/\/shop_images\/favicon.jpg",
     "enable_ajax": true,
+    "u2u_co_date": "Sep 06, 2020 00:00:00",
+    "u2u_mcv_enabled": true,
+    "u2u_mcv": 30,
+    "u2u_mcv_warning": "<p>Cart value too low! To make collective ordering work&nbsp;each order needs to be &euro;30,00 or higher.<\/p>",
+    "u2u_pricestructure_enabled": true,
     "checkout_header_image": "",
     "checkout_logo_image": "",
     "checkout_logo_position": "left",
@@ -49,6 +54,7 @@
     "checkout_accent_color": "#197bbd",
     "checkout_button_color": "#197bbd",
     "checkout_error_color": "#e32c2b",
+    "u2u_enable_mcv": true,
     "sections": {
       "header": {
         "type": "header",
@@ -63,18 +69,6 @@
           "message_link": "",
           "color_bg": "#3a3a3a",
           "color_text": "#ffffff"
-        }
-      },
-      "collection": {
-        "type": "collection",
-        "settings": {
-          "title": "LET's GET STARTED WITH THE COOL BASICS",
-          "subtitle": "Simple yet revolutionary. Produced with love in Portugal.",
-          "collection": "basics",
-          "grid": 3,
-          "rows": 3,
-          "show_vendor": false,
-          "show_view_all": true
         }
       },
       "footer": {
@@ -125,98 +119,99 @@
       "1592403638763": {
         "type": "hero-frame",
         "settings": {
-          "image": "shopify:\/\/shop_images\/AdobeStock_209202958.jpeg",
+          "image": "shopify:\/\/shop_images\/hero_v1.jpg",
           "alignment": "center",
           "hero_layout": "full_width",
           "hero_size": "x-large",
           "text_size": "medium",
-          "title": "<p>TRULY SUSTAINABLE FASHION<br>FOR TRULY UNBEATABLE PRICES<\/p>",
-          "text": "<p>The collective ordering platform<br>that connects you directly with fashion producers.<\/p>",
+          "title": "<p>THE BEST QUALITY SUSTAINABLE BASICS FOR THE LOWEST PRICE<\/p>",
+          "text": "<p>Get 70%+ off by ordering collectively from manufacturers through our on-demand platform.<\/p>",
           "link_label": "LEARN HOW",
-          "link_link": "shopify:\/\/pages\/under-construction",
+          "link_link": "shopify:\/\/pages\/concept",
           "button_label": "SHOP NOW",
-          "button_link": "shopify:\/\/pages\/under-construction"
+          "button_link": "shopify:\/\/collections\/basics"
         }
       },
       "1592481439617": {
         "type": "video",
         "settings": {
-          "image": "shopify:\/\/shop_images\/IMG_6471.JPG",
+          "image": "shopify:\/\/shop_images\/Bildschirmfoto_2020-08-07_um_11.47.08.png",
           "image_position": "center center",
-          "video_link": "https:\/\/www.youtube.com\/watch?v=_9VUPq3SxOc",
-          "show_overlay": true,
+          "video_link": "https:\/\/youtu.be\/yAC7mvxjOqM",
+          "show_overlay": false,
           "style": "image_with_play",
           "height": "medium",
           "video_title": "",
           "text_size": "medium",
-          "headline": "WELCOME TO COLLECTIVE ORDERING",
-          "sub-headline": "Save money and the planet by ordering as a community."
+          "headline": "UNBEATABLE PRICES",
+          "sub-headline": "UPTOUS connects you directly with fashion producers, giving you the best possible value for money."
         }
       },
       "1592486513674": {
         "type": "feature-row-vertical",
         "settings": {
-          "image": "shopify:\/\/shop_images\/doodle.png",
+          "image": "shopify:\/\/shop_images\/oldvsnew.jpg",
           "layout": "left",
-          "title": "COLLECTIVE ORDERING VS. RETAIL",
-          "subtitle": "You pay less but everyone gets more.",
-          "text": "<p>Producing fashion only after it&rsquo;s been bought and selling it in the most direct way creates efficiencies that allow sustainable fashion to be affordable for everyone while saving resources. A win for everyone, including our planet.&nbsp;<\/p>",
+          "title": "COLLECTIVE ORDERING VS. OLD FASHION INDUSTRY",
+          "subtitle": "How maximum efficiency can get you a 70% lower price:",
+          "text": "<p>By producing on-demand in bulk and connecting you directly with manufacturers, we increase efficiency dramatically, and are therefore able to sell the highest quality products for the lowest prices.<\/p>",
           "button_label": "LEARN MORE",
-          "button_link": "shopify:\/\/pages\/under-construction"
+          "button_link": "shopify:\/\/pages\/concept"
         }
       },
       "1593003134978": {
         "type": "hero-blocks",
         "settings": {
-          "image": "shopify:\/\/shop_images\/AdobeStock_183373937.jpeg",
+          "image": "shopify:\/\/shop_images\/collectiveorder.jpg",
           "alignment": "center",
           "hero_layout": "full_width",
           "hero_size": "x-large",
           "text_size": "medium",
           "title": "THE POWER OF WORKING TOGETHER",
           "text": "",
-          "block_image1": "shopify:\/\/shop_images\/Gruppe_119_2x_48cd3690-b940-4560-9628-b289216d53f2.png",
+          "block_image1": "shopify:\/\/shop_images\/Icons_sketchy-01.png",
           "block_text1": "<p>Lower prices for<br>more sustainability<\/p>",
-          "block_image2": "shopify:\/\/shop_images\/Gruppe_118_2x_0db6eec1-af44-444d-a028-407b95745a11.png",
-          "block_text2": "<p>Better working conditions<br>and less waste<\/p>",
-          "block_image3": "shopify:\/\/shop_images\/Gruppe_117_2x_390ac175-cb58-401f-85c4-700addf4b9b8.png",
-          "block_text3": "<p>Nothing to hide<br>and full transparency<\/p>",
+          "block_image2": "shopify:\/\/shop_images\/Icons_sketchy-02.png",
+          "block_text2": "<p>Less waste and <br>better working conditions<\/p>",
+          "block_image3": "shopify:\/\/shop_images\/Icons_sketchy-03.png",
+          "block_text3": "<p>Nothing to hide anymore<\/p>",
           "button_label": "SHOP NOW",
-          "button_link": "shopify:\/\/pages\/under-construction"
+          "button_link": "shopify:\/\/collections\/basics"
         }
       },
       "1593082711245": {
         "type": "blocks-video",
         "settings": {
           "headline": "How it works",
-          "subheadline": "Flipping the fashion industry around",
-          "image1": "shopify:\/\/shop_images\/Gruppe_maskieren_1_2x_7481760f-af0f-4474-9b38-9d4e573a6ff1.png",
+          "subheadline": "Turning the fashion industry on its head - together.",
+          "image1": "shopify:\/\/shop_images\/How_It_Works-01.png",
           "text1": "<p><strong>#1<\/strong> Select a product and<br>join a community order.<\/p>",
-          "image2": "shopify:\/\/shop_images\/Gruppe_maskieren_2_2x_da4a1c60-f164-44d4-acf8-510b3a3547e4.png",
-          "text2": "<p><strong>#2<\/strong> Wait for your products<br>to be produced.<\/p>",
-          "image3": "shopify:\/\/shop_images\/Gruppe_maskieren_3_2x_0332418a-15e6-4076-844b-c39e16fdecd4.png",
+          "image2": "shopify:\/\/shop_images\/How_It_Works-02.png",
+          "text2": "<p><strong>#2<\/strong> Wait for your products<br>to be produced and delivered.<\/p>",
+          "image3": "shopify:\/\/shop_images\/How_It_Works-03.png",
           "text3": "<p><strong>#3<\/strong> Enjoy sustainable fashion for the lowest price.<\/p>",
-          "image4": "shopify:\/\/shop_images\/Gruppe_118_2x_0db6eec1-af44-444d-a028-407b95745a11.png",
-          "text4": "<p><strong>#4<\/strong>&nbsp;Co-create an economy that serves everyone.<\/p>",
-          "image": "",
+          "image4": "shopify:\/\/shop_images\/How_It_Works-04_bf4673da-04e3-4875-8fb4-ba2f58035b3c.png",
+          "text4": "<p><strong>#4<\/strong>&nbsp;Co-create an economy that serves everyone, including our Planet.<\/p>",
+          "image": "shopify:\/\/shop_images\/Bildschirmfoto_2020-08-07_um_11.55.48.png",
           "image_position": "center center",
-          "video_link": "https:\/\/www.youtube.com\/watch?v=_9VUPq3SxOc",
+          "video_link": "https:\/\/youtu.be\/DZj4YFrkpmU",
           "show_overlay": true,
           "style": "image_with_play",
-          "height": "small",
+          "height": "medium",
           "video_title": "",
           "text_size": "medium",
-          "button_label": "Learn more",
-          "button_link": "shopify:\/\/pages\/under-construction"
+          "button_label": "Having doubts?",
+          "button_link": "shopify:\/\/pages\/frequently-asked-questions"
         }
       },
       "1593427042443": {
         "type": "newsletter",
+        "disabled": true,
         "settings": {
           "section_title": "Join the Journey",
           "subheading": "<p>Be part of our community and be the first to hear about news, products and ideas.<\/p>",
           "show_background": false,
-          "image": "shopify:\/\/shop_images\/AdobeStock_209202958.jpeg",
+          "image": "shopify:\/\/shop_images\/newsletter_square.jpg",
           "hashtag": "#COLLECTIVEORDERING",
           "icon_ig": "shopify:\/\/shop_images\/instagram_2x_f5623046-be45-4352-9485-79f8d59d2e2e.png",
           "icon_yt": "shopify:\/\/shop_images\/youtube_2x_61cd8821-3295-4cc7-9b1b-3301ea80b905.png"
@@ -224,28 +219,30 @@
       },
       "1593512502772": {
         "type": "hero-noframe",
+        "disabled": true,
         "settings": {
-          "image": "shopify:\/\/shop_images\/IMG_6471.JPG",
+          "image": "shopify:\/\/shop_images\/collective.jpg",
           "alignment": "center",
           "hero_layout": "full_width",
           "hero_size": "x-large",
           "text_size": "medium",
           "title": "<p>EXPERIENCE<br>COLLECTIVE ACTION<\/p>",
-          "text": "<p>We are sick and tired of how business is done in the old fashion world.<br>In our VLOG we want to transparently share the experience of creating<br>a new way of fashion business, listen to what the community has to say<br>and move forward together, with you.<\/p>",
+          "text": "<p>Follow&nbsp;and become part of the journey of creating this business from the ground up.<\/p>",
           "link_label": "",
           "link_link": "",
           "button_label": "BECOME A PART",
-          "button_link": "shopify:\/\/pages\/under-construction"
+          "button_link": ""
         }
       },
       "1593514012301": {
         "type": "journey",
+        "disabled": true,
         "blocks": {
           "1593514012301-0": {
             "type": "story",
             "settings": {
               "date": "VLOG #1",
-              "title": "THE FASHION RESET",
+              "title": "WELCOME TO UPTOUS",
               "video_link": "https:\/\/www.youtube.com\/watch?v=_9VUPq3SxOc",
               "text": "<p>We meet with<strong> Antonio<\/strong> and lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed finibus, ipsum sed bibendum volutpat, dui arcu vehicula dolor, ut efficitur felis elit vel augue. Curabitur ultrices placerat felis. Praesent fermentum, lacus non tristique sollicitudin, ante nunc aliquet mi, et iaculis purus arcu in erat. Nullam lacinia hendrerit erat eu porta. Quisque ut luctus nibh.<\/p>"
             }
@@ -284,25 +281,25 @@
           "1594744960631": {
             "type": "review",
             "settings": {
-              "image": "shopify:\/\/shop_images\/fake_profile.jpg",
-              "meta": "<p><strong>Mariana<\/strong> | Lisbon &mdash; @marianax<\/p>",
-              "text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ullamcorper auctor mi ut aliquam. Sed viverra maximus nisl sed eleifend. Maecenas nec arcu libero.<\/p>"
+              "image": "shopify:\/\/shop_images\/ewa_tomko.jpg",
+              "meta": "<p><strong>Ewa<\/strong> | Hamburg &mdash; @ewa_tomko<\/p>",
+              "text": "<p>Very comfortable shirt! The fabric feels great on the skin and very high quality generally.<\/p>"
             }
           },
           "1594746037141": {
             "type": "review",
             "settings": {
-              "image": "shopify:\/\/shop_images\/fake_profile.jpg",
-              "meta": "<p><strong>Carina<\/strong> | Berlin &mdash; @car.ina<\/p>",
-              "text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ullamcorper auctor mi ut aliquam. Sed viverra maximus nisl sed eleifend. Maecenas nec arcu libero.<\/p>"
+              "image": "shopify:\/\/shop_images\/vikistr.jpg",
+              "meta": "<p><strong>Viktoria<\/strong>&nbsp;| Munich &mdash; @vikistr<\/p>",
+              "text": "<p>Minimalistic T-Shirt that's easy to combine with basically anything. Perfect for an easy summer outfit.<\/p>"
             }
           },
           "1594746095889": {
             "type": "review",
             "settings": {
-              "image": "shopify:\/\/shop_images\/fake_profile.jpg",
-              "meta": "<p><strong>Jule<\/strong> | Hamburg &mdash; @julecute<\/p>",
-              "text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ullamcorper auctor mi ut aliquam. Sed viverra maximus nisl sed eleifend. Maecenas nec arcu libero.<\/p>"
+              "image": "shopify:\/\/shop_images\/lucyeezy.jpg",
+              "meta": "<p><strong>Lucy<\/strong>&nbsp;&mdash; @lucyeezy<\/p>",
+              "text": "<p>The fabric feels fantastic. High quality but lightweight at the same time. Ticks all the boxes for a great shirt!<\/p>"
             }
           }
         },
@@ -314,29 +311,33 @@
         "settings": {
           "hero_image": "shopify:\/\/shop_images\/AdobeStock_309576547.jpeg",
           "title": "<p>Help to FUND the first produce on demand collection<\/p>",
+          "order_goal": 1000,
+          "order_current": 64,
+          "order_text": "collective orders have been placed.",
+          "order_updated": "Aug 13, 2020 11:00:00",
           "show_quantity_selector": true,
           "show_variant_labels": true,
           "show_vendor": false,
-          "enable_payment_button": true,
+          "enable_payment_button": false,
           "show_share_buttons": false,
           "media_size": "medium",
           "enable_image_zoom": false,
           "enable_video_looping": false,
           "product_feature1_img": "shopify:\/\/shop_images\/emoji_3x_efb71631-b65e-40ba-b456-86ec7a9a35f3.png",
           "product_feature1_title": "Produced on Demand",
-          "product_feature1_text": "<p>The product will be produced for you once you bought it to ensure our platform does not cause any waste through over-production. Production on demand saves resources and allows low prices for high quality sustainable fashion.<\/p>",
+          "product_feature1_text": "<p>The product will be produced for you once you bought it to ensure our platform does not cause any waste through over-production. Production on demand saves resources and allows low prices for high quality sustainable fashion. The shipping time will depend on when join the collective order. Shipping takes up to three weeks after the collective order is closed.<\/p>",
           "product_feature2_img": "shopify:\/\/shop_images\/plant_3x_c9462361-f6c1-4070-aa9a-a351fc7caf35.png",
-          "product_feature2_title": "GOTS Certified Cotton",
-          "product_feature2_text": "<p>The product will be produced for you once you bought it to ensure our platform does not cause any waste through over-production. Production on demand saves resources and allows low prices for high quality sustainable fashion.<\/p>",
+          "product_feature2_title": "Organic Cotton",
+          "product_feature2_text": "<p>Our products are created with organic cotton. Cotton crops have not been treated with harmful chemicals. The cotton was harvested and processed under better working conditions with living wages and no child labour.<\/p>",
           "product_feature3_img": "shopify:\/\/shop_images\/heart_3x_1688cb19-e1d1-4777-bdbe-317893479278.png",
           "product_feature3_title": "Made in Europe",
-          "product_feature3_text": "<p>The product will be produced for you once you bought it to ensure our platform does not cause any waste through over-production. Production on demand saves resources and allows low prices for high quality sustainable fashion.<\/p>",
+          "product_feature3_text": "<p>All our products are made in Portugal in a factory just above the beautiful city of Porto. That means our products do not need to&nbsp;be shipped around the world to reach your doorstep and are created by people that&nbsp;are passionate about their craft under best work conditions.<\/p>",
           "product_benefits_title": "Empower a new World of Fashion",
-          "product_benefit1_img": "shopify:\/\/shop_images\/Gruppe_119_2x_48cd3690-b940-4560-9628-b289216d53f2.png",
+          "product_benefit1_img": "shopify:\/\/shop_images\/Icons_sketchy-01.png",
           "product_benefit1_text": "Lower prices for more sustainability",
-          "product_benefit2_img": "shopify:\/\/shop_images\/Gruppe_118_2x_0db6eec1-af44-444d-a028-407b95745a11.png",
+          "product_benefit2_img": "shopify:\/\/shop_images\/Icons_sketchy-02.png",
           "product_benefit2_text": "Better working conditions and less waste",
-          "product_benefit3_img": "shopify:\/\/shop_images\/Gruppe_117_2x_390ac175-cb58-401f-85c4-700addf4b9b8.png",
+          "product_benefit3_img": "shopify:\/\/shop_images\/Icons_sketchy-03.png",
           "product_benefit3_text": "Nothing to hide and full transparency",
           "product_reviews_title": "Community Reviews",
           "product_reviews_text": "<p>We produced some sample pieces and handed them out to people around Europe to ask them what they think of our products.<\/p>"
@@ -355,10 +356,9 @@
         "settings": {
           "title": "Time left for",
           "order": "COLLECTIVE ORDER #0001",
-          "date": "Aug 20, 2020 10:00:00",
           "button_label": "JOIN ORDER NOW",
-          "button_link": "shopify:\/\/pages\/under-construction",
-          "image": "shopify:\/\/shop_images\/AdobeStock_309576547.jpeg"
+          "button_link": "shopify:\/\/collections\/basics",
+          "image": "shopify:\/\/shop_images\/power.jpg"
         }
       },
       "1594040300542": {
@@ -367,19 +367,19 @@
           "1594040300542-0": {
             "type": "video",
             "settings": {
-              "video_link": "https:\/\/www.youtube.com\/watch?v=_9VUPq3SxOc"
+              "video_link": "https:\/\/www.youtube.com\/watch?v=yAC7mvxjOqM"
             }
           },
           "1594041275396": {
             "type": "video",
             "settings": {
-              "video_link": "https:\/\/www.youtube.com\/watch?v=_9VUPq3SxOc"
+              "video_link": "https:\/\/www.youtube.com\/watch?v=DZj4YFrkpmU"
             }
           },
           "1594041337123": {
             "type": "video",
             "settings": {
-              "video_link": "https:\/\/www.youtube.com\/watch?v=_9VUPq3SxOc"
+              "video_link": "https:\/\/www.youtube.com\/watch?v=uENdFyGhKrM"
             }
           }
         },
@@ -428,8 +428,8 @@
           "show_vendor": false,
           "sort_enable": true,
           "tags_enable": true,
-          "feature_img1": "shopify:\/\/shop_images\/Bild_2_2x_4d0b19ce-9ab2-4394-a6e7-4a98efa6e650.png",
-          "feature_text1": "GOTS certified organic cotton",
+          "feature_img1": "shopify:\/\/shop_images\/leaf_b2a4ce33-f4c1-46d7-bfba-006f3d03b612.png",
+          "feature_text1": "Made from organic cotton",
           "feature_img2": "shopify:\/\/shop_images\/pt.png",
           "feature_text2": "Made with love in Portugal",
           "feature_img3": "shopify:\/\/shop_images\/nooverproduction.png",
@@ -468,20 +468,68 @@
             "type": "faq",
             "settings": {
               "question": "What does produce on demand mean?",
-              "answer": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ullamcorper auctor mi ut aliquam. Sed viverra maximus nisl sed eleifend. Maecenas nec arcu libero.<\/p>"
+              "answer": "<p>Produce on demand means your product will be produced for you after you placed your order, together with the community. This way the production is a lot more efficient and environmentally friendly by saving resources.&nbsp;Because there is no&nbsp;stock-risk we don't have to calculate eventual profit losses through unsold pieces into our prices. It enables us to offer high quality sustainable fashion for unbeatable prices.<\/p>"
             }
           },
           "1595243196724": {
             "type": "faq",
             "settings": {
               "question": "When will I receive my product?",
-              "answer": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ullamcorper auctor mi ut aliquam. Sed viverra maximus nisl sed eleifend. Maecenas nec arcu libero.<\/p>"
+              "answer": "<p>That depends on when you join the collective order. You can find the exact&nbsp;end-date for the current collective order below the add to cart button. After you have joined the order you will need to wait for the remainder of that time plus about 3 weeks of production and shipping after the collective order is closed.<\/p>"
+            }
+          },
+          "1595938468634": {
+            "type": "faq",
+            "settings": {
+              "question": "Can I cancel my order?",
+              "answer": "<p>Yes, you can cancel your order anytime before your products are shipped or even return the products within 14 days after the product has been shipped to you and get a full refund.<\/p>"
+            }
+          },
+          "1595938070328": {
+            "type": "faq",
+            "settings": {
+              "question": "Can I return my products?",
+              "answer": "<p>You have the right to return your products within 14 days after they have been shipped to you. Please understand that returns are a big problem for production on demand business. Instead maybe pass products you don't like on to someone that does. Our products sure make for a good gift! Alternatively try to sell them to someone in your region. That way the product does not need to be shipped back and forth throughout Europe.<\/p>"
+            }
+          },
+          "1596052409905": {
+            "type": "faq",
+            "settings": {
+              "question": "What makes the products sustainable?",
+              "answer": "<p>Our products are created with organic cotton. Cotton crops have not been treated with harmful chemicals. The cotton was harvested and processed under better working conditions with living wages and no child labour.<br>Another even bigger contribution to making our products sustainable is that all of our products are produced on demand. Producing only on demand eliminates overproduction which wastes resources, promotes wasteful lifestyles and consumer behaviour and makes products more expensive than they need to be (because of stock-risk). Our mission is to deliver the best value for your fashion for as little money as possible thus enabling high quality, sustainable products for everyone.<\/p>"
+            }
+          },
+          "1596053020752": {
+            "type": "faq",
+            "settings": {
+              "question": "Who are your suppliers?",
+              "answer": "<p>For the moment we work with one supplier from Portugal. They have been in business for 30 years and are very passionate about their craft. You can get to know them more by visiting <a href=\"https:\/\/uptous.co\/pages\/concept\">https:\/\/uptous.co\/pages\/concept<\/a> and scrolling down to the interview with them!<\/p>"
+            }
+          },
+          "1596053239424": {
+            "type": "faq",
+            "settings": {
+              "question": "When will there be other \/ more products?",
+              "answer": "<p>We aim to widen our assortment as fast as possible. The quicker we can prove to the world that the demand for produce on demand fashion is the faster we can deliver new, awesome products. You might ask &ldquo;You are only producing on demand, why not have a wide assortment right away?&rdquo;. Good question! The reality is that we need to be careful to meet the minimum order quantities required by our producers for every piece we offer. To be able to achieve that in the beginning we need to focus all of our consumers and orders they place on a smaller assortment first. Bottom line: The bigger the community the bigger the assortment will be!<\/p>"
+            }
+          },
+          "1596053393585": {
+            "type": "faq",
+            "settings": {
+              "question": "Why do I have to pay 23% VAT?",
+              "answer": "<p>Our company is located in Portugal, so we can be close to our producers and work efficiently with them. The tax rate in Portugal is 23% compared to the tax rate of 19% in Germany for example. All our prices are including VAT.<\/p>"
             }
           }
         },
         "block_order": [
           "1595243137035",
-          "1595243196724"
+          "1595243196724",
+          "1595938468634",
+          "1595938070328",
+          "1596052409905",
+          "1596053020752",
+          "1596053239424",
+          "1596053393585"
         ],
         "settings": {
           "title": "Frequently asked Questions"
@@ -490,16 +538,16 @@
       "video": {
         "type": "video",
         "settings": {
-          "image": "",
+          "image": "shopify:\/\/shop_images\/Bildschirmfoto_2020-08-07_um_11.47.08.png",
           "image_position": "center center",
-          "video_link": "https:\/\/www.youtube.com\/watch?v=_9VUPq3SxOc",
-          "show_overlay": true,
+          "video_link": "https:\/\/youtu.be\/yAC7mvxjOqM",
+          "show_overlay": false,
           "style": "image_with_play",
           "height": "medium",
           "video_title": "",
           "text_size": "medium",
-          "headline": "Welcome to collective Ordering",
-          "sub-headline": "Save money and the planet by ordering as a community."
+          "headline": "UNBEATABLE PRICES",
+          "sub-headline": "UPTOUS connects you directly with fashion producers, giving you the best possible value for money."
         }
       },
       "newsletter": {
@@ -508,7 +556,7 @@
           "section_title": "StAY IN THE LOOP",
           "subheading": "<p>Be part of our community and be the first to hear about news, products and ideas.<\/p>",
           "show_background": false,
-          "image": "shopify:\/\/shop_images\/fake_profile.jpg",
+          "image": "shopify:\/\/shop_images\/newsletter_square.jpg",
           "hashtag": "#collectiveordering",
           "icon_ig": "shopify:\/\/shop_images\/instagram_2x_f5623046-be45-4352-9485-79f8d59d2e2e.png",
           "icon_yt": "shopify:\/\/shop_images\/youtube_2x_61cd8821-3295-4cc7-9b1b-3301ea80b905.png"
@@ -530,21 +578,14 @@
           "button_link": "shopify:\/\/pages\/under-construction"
         }
       },
-      "influencerlp-bio": {
-        "type": "influencerlp-bio",
-        "settings": {
-          "profilepic": "shopify:\/\/shop_images\/IMG_1547.JPG",
-          "biotext": "<p><strong>Hey, thanks for clicking my link!<\/strong><br>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ullamcorper auctor mi ut aliquam. Sed viverra maximus nisl sed eleifend. Maecenas nec arcu libero.<br><br>&mdash; Daniel<\/p>"
-        }
-      },
       "feature-row-vertical": {
         "type": "feature-row-vertical",
         "settings": {
           "image": "shopify:\/\/shop_images\/doodle.png",
           "layout": "left",
           "title": "COLLECTIVE ORDERING VS. OLD FASHION INDUSTRY",
-          "subtitle": "You pay less but everyone gets more.",
-          "text": "<p>Producing fashion only after it&rsquo;s been bought and selling it in the most direct way creates efficiencies that allow sustainable fashion to be affordable for everyone while saving resources. A win for everyone, including our planet.&nbsp;<\/p>",
+          "subtitle": "How maximum efficiency can get you a 70% lower price:",
+          "text": "<p>By producing on-demand in bulk and connecting you directly with manufacturers, we increase efficiency dramatically, and are therefore able to sell the highest quality products for the lowest prices.<\/p>",
           "button_label": "learn more",
           "button_link": "shopify:\/\/pages\/under-construction"
         }
@@ -554,7 +595,6 @@
         "settings": {
           "title": "Time left for",
           "order": "COLLECTIVE ORDER #0001",
-          "date": "Aug 20, 2020 10:00:00",
           "button_label": "Join order now",
           "button_link": "shopify:\/\/pages\/under-construction",
           "image": "shopify:\/\/shop_images\/AdobeStock_309576547.jpeg"
@@ -563,18 +603,18 @@
       "hero-blocks": {
         "type": "hero-blocks",
         "settings": {
-          "image": "shopify:\/\/shop_images\/IMG_1547.JPG",
+          "image": "shopify:\/\/shop_images\/collectiveorder.jpg",
           "alignment": "center",
           "hero_layout": "full_width",
-          "hero_size": "medium",
+          "hero_size": "x-large",
           "text_size": "medium",
           "title": "THE POWER OF WORKING TOGETHER",
           "text": "",
-          "block_image1": "shopify:\/\/shop_images\/Gruppe_119_2x_48cd3690-b940-4560-9628-b289216d53f2.png",
+          "block_image1": "shopify:\/\/shop_images\/Icons_sketchy-01.png",
           "block_text1": "<p>Lower prices for<br>more sustainability<\/p>",
-          "block_image2": "shopify:\/\/shop_images\/Gruppe_118_2x_0db6eec1-af44-444d-a028-407b95745a11.png",
+          "block_image2": "shopify:\/\/shop_images\/Icons_sketchy-02.png",
           "block_text2": "<p>Better working conditions<br>and less waste<\/p>",
-          "block_image3": "shopify:\/\/shop_images\/Gruppe_117_2x_390ac175-cb58-401f-85c4-700addf4b9b8.png",
+          "block_image3": "shopify:\/\/shop_images\/Icons_sketchy-03.png",
           "block_text3": "<p>Nothing to hide<br>and full transparency<\/p>",
           "button_label": "Shop now",
           "button_link": "shopify:\/\/pages\/under-construction"
@@ -584,25 +624,25 @@
         "type": "blocks-video",
         "settings": {
           "headline": "HOW IT WORKS",
-          "subheadline": "Flipping the fashion industry around",
-          "image1": "shopify:\/\/shop_images\/Gruppe_maskieren_1_2x_7481760f-af0f-4474-9b38-9d4e573a6ff1.png",
+          "subheadline": "Turning the fashion industry on its head - together.",
+          "image1": "shopify:\/\/shop_images\/How_It_Works-01.png",
           "text1": "<p><strong>#1<\/strong> Select a product and<br>join a community order.<\/p>",
-          "image2": "shopify:\/\/shop_images\/Gruppe_maskieren_2_2x_da4a1c60-f164-44d4-acf8-510b3a3547e4.png",
+          "image2": "shopify:\/\/shop_images\/How_It_Works-02.png",
           "text2": "<p><strong>#2<\/strong> Wait for your products<br>to be produced.<\/p>",
-          "image3": "shopify:\/\/shop_images\/Gruppe_maskieren_3_2x_0332418a-15e6-4076-844b-c39e16fdecd4.png",
+          "image3": "shopify:\/\/shop_images\/How_It_Works-03.png",
           "text3": "<p><strong>#3<\/strong> Enjoy sustainable fashion<br>for the lowest price.<\/p>",
-          "image4": "shopify:\/\/shop_images\/Gruppe_118_2x_0db6eec1-af44-444d-a028-407b95745a11.png",
-          "text4": "<p><strong>#4<\/strong> Co-create an economy<br>that serves everyone<\/p>",
-          "image": "",
+          "image4": "shopify:\/\/shop_images\/How_It_Works-04_bf4673da-04e3-4875-8fb4-ba2f58035b3c.png",
+          "text4": "<p><strong>#4<\/strong> Co-create an economy<br>that serves everyone, including our planet.<\/p>",
+          "image": "shopify:\/\/shop_images\/Bildschirmfoto_2020-08-07_um_11.55.48.png",
           "image_position": "center center",
-          "video_link": "https:\/\/www.youtube.com\/watch?v=_9VUPq3SxOc",
+          "video_link": "https:\/\/www.youtube.com\/watch?v=DZj4YFrkpmU",
           "show_overlay": true,
           "style": "image_with_play",
           "height": "medium",
           "video_title": "",
           "text_size": "medium",
-          "button_label": "",
-          "button_link": ""
+          "button_label": "Having doubts?",
+          "button_link": "shopify:\/\/pages\/frequently-asked-questions"
         }
       },
       "content-showcase": {
@@ -611,19 +651,26 @@
           "1595255957484": {
             "type": "video",
             "settings": {
-              "video_link": "https:\/\/www.youtube.com\/watch?v=_9VUPq3SxOc"
+              "video_link": "https:\/\/www.youtube.com\/watch?v=yAC7mvxjOqM"
             }
           },
           "1595255960649": {
             "type": "video",
             "settings": {
-              "video_link": "https:\/\/www.youtube.com\/watch?v=_9VUPq3SxOc"
+              "video_link": "https:\/\/www.youtube.com\/watch?v=DZj4YFrkpmU"
+            }
+          },
+          "1596966701185": {
+            "type": "video",
+            "settings": {
+              "video_link": "https:\/\/www.youtube.com\/watch?v=uENdFyGhKrM"
             }
           }
         },
         "block_order": [
           "1595255957484",
-          "1595255960649"
+          "1595255960649",
+          "1596966701185"
         ],
         "settings": {
           "title": "<p>DIVE INTO<br>THE TOPIC<\/p>",
@@ -654,19 +701,418 @@
           "overlay_text_color": "#ffffff",
           "overlay_opacity": 65
         }
+      },
+      "1595417279692": {
+        "type": "collection-switcher",
+        "settings": {
+          "title": "THE BEST BASICS YOU'VE EVER WORN",
+          "subtitle": "Simple yet revolutionary. Produced with the highest quality fabrics in Portugal.",
+          "collection": "womens-basics",
+          "collection2": "mens-basics",
+          "grid": 3,
+          "rows": 2,
+          "show_vendor": false,
+          "show_view_all": true,
+          "collection3": "basics"
+        }
+      },
+      "cart-template": {
+        "type": "cart-template",
+        "settings": {
+          "cart_ajax_enable": false,
+          "cart_notes_enable": false
+        }
+      },
+      "hero": {
+        "type": "hero",
+        "settings": {
+          "image": "shopify:\/\/shop_images\/team.jpg",
+          "alignment": "top",
+          "hero_layout": "full_width",
+          "hero_size": "medium",
+          "text_size": "medium",
+          "title": "",
+          "text": "",
+          "button_label": "",
+          "button_link": ""
+        }
+      },
+      "team": {
+        "type": "team",
+        "blocks": {
+          "1595593147586": {
+            "type": "member",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/wolf.jpg",
+              "name": "Wolfgang",
+              "title": "Co-Founder & CEO",
+              "text": "<p>Wolfgang has worked in fashion for 18 years. He created his first sustainable clothing company after a trip around the world in 2011. When he's not working, he's either in the ocean, brainstorming how to change the world or putting together his plan to travel to Space.<\/p>"
+            }
+          },
+          "1595593841154": {
+            "type": "member",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/daniel.jpg",
+              "name": "Daniel",
+              "title": "Co-Founder & Product",
+              "text": "<p>Daniel is passionate about&nbsp;coding,&nbsp;making music and outdoor sports. He is convinced a new time has come where people that couldn't identify with entrepreneurship so far will lead a new world economy in unconventional ways that's about creating value for everyone.<\/p>"
+            }
+          },
+          "1595595068324": {
+            "type": "member",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/james_9a272807-5079-4b27-a0d9-2133f574125e.jpg",
+              "name": "James",
+              "title": "ART & CONTENT DIRECTOR",
+              "text": "<p>James has been creating visual content for brands, musicians and cultural organisations since 2013. His creative motto is great design, good storytelling, good humour! He moved from the UK to Berlin to ride out his twenties and then made the trip across the continent to Lisbon last year to enjoy a new pace of life by the sea.&nbsp;<\/p>"
+            }
+          },
+          "1595595111302": {
+            "type": "member",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/bruno_5e0bfad4-2835-4c95-bd7a-da1cc704f0cd.jpg",
+              "name": "Bruno",
+              "title": "Head of Operations",
+              "text": "<p>Bruno is originally from Brazil and moved to Lisbon just over 3 years ago. He not only loves animals more than people, but also action over words - especially when it comes to creating a sustainable future. In addition to his 'old' wise soul, he has one of the darkest, driest sense of humour on the planet.<\/p>"
+            }
+          },
+          "1596467336143": {
+            "type": "member",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/plutao.jpg",
+              "name": "Plutão",
+              "title": "CHIEF HAPPINESS OFFICER",
+              "text": "<p>Plut&atilde;o was born on June 5th and is the first UPTOUS baby. When he&rsquo;s not pooping and peeing where he's not supposed to, he gives us peace and happiness with his loving and funny personality. We believe he is a cross-bred between dog, bunny and dear.<\/p>"
+            }
+          }
+        },
+        "block_order": [
+          "1595593147586",
+          "1595593841154",
+          "1595595068324",
+          "1595595111302",
+          "1596467336143"
+        ],
+        "settings": {}
+      },
+      "values": {
+        "type": "values",
+        "blocks": {
+          "1595600694699": {
+            "type": "value",
+            "settings": {
+              "title": "BEING INCLUSIVE",
+              "text": "<p>Positive change is up to all of us! We are co-creating a community together with you - that everyone can become a part of. It doesn&rsquo;t matter how much you know about the fashion industry or how sustainably you live already - if you want to create impact, or if you just like to shop for great products at low prices: we are all part of this movement forward together!<\/p>"
+            }
+          },
+          "1595600819761": {
+            "type": "value",
+            "settings": {
+              "title": "BEING TRANSPARENT",
+              "text": "<p>We believe that transparency is fundamental if businesses and customers are to collaborate on a new level. To us, transparency means sharing our thoughts, asking the community for help, and sharing our unfiltered insights into how UPTOUS is being created - with the knowledge that we are not perfect and that this is only going to work out if you become part of this journey with us!<\/p>"
+            }
+          },
+          "1595600829944": {
+            "type": "value",
+            "settings": {
+              "title": "BEING UNCONVENTIONAL",
+              "text": "<p>We are breaking free from convention and making our own rules about how business should be created and run. Our objective is to fulfil the promise of a better tomorrow by collaborative creation - using methods that haven&rsquo;t previously existed.&nbsp;<\/p>"
+            }
+          },
+          "1595600842949": {
+            "type": "value",
+            "settings": {
+              "title": "BEING VISIONARY",
+              "text": "<p>We believe that the best solutions come to mind when thinking outside the box. Now, more than ever, the world needs solutions for problems that have been ignored for too long. We believe that those solutions need to be created beyond the frameworks and systems that have been put in place over the past few decades. To create positive change means to wander on new territory.<\/p>"
+            }
+          }
+        },
+        "block_order": [
+          "1595600694699",
+          "1595600819761",
+          "1595600829944",
+          "1595600842949"
+        ],
+        "settings": {
+          "title": "What we value most",
+          "subtitle": "We stand for:"
+        }
+      },
+      "hero-concept": {
+        "type": "hero-concept",
+        "settings": {
+          "image": "shopify:\/\/shop_images\/collectiveorder.jpg",
+          "alignment": "center",
+          "hero_layout": "full_width",
+          "hero_size": "medium",
+          "text_size": "medium",
+          "title": "",
+          "text": "",
+          "button_label": "",
+          "button_link": ""
+        }
+      },
+      "why-what-how": {
+        "type": "why-what-how",
+        "settings": {
+          "title1": "WHY UPTOUS EXISTS",
+          "image1": "shopify:\/\/shop_images\/why.jpg",
+          "text1": "<p>The 'old' fashion industry is inefficient and destructive. The way things currently work doesn&rsquo;t allow for it to adapt efficiently enough to make sustainable fashion affordable for everyone. We need to reset. UPTOUS was created to redefine the process of creating and selling fashion from the ground up. A revolution in the fashion industry that starts with you!<\/p>",
+          "title2": "WHAT IS UPTOUS",
+          "image2": "shopify:\/\/shop_images\/what.jpg",
+          "text2": "<p>UPTOUS is a collective ordering platform with the aim of creating and selling fashion in the most efficient and direct way possible. Together with you, as part of the community, we can create the best value fashion that will benefit everyone, including the planet!<\/p>",
+          "title3": "HOW UPTOUS WORKS",
+          "image3": "shopify:\/\/shop_images\/how.jpg",
+          "text3": "<p>UPTOUS connects you directly with fashion manufacturers - on demand. No brands or retailers are between you and your product. So you can shop for high-quality, sustainable fashion in the most efficient and direct way for the lowest possible prices.<br>Since manufacturers need minimum order quantities to be able to produce, we order together as a community. That way, we only produce what is needed, and nothing more. The financial benefits of completely removing over-production, and skipping retail and brands, are passed on to you in the form of low prices for great products.<\/p>"
+        }
+      },
+      "feature-columns": {
+        "type": "feature-columns",
+        "blocks": {
+          "1595847981941": {
+            "type": "text_block",
+            "settings": {
+              "enable_image": true,
+              "image": "shopify:\/\/shop_images\/sketch_1_padding.png",
+              "title": "Lower prices for more sustainability",
+              "text": "<p>Producing fashion on demand eliminates over-production. Eliminating over-production gets rid of stock-risk. No stock-risk means&nbsp;more profit that is given back to you in form of low prices for sustainable products.<\/p>",
+              "button_label": "",
+              "button_link": ""
+            }
+          },
+          "1595848031594": {
+            "type": "text_block",
+            "settings": {
+              "enable_image": true,
+              "image": "shopify:\/\/shop_images\/sketch_2_padding.png",
+              "title": "Better working conditions and less waste",
+              "text": "<p>Producing on demand&nbsp;not only means saving resources and thus creating less waste, but also more money that can be paid for the production of clothes.&nbsp;It's the&nbsp;fundament for creating better work conditions throughout the industry.<\/p>",
+              "button_label": "",
+              "button_link": ""
+            }
+          },
+          "1595848049207": {
+            "type": "text_block",
+            "settings": {
+              "enable_image": true,
+              "image": "shopify:\/\/shop_images\/sketch_3_padding.png",
+              "title": "Nothing to hide and full transparency",
+              "text": "<p>We want to share running this business with you. We will give you full insight into what is usually being hidden to explain what it means to revolutionize the fashion industry and to use your feedback as our compass.<\/p>",
+              "button_label": "",
+              "button_link": ""
+            }
+          }
+        },
+        "block_order": [
+          "1595847981941",
+          "1595848031594",
+          "1595848049207"
+        ],
+        "settings": {
+          "title": "The power of #collectiveordering",
+          "align_text": "left"
+        }
+      },
+      "collection-switcher": {
+        "type": "collection-switcher",
+        "settings": {
+          "title": "THE BEST BASCIS YOU'VE EVER WORN",
+          "subtitle": "Simple yet revolutionary. Produced with the highest quality fabrics in Portugal.",
+          "collection": "womens-basics",
+          "collection2": "mens-basics",
+          "grid": 3,
+          "rows": 2,
+          "show_vendor": false,
+          "show_view_all": true,
+          "collection3": "basics"
+        }
+      },
+      "video-blocks": {
+        "type": "video-blocks",
+        "blocks": {
+          "1596532588101": {
+            "type": "videoblock",
+            "settings": {
+              "video_link": "https:\/\/youtu.be\/uENdFyGhKrM",
+              "title": "Confecções Luis LDA.",
+              "text": "<p>Meet Augusta and Ant&oacute;nio and listen to what they have to say about the (positive) change in the fashion industry and our role in it.<\/p>",
+              "isplaceholder": false
+            }
+          },
+          "1596533258426": {
+            "type": "videoblock",
+            "settings": {
+              "video_link": "https:\/\/www.youtube.com\/watch?v=_9VUPq3SxOc",
+              "title": "Coming Soon",
+              "text": "<p>We are constantly growing our network of awesome manufacturers to grow our assortment of clothes you can choose from in the future.<\/p>",
+              "isplaceholder": true
+            }
+          }
+        },
+        "block_order": [
+          "1596532588101",
+          "1596533258426"
+        ],
+        "settings": {
+          "title": "Meet our producers",
+          "subtitle": "Our heros that make it happen"
+        }
+      },
+      "product-reviews": {
+        "type": "product-reviews",
+        "blocks": {
+          "1596917689797": {
+            "type": "review",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/ewa_tomko.jpg",
+              "meta": "<p><strong>Ewa<\/strong> | Hamburg&nbsp;<span style=\"text-decoration: none;\">&mdash; <\/span> @ewa_tomko<\/p>",
+              "text": "<p>Very comfortable shirt! The fabric feels great on the skin and very high quality generally.<\/p>"
+            }
+          },
+          "1596917797089": {
+            "type": "review",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/vikistr.jpg",
+              "meta": "<p><strong>Viktoria<\/strong> | Munich&nbsp;<span style=\"text-decoration: none;\">&mdash;&nbsp;@vikistr<\/span><\/p>",
+              "text": "<p>Minimalistic T-Shirt that's easy to combine with basically anything. Perfect for an easy summer outfit.<\/p>"
+            }
+          },
+          "1596980198201": {
+            "type": "review",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/nikey.jpg",
+              "meta": "<p><strong>Nikey<\/strong> | Regensburg&nbsp;&mdash; @nikeydauringon<\/p>",
+              "text": "<p>The T-Shirt feels very soft and comfortable on the skin!<\/p>"
+            }
+          }
+        },
+        "block_order": [
+          "1596917689797",
+          "1596917797089",
+          "1596980198201"
+        ],
+        "settings": {
+          "product_reviews_title": "COMMUNITY REVIEWS",
+          "product_reviews_text": "<p>We produced some sample pieces and handed them out to people around Europe to ask them what they think of our products.<\/p>"
+        }
+      },
+      "product-benefits": {
+        "type": "product-benefits",
+        "settings": {
+          "product_benefits_title": "Empower a new World of Fashion",
+          "product_benefit1_img": "shopify:\/\/shop_images\/sketch_1.png",
+          "product_benefit1_text": "Lower prices for more sustainability",
+          "product_benefit2_img": "shopify:\/\/shop_images\/sketch_2.png",
+          "product_benefit2_text": "Better working conditions and less waste",
+          "product_benefit3_img": "shopify:\/\/shop_images\/sketch_3.png",
+          "product_benefit3_text": "Nothing to hide and full transparency"
+        }
+      },
+      "1596918697153": {
+        "type": "product-reviews",
+        "blocks": {
+          "1596918732409": {
+            "type": "review",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/ewa_tomko.jpg",
+              "meta": "<p><strong>Ewa<\/strong>&nbsp;| Hamburg&nbsp;<span style=\"text-decoration: none;\">&mdash;&nbsp;<\/span>@ewa_tomko<\/p>",
+              "text": "<p>Very comfortable shirt! The fabric feels great on the skin and very high quality generally.<\/p>"
+            }
+          },
+          "1596918752621": {
+            "type": "review",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/vikistr.jpg",
+              "meta": "<p><strong>Viktoria<\/strong>&nbsp;| Munich&nbsp;<span style=\"text-decoration: none;\">&mdash;&nbsp;@vikistr<\/span><\/p>",
+              "text": "<p>Minimalistic T-Shirt that's easy to combine with basically anything. Perfect for an easy summer outfit.<\/p>"
+            }
+          },
+          "1596988260032": {
+            "type": "review",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/nikey.jpg",
+              "meta": "<p><strong>Nikey<\/strong>&nbsp;| Regensburg&nbsp;&mdash; @nikeydauringon<\/p>",
+              "text": "<p>The T-Shirt feels very soft and comfortable on the skin!<\/p>"
+            }
+          }
+        },
+        "block_order": [
+          "1596918732409",
+          "1596918752621",
+          "1596988260032"
+        ],
+        "settings": {
+          "product_reviews_title": "Community Reviews",
+          "product_reviews_text": "<p>We produced some sample pieces and handed them out to people around Europe to ask them what they think of our products.<\/p>"
+        }
+      },
+      "feedback": {
+        "type": "feedback",
+        "settings": {
+          "title": "YOUR FEEDBACK MEANS EVERYTHING TO US!",
+          "image": "shopify:\/\/shop_images\/newsletter_square.jpg",
+          "msg": "Hey there! ..."
+        }
+      },
+      "1597167247233": {
+        "type": "feedback",
+        "settings": {
+          "title": "Your feedback means everything to us!",
+          "image": "shopify:\/\/shop_images\/newsletter_square.jpg",
+          "msg": "Hey there! ..."
+        }
+      },
+      "product-template-fffbox": {
+        "type": "product-template-fffbox",
+        "settings": {
+          "hero_image": "",
+          "title": "",
+          "order_goal": 0,
+          "order_current": 0,
+          "order_text": "",
+          "order_updated": "",
+          "show_quantity_selector": false,
+          "show_variant_labels": true,
+          "show_vendor": false,
+          "enable_payment_button": true,
+          "show_share_buttons": false,
+          "media_size": "medium",
+          "enable_image_zoom": false,
+          "enable_video_looping": false,
+          "product_feature1_img": "",
+          "product_feature1_title": "",
+          "product_feature1_text": "",
+          "product_feature2_img": "",
+          "product_feature2_title": "",
+          "product_feature2_text": "",
+          "product_feature3_img": "",
+          "product_feature3_title": "",
+          "product_feature3_text": "",
+          "product_benefits_title": "",
+          "product_benefit1_img": "",
+          "product_benefit1_text": "",
+          "product_benefit2_img": "",
+          "product_benefit2_text": "",
+          "product_benefit3_img": "",
+          "product_benefit3_text": "",
+          "product_reviews_title": "",
+          "product_reviews_text": ""
+        }
       }
     },
     "content_for_index": [
       "1592403638763",
       "1592481439617",
       "1592486513674",
-      "1594033764120",
-      "collection",
+      "1595417279692",
+      "1596918697153",
       "1593003134978",
       "1593082711245",
+      "1594033764120",
       "1593512502772",
       "1593514012301",
       "1593427042443",
+      "1597167247233",
       "1594040300542",
       "1594041649120"
     ]

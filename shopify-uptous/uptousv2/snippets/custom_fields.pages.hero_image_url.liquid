@@ -1,0 +1,13 @@
+{% comment %}
+  DO NOT MODIFY THIS FILE DIRECTLY. THIS FILE WILL BE OVERWRITTEN.
+  YOU CAN MODIFY THE LIQUID CODE FOR THIS CUSTOM FIELD HERE:
+  https://customfields.bonify.io/dashboard/uptous-store.myshopify.com/pages/configure/191352/edit
+{% endcomment %}
+{% if page.metafields.custom_fields["hero_image_url"] != blank %}
+  <div class="custom-field custom-field__hero-image-url custom-field__type--text">
+    <h3 class="custom-field--title">Hero Image URL</h3>
+    <div class="custom-field--value">
+      {{ page.metafields.custom_fields["hero_image_url"] }}
+    </div>
+  </div>
+{% endif %}
