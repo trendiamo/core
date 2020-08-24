@@ -1,5 +1,6 @@
-<div class="u2u-pdp-hero" style="background-image: url('{{ product.metafields.custom_fields["hero_image_url"] }})'">
+<div class="u2u-pdp-hero" style="background-image: url('{{ section.settings.hero_image | img_url: '2000x' }})'">
   <div class="u2u-pdp-hero-title page-width">{{ section.settings.title }}</div>
+  {% unless section.settings.show_progress == false %}
   <div class="u2u-pdp-hero-bar-wrapper page-width">
     <div class="u2u-pdp-hero-bar-frame">
       <div id="orderbar" class="u2u-pdp-hero-bar">
@@ -9,6 +10,7 @@
     </div>
     <div id="orderupdate" class="u2u-pdp-hero-bar-update"></div>
   </div>
+  {% endunless %}
 </div>
 
 <div class="product-template__container page-width u2u-product-meta"
@@ -195,6 +197,8 @@
               {% endfor %}
             </select>
 
+            <div id="infiniteoptions-container"></div>
+
             {% if section.settings.show_quantity_selector %}
               <div class="product-form__controls-group">
                 <div class="product-form__item u2u-product-option-qty">
@@ -232,7 +236,7 @@
             </div>
           {% endform %}
         </div>
-        <div class="u2u-shipping-information"><p>The current collective order will close on&nbsp;</p><p>{{ settings.u2u_co_date }}.</p><p>From that day the production and shipment of your product will take about 3 weeks. <b>Shipping costs within the EU €10,00.</b></p></div>
+        <div class="u2u-shipping-information"><p>You can join this drop until&nbsp;</p><p>{{ settings.u2u_co_date }}.</p><p>From that day the production and shipment of your products will take about 3 weeks.</p></div>
 
         {%- comment -%}
           Live region for announcing updated price and availability to screen readers
@@ -452,6 +456,14 @@ var u2uf3b = false;
       "label": {
         "de": "Titel",
         "en": "Title"
+      }
+    },
+    {
+      "type": "checkbox",
+      "id": "show_progress",
+      "label": {
+        "de": "Progress Bar Anzeigen",
+        "en": "Display Progress Bar"
       }
     },
     {

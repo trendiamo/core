@@ -92,9 +92,6 @@
           {%- if section.settings.text != blank -%}
             <div class="rte-setting mega-subtitle{% if section.settings.text_size == 'large' %} mega-subtitle--large{% endif %} u2u-framed-subtitle">{{ section.settings.text }}</div>
           {%- endif -%}
-          {%- if section.settings.link_label != blank -%}
-            <div class="u2u-framed-link"><a href="{{ section.settings.link_link }}">{{ section.settings.link_label }}</a></div>
-          {%- endif -%}
           {%- if section.settings.button_label != blank and section.settings.button_link != blank -%}
             {%- capture ariaLabel -%}
               {{- section.settings.button_label -}}
