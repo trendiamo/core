@@ -4933,7 +4933,7 @@ $color-blankstate-background: rgba($color-body-text, 0.1);
 }
 
 .site-header__search-toggle {
-  display: block;
+  display: none !important;
 }
 
 .site-header__account,
@@ -5028,10 +5028,11 @@ $color-blankstate-background: rgba($color-body-text, 0.1);
 }
 
 .announcement-bar__message {
+  font-family: 'Proxima Nova Bold', sans-serif !important;
   display: block;
   padding: ($gutter-site-mobile / 2) $gutter-site-mobile;
   font-size: em(16);
-  font-weight: $font-weight-header;
+  font-weight: normal;
 
   @include media-query($medium-up) {
     padding-left: $gutter-site;
@@ -7529,6 +7530,10 @@ $toolbar-height-small: 46px;
   @include overlay(1);
 }
 
+.hero__overlay_u2u26 {
+  @include overlay(1);
+}
+
 .hero__inner {
   position: relative;
   display: table-cell;
@@ -8043,6 +8048,13 @@ $toolbar-height-small: 46px;
 
     &.small--one-half {
       @include flex(1 0 50%);
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    &.small--full {
+      @include flex(1 0 100%);
       max-width: 400px;
       margin-left: auto;
       margin-right: auto;
@@ -8821,8 +8833,8 @@ h1 {
 
 .u2u-headline {
   font-family: 'Proxima Nova Bold', sans-serif !important;
-  font-size: 28px;
-  text-align: left;
+  font-size: 2em;
+  text-align: center;
   text-transform: uppercase;
   letter-spacing: normal;
   font-weight: normal;
@@ -8845,16 +8857,17 @@ h1 {
   padding-left: 40px;
   padding-right: 40px;
   letter-spacing: 2px;
-  background: transparent;
-  border: 4px solid white;
+  background: white;
+  color: black;
   border-radius: 0px;
-  font-size: 1.1em;
+  font-size: 13px;
   margin-top: 0px;
   font-weight: normal;
 }
 
 .u2u-btn-white:hover {
-  background-color: rgba(255, 255, 255, 0.25) !important;
+  background-color: #404040 !important;
+  color: white !important;
 }
 
 .u2u-btn-black {
@@ -8862,13 +8875,16 @@ h1 {
   padding-left: 40px;
   padding-right: 40px;
   letter-spacing: 2px;
-  background: transparent;
-  border: 4px solid black;
+  background: black;
   border-radius: 0px !important;
-  font-size: 1.1em;
+  font-size: 13px;
   margin-top: 0px;
-  color: black;
+  color: white;
   font-weight: normal;
+}
+
+.u2u-btn-center {
+  align-self: center;
 }
 
 .u2u-btn-black:hover {
@@ -8891,7 +8907,7 @@ h1 {
 @media only screen and (min-width: 1000px) {
 
   .u2u-headline {
-    font-size: 50px;
+    font-size: 2.3333em;
     text-align: center;
   }
 
@@ -9458,7 +9474,7 @@ h1 {
 
 .u2u-countdown-order {
   font-family: 'Proxima Nova Bold', sans-serif !important;
-  font-size: 30px;
+  font-size: 2em;
   text-transform: uppercase;
 }
 
@@ -9517,6 +9533,10 @@ h1 {
 
   .u2u-countdown {
     padding: 100px;
+  }
+
+  .u2u-countdown-order {
+    font-size: 2.3333em;
   }
 
   .u2u-countdown-page {
@@ -9985,13 +10005,12 @@ h1 {
 }
 
 .u2u-product-reviews {
-  margin-top: 55px;
-  margin-bottom: 55px;
+
 }
 
 .u2u-product-reviews-title {
   font-family: 'Proxima Nova Bold', sans-serif !important;
-  font-size: 20px;
+  font-size: 2em;
   text-transform: uppercase;
   text-align: center;
 }
@@ -10026,7 +10045,7 @@ h1 {
 @media only screen and (min-width: 1000px) {
 
   .u2u-product-reviews {
-    margin-bottom: 100px;
+
   }
 
   .u2u-product-reviews-title {
@@ -10280,6 +10299,96 @@ h1 {
 }
 
 /*====FEATURED COLLECTION - FFFBOX====*/
+
+.u2u-collection-fffbox-title {
+  margin-bottom: 30px;
+  text-align: left !important;
+}
+
+.fffbox-box {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+  padding: 20px;
+  margin-bottom: 20px;
+  //border-radius: 3px;
+  //box-shadow: 1px 1px 4px 0 rgba(0,0,0,.2);
+}
+
+.fffbox-box-ribbon span {
+  position: absolute;
+  top: 10px;
+  text-align: center;
+  display: block;
+  background-color: red;
+  transform: rotate(45deg);
+
+}
+
+.fffbox-box-meta {
+  display: flex;
+  justify-content: space-between;
+}
+
+.fffbox-box-meta-left {
+
+}
+
+.fffbox-box-meta-label {
+  background-color: gray;
+  border-radius: 3px;
+  color: white;
+  font-family: 'Proxima Nova Bold', sans-serif !important;
+  font-size: 1.5em;
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  line-height: 50px;
+}
+
+.fffbox-box-title {
+  font-family: 'Proxima Nova Bold', sans-serif !important;
+  font-size: 1.5em;
+  text-transform: uppercase;
+}
+
+.fffbox-box-price {
+  font-size: 1.2em;
+}
+
+.fffbox-box-hr {
+  width: 100%;
+  height: 1px;
+  background-color: #dddddd;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.fffbox-box-items {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.fffbox-box-item {
+  flex: 0 0 33.33%;
+  width: 33.33%;
+  height: 96px;
+}
+
+.fffbox-box-btn {
+  margin-bottom: 10px;
+}
+
+@media only screen and (min-width: 1000px) {
+  .fffbox-box {
+    margin-bottom: 0px;
+  }
+
+  .fffbox-box-item {
+    height: 100px;
+  }
+}
 
 .grid__item--collection-fffbox:hover {
   cursor: pointer;
@@ -10986,6 +11095,16 @@ h1 {
 
 /*====COLLECTION FFFBOX====*/
 
+@media only screen and (max-width: 1000px) {
+  #fffbox-funnel {
+    margin-top: -45px;
+  }
+
+  #fffbox-funnel-women {
+    margin-bottom: 15px;
+  }
+}
+
 .u2u-collection-fffbox-funnel {
   display: flex;
   width: 100%;
@@ -11018,11 +11137,10 @@ h1 {
   top: 70%;
   left: 0;
   right: 0;
-  color: white;
-  background: rgba(0, 0, 0, 0.4);
-  border: 4px solid white;
+  color: black;
+  background: white;
   font-family: 'Proxima Nova Bold', sans-serif !important;
-  font-size: 1.1em;
+  font-size: 13px;
   text-transform: uppercase;
   letter-spacing: 2px;
   padding: 10px;
@@ -11041,6 +11159,7 @@ h1 {
 
 .u2u-collection-fffbox-col-hero {
   width: 100%;
+  margin-bottom: 30px;
 }
 
 @media only screen and (min-width: 1000px) {
@@ -11069,7 +11188,7 @@ p {
 }
 
 .site-nav__label {
-  font-family: 'Proxima Nova Bold', sans-serif !important;
+  font-family: 'Proxima Nova Regular', sans-serif !important;
   text-transform: uppercase;
   font-size: 18px;
   color: black;
@@ -11604,7 +11723,65 @@ p {
 
 }
 
+/*====UPTOUS v2.6 UPDATES====*/
 
+.mega-title_u2u26 {
+  font-family: 'Proxima Nova Bold', sans-serif !important;
+  text-shadow: 0;
+  font-weight: normal;
+  text-shadow: 0 0 0 !important;
+  width: 260px;
+  word-break: normal;
+}
+
+.hero__overlay_u2u26::before {
+  background-color: #000000;
+}
+
+.u2u-hero26-btn {
+  font-family: 'Proxima Nova Bold', sans-serif !important;
+  font-weight: normal;
+  background: white;
+  color: black;
+  border-radius: 0;
+}
+
+@media only screen and (min-width: 1000px) {
+
+  .mega-title_u2u26 {
+    width: 400px;
+  }
+
+  .mega-subtitle_u2u26 {
+    width: 400px;
+    margin: 0 !important;
+  }
+
+  .hero__overlay_u2u26::before {
+    opacity: 0;
+  }
+}
+
+/*====GAY LANDINGPAGE====*/
+
+.u2u-blockquote-img {
+  width: 200px;
+  height: 200px;
+  margin: 0 auto;
+  margin-bottom: 20px;
+  border-radius: 200px;
+}
+
+/*====INFLURY LANDINGPAGE====*/
+
+.u2u-section-cta {
+  text-align: center;
+}
+
+.u2u-btn-cta-single {
+  padding: 20px 40px;
+  font-size: 16px;
+}
 
 
 

@@ -64,7 +64,7 @@
       </noscript>
     </div>
   {%- else -%}
-    <div class="hero hero--{{ section.settings.hero_size }} hero-{{ section.id }}{% if section.settings.title != blank or section.settings.text != blank or section.settings.button_label != blank %} hero__overlay{% endif %} box ratio-container lazyload js"
+    <div class="hero hero--{{ section.settings.hero_size }} hero-{{ section.id }}{% if section.settings.title != blank or section.settings.text != blank or section.settings.button_label != blank %} hero__overlay_u2u26{% endif %} box ratio-container lazyload js"
          id="Hero-{{ section.id }}"
          data-layout="{{ section.settings.hero_layout }}"
          {%- if section.settings.image -%}
@@ -87,10 +87,10 @@
       <div class="hero__inner testclass">
         <div class="page-width text-left">
           {%- if section.settings.title != blank -%}
-            <h2 class="h1 mega-title{% if section.settings.text_size == 'large' %} mega-title--large{% endif %}">{{ section.settings.title | escape }}</h2>
+            <h2 class="h1 mega-title{% if section.settings.text_size == 'large' %} mega-title--large{% endif %} mega-title_u2u26">{{ section.settings.title | escape }}</h2>
           {%- endif -%}
           {%- if section.settings.text != blank -%}
-            <div class="rte-setting mega-subtitle{% if section.settings.text_size == 'large' %} mega-subtitle--large{% endif %}">{{ section.settings.text }}</div>
+            <div class="rte-setting mega-subtitle{% if section.settings.text_size == 'large' %} mega-subtitle--large{% endif %} mega-subtitle_u2u26">{{ section.settings.text }}</div>
           {%- endif -%}
           {%- if section.settings.button_label != blank and section.settings.button_link != blank -%}
             {%- capture ariaLabel -%}
@@ -105,7 +105,7 @@
             {%- endcapture -%}
 
             <a href="{{ section.settings.button_link }}"
-              class="btn hero__btn"
+              class="btn hero__btn u2u-hero26-btn"
               aria-label="{{ ariaLabel }}">
               {{- section.settings.button_label | escape -}}
             </a>
@@ -126,8 +126,8 @@
 {
   "name": {
     "da": "Billede med tekstoverlejring",
-    "de": "Foto mit überlegtem Text",
-    "en": "Img with text overlay og.",
+    "de": "Foto mit überlegtem Text 2.6",
+    "en": "Img with text overlay 2.6",
     "es": "magen con texto superpuesto",
     "fi": "Kuva päällä olevalla tekstillä",
     "fr": "Image avec calque texte",
@@ -719,7 +719,7 @@
       "name": {
         "da": "Billede med tekstoverlejring",
         "de": "Foto mit überlegtem Text",
-        "en": "Image with text overlay",
+        "en": "Image with text overlay 2.6",
         "es": "magen con texto superpuesto",
         "fi": "Kuva päällä olevalla tekstillä",
         "fr": "Image avec calque texte",

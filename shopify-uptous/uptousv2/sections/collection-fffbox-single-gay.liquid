@@ -9,7 +9,6 @@
   {% endcomment %}
 
   {%- assign collection = collections[section.settings.collection] -%}
-  {%- assign collection2 = collections[section.settings.collection2] -%}
 
   {% case section.settings.grid %}
     {% when 2 %}
@@ -28,80 +27,8 @@
 
   {%- assign product_limit = section.settings.grid | times: section.settings.rows -%}
 
-  <div id="fffbox-funnel" class="u2u-collection-fffbox-funnel">
-    <div id="fffbox-funnel-women" class="u2u-collection-fffbox-funnel-step">
-      <img class="fffbox-funnel-img" src="{{ collection.image | img_url: '1024x' }}"/>
-      <div class="fffbox-funnel-btn">{{ section.settings.collection_btn }}</div>
-    </div>
-    <div id="fffbox-funnel-men" class="u2u-collection-fffbox-funnel-step">
-      <img class="fffbox-funnel-img" src="{{ collection2.image | img_url: '1024x' }}"/>
-      <div class="fffbox-funnel-btn">{{ section.settings.collection2_btn }}</div>
-    </div>
-  </div>
-
-<div id="u2u-collection-fffbox-col1">
+<div id="u2u-collection-fffbox-col1-single" name="shop">
   {% if section.settings.collection_hero != blank %}<img class="u2u-collection-fffbox-col-hero" src="{{ section.settings.collection_hero | img_url: '1024x' }}"/>{% endif %}
-  <div class="u2u-headline u2u-collection-fffbox-title">Choose your fashion for future box</div>
-  <ul class="grid grid--uniform grid--view-items">
-    <li class="grid__item grid__item--{{section.id}} small--full medium-up--one-third">
-      <div class="fffbox-box">
-        <div class="fffbox-box-meta">
-          <div class="fffbox-box-meta-left">
-            <div class="fffbox-box-title">3 items box</div>
-            <div class="fffbox-box-price">€37,00</div>
-          </div>
-          <div class="fffbox-box-meta-label">3x</div>
-        </div>
-        <div class="fffbox-box-hr"></div>
-        <div class="fffbox-box-items">
-          <img class="fffbox-box-item" src="https://cdn.shopify.com/s/files/1/0278/6934/7915/files/t-shirt_1x_a5c29b46-96a7-4582-8da1-dd720d7dd34c.jpg?v=1598366002"/>
-          <img class="fffbox-box-item" src="https://cdn.shopify.com/s/files/1/0278/6934/7915/files/panties_1x_f426ced8-5b84-4ea6-8f91-9c913d856f7a.jpg?v=1598366002"/>
-          <img class="fffbox-box-item" src="https://cdn.shopify.com/s/files/1/0278/6934/7915/files/socks_1x_146975d8-884d-46c2-8b03-9e0ef72a7da9.jpg?v=1598366002"/>
-        </div>
-        <a href="{{ section.settings.col1p1 }}" class="btn u2u-btn-black u2u-btn-center fffbox-box-btn">Pick your items</a>
-      </div>
-    </li>
-    <li class="grid__item grid__item--{{section.id}} small--full medium-up--one-third">
-      <div class="fffbox-box">
-        <div class="fffbox-box-meta">
-          <div class="fffbox-box-meta-left">
-            <div class="fffbox-box-title">6 items box</div>
-            <div class="fffbox-box-price">€69,00</div>
-          </div>
-          <div class="fffbox-box-meta-label">6x</div>
-        </div>
-        <div class="fffbox-box-hr"></div>
-        <div class="fffbox-box-items">
-          <img class="fffbox-box-item" src="https://cdn.shopify.com/s/files/1/0278/6934/7915/files/t-shirt_2x_a7000123-7c43-400b-9e89-2d6a38087b87.jpg?v=1598366002"/>
-          <img class="fffbox-box-item" src="https://cdn.shopify.com/s/files/1/0278/6934/7915/files/panties_2x_52efe0cb-7dd6-4057-befb-88939cc9470f.jpg?v=1598366002"/>
-          <img class="fffbox-box-item" src="https://cdn.shopify.com/s/files/1/0278/6934/7915/files/socks_2x_3c2a8c62-9440-4b40-82f6-f1bcfea8cba8.jpg?v=1598366002"/>
-        </div>
-        <a href="{{ section.settings.col1p2 }}" class="btn u2u-btn-black u2u-btn-center fffbox-box-btn">Pick your items</a>
-      </div>
-    </li>
-    <li class="grid__item grid__item--{{section.id}} small--full medium-up--one-third">
-      <div class="fffbox-box">
-        <div class="fffbox-box-meta">
-          <div class="fffbox-box-meta-left">
-            <div class="fffbox-box-title">9 items box</div>
-            <div class="fffbox-box-price">€99,00</div>
-          </div>
-          <div class="fffbox-box-meta-label">9x</div>
-        </div>
-        <div class="fffbox-box-hr"></div>
-        <div class="fffbox-box-items">
-          <img class="fffbox-box-item" src="https://cdn.shopify.com/s/files/1/0278/6934/7915/files/t-shirt_3x_cc6fc1a3-63bd-4e44-b464-9e1cbe0ecc44.jpg?v=1598361431"/>
-          <img class="fffbox-box-item" src="https://cdn.shopify.com/s/files/1/0278/6934/7915/files/panties_3x_5b45b834-31a2-48da-8774-9ab0922dc689.jpg?v=1598366002"/>
-          <img class="fffbox-box-item" src="https://cdn.shopify.com/s/files/1/0278/6934/7915/files/socks_3x_280db67d-6910-44b5-9532-5ead2e7f4d11.jpg?v=1598366002"/>
-        </div>
-        <a href="{{ section.settings.col1p3 }}" class="btn u2u-btn-black u2u-btn-center fffbox-box-btn">Pick your items</a>
-      </div>
-    </li>
-  </ul>
-</div>
-
-<div id="u2u-collection-fffbox-col2">
-  {% if section.settings.collection2_hero != blank %}<img class="u2u-collection-fffbox-col-hero" src="{{ section.settings.collection2_hero | img_url: '1024x' }}"/>{% endif %}
   <div class="u2u-headline u2u-collection-fffbox-title">Choose your fashion for future box</div>
   <ul class="grid grid--uniform grid--view-items">
     <li class="grid__item grid__item--{{section.id}} small--full medium-up--one-third">
@@ -119,7 +46,7 @@
           <img class="fffbox-box-item" src="https://cdn.shopify.com/s/files/1/0278/6934/7915/files/boxers_1x_e6a60373-5299-49b2-8660-31d141a3416c.jpg?v=1598371692"/>
           <img class="fffbox-box-item" src="https://cdn.shopify.com/s/files/1/0278/6934/7915/files/socks_1x_146975d8-884d-46c2-8b03-9e0ef72a7da9.jpg?v=1598366002"/>
         </div>
-        <a href="{{ section.settings.col2p1 }}" class="btn u2u-btn-black u2u-btn-center fffbox-box-btn">Pick your items</a>
+        <a href="{{ section.settings.col1p1 }}" class="btn u2u-btn-black u2u-btn-center fffbox-box-btn">Pick your items</a>
       </div>
     </li>
     <li class="grid__item grid__item--{{section.id}} small--full medium-up--one-third">
@@ -137,7 +64,7 @@
           <img class="fffbox-box-item" src="https://cdn.shopify.com/s/files/1/0278/6934/7915/files/boxers_2x_628154f2-3a3a-4a9a-b081-5a19cf141fc6.jpg?v=1598371692"/>
           <img class="fffbox-box-item" src="https://cdn.shopify.com/s/files/1/0278/6934/7915/files/socks_2x_3c2a8c62-9440-4b40-82f6-f1bcfea8cba8.jpg?v=1598366002"/>
         </div>
-        <a href="{{ section.settings.col2p2 }}" class="btn u2u-btn-black u2u-btn-center fffbox-box-btn">Pick your items</a>
+        <a href="{{ section.settings.col1p2 }}" class="btn u2u-btn-black u2u-btn-center fffbox-box-btn">Pick your items</a>
       </div>
     </li>
     <li class="grid__item grid__item--{{section.id}} small--full medium-up--one-third">
@@ -155,7 +82,7 @@
           <img class="fffbox-box-item" src="https://cdn.shopify.com/s/files/1/0278/6934/7915/files/boxers_3x_c3bf4ced-03c7-4589-a183-819494f7896a.jpg?v=1598371692"/>
           <img class="fffbox-box-item" src="https://cdn.shopify.com/s/files/1/0278/6934/7915/files/socks_3x_280db67d-6910-44b5-9532-5ead2e7f4d11.jpg?v=1598366002"/>
         </div>
-        <a href="{{ section.settings.col2p3 }}" class="btn u2u-btn-black u2u-btn-center fffbox-box-btn">Pick your items</a>
+        <a href="{{ section.settings.col1p3 }}" class="btn u2u-btn-black u2u-btn-center fffbox-box-btn">Pick your items</a>
       </div>
     </li>
   </ul>
@@ -171,21 +98,6 @@
   {% endif %}
 
 </div>
-
-<script>
-
-$("#fffbox-funnel-women").click(function(){
-  $("#fffbox-funnel").hide();
-  $("#u2u-collection-fffbox-col1").show();
-});
-
-$("#fffbox-funnel-men").click(function(){
-  $("#fffbox-funnel").hide();
-  $("#u2u-collection-fffbox-col2").show();
-});
-
-</script>
-
 
 {% schema %}
 {
@@ -264,62 +176,6 @@ $("#fffbox-funnel-men").click(function(){
       }
     },
     {
-      "id": "collection",
-      "type": "collection",
-      "label": {
-        "da": "Kollektion",
-        "de": "Kategorie",
-        "en": "Collection",
-        "es": "Colección",
-        "fi": "Kokoelma",
-        "fr": "Collection",
-        "hi": "कलेक्शन",
-        "it": "Collezione",
-        "ja": "コレクション",
-        "ko": "컬렉션",
-        "nb": "Samling",
-        "nl": "Collectie",
-        "pt-BR": "Coleção",
-        "pt-PT": "Coleção",
-        "sv": "Produktserie",
-        "th": "คอลเลกชัน",
-        "zh-CN": "收藏",
-        "zh-TW": "商品系列"
-      }
-    },
-    {
-      "id": "collection2",
-      "type": "collection",
-      "label": {
-        "da": "Kollektion 2",
-        "de": "Kategorie 2",
-        "en": "Collection 2",
-        "es": "Colección",
-        "fi": "Kokoelma",
-        "fr": "Collection",
-        "hi": "कलेक्शन",
-        "it": "Collezione",
-        "ja": "コレクション",
-        "ko": "컬렉션",
-        "nb": "Samling",
-        "nl": "Collectie",
-        "pt-BR": "Coleção",
-        "pt-PT": "Coleção",
-        "sv": "Produktserie",
-        "th": "คอลเลกชัน",
-        "zh-CN": "收藏",
-        "zh-TW": "商品系列"
-      }
-    },
-    {
-      "id": "collection_btn",
-      "type": "text",
-      "label": {
-        "de": "Kategorie Button Text",
-        "en": "Collection Button Text"
-      }
-    },
-    {
       "id": "col1p1",
       "type": "url",
       "label": {
@@ -344,51 +200,11 @@ $("#fffbox-funnel-men").click(function(){
       }
     },
     {
-      "id": "collection2_btn",
-      "type": "text",
-      "label": {
-        "de": "Kategorie 2 Button Text",
-        "en": "Collection 2 Button Text"
-      }
-    },
-    {
-      "id": "col2p1",
-      "type": "url",
-      "label": {
-        "de": "Kategorie 2 Produkt 1",
-        "en": "Collection 2 Product 1"
-      }
-    },
-    {
-      "id": "col2p2",
-      "type": "url",
-      "label": {
-        "de": "Kategorie 2 Produkt 2",
-        "en": "Collection 2 Product 2"
-      }
-    },
-    {
-      "id": "col2p3",
-      "type": "url",
-      "label": {
-        "de": "Kategorie 2 Produkt 3",
-        "en": "Collection 2 Product 3"
-      }
-    },
-    {
       "id": "collection_hero",
       "type": "image_picker",
       "label": {
         "de": "Kategorie Hero",
         "en": "Collection Hero"
-      }
-    },
-    {
-      "id": "collection2_hero",
-      "type": "image_picker",
-      "label": {
-        "de": "Kategorie 2 Hero",
-        "en": "Collection 2 Hero"
       }
     },
     {
